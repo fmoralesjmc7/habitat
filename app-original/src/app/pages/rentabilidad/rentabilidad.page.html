@@ -1,0 +1,162 @@
+<app-header></app-header>
+
+<ion-content class="content_page">
+	<article class="cnt_rrss">
+	<p class="cnt_rrss-title">Rentabilidad de los </p>
+	<p class="cnt_rrss-title">Fondos de Pensión</p>
+	
+    <p class="cnt_rrss-subtitle">{{ subtitulo60 }}</p>
+
+
+
+		<section class="cnt_table">
+			<article class="table">
+				<ul class="column">
+					<li class="column-items">
+						AFP
+					</li>
+					<li class="column-items">
+						A
+					</li>
+					<li class="column-items">
+						B
+					</li>
+					<li class="column-items">
+						C
+					</li>
+					<li class="column-items">
+						D
+					</li>
+					<li class="column-items">
+						E
+					</li>
+				</ul>
+			</article>
+			<!-- TABLA DE 60 MESES -->
+			<article class="table">
+				<ul class="column" *ngFor="let datos of datoRecopilado60">
+					<li class="column-items">
+						{{ datos.afp }}
+					</li>
+					<li class="column-items">
+						{{ datos.fondo_a }}
+					</li>
+					<li class="column-items">
+						{{ datos.fondo_b }}
+					</li>
+					<li class="column-items">
+						{{ datos.fondo_c }}
+					</li>
+					<li class="column-items">
+						{{ datos.fondo_d }}
+					</li>
+					<li class="column-items">
+						{{ datos.fondo_e }}
+					</li>
+				</ul>
+			</article>
+
+			<article class="table">
+				<ul class="column">
+					<li class="column-items" *ngFor="let datos of posicion60">
+						{{ datos.texto }}
+					</li>
+				</ul>
+			</article><!-- table -->
+		</section> <!-- cnt_table -->
+
+		<section class="cnt_info" *ngIf="truncarTexto === true">
+			<p class="cnt_info-data">
+				{{ parrafo60 | slice:0:115 }}...
+			</p>
+			<button class="cnt_info-btn" (click)="moreMethod()">Leer Más</button>
+		</section>
+
+		<section class="cnt_info" *ngIf="truncarTexto === false">
+			<p class="cnt_info-data">
+				{{ parrafo60 }}
+			</p>
+			<button class="cnt_info-btn" (click)="lessMethod()">Leer Menos</button>
+		</section>
+
+		<p class="cnt_rrss-subtitle">
+			{{ subtitulo12 }}
+    </p>
+		
+		<section class="cnt_table">
+			<article class="table">
+				<ul class="column">
+					<li class="column-items">
+						AFP
+					</li>
+					<li class="column-items">
+						A
+					</li>
+					<li class="column-items">
+						B
+					</li>
+					<li class="column-items">
+						C
+					</li>
+					<li class="column-items">
+						D
+					</li>
+					<li class="column-items">
+						E
+					</li>
+				</ul>
+			</article>
+			<!-- TABLA DE 12 MESES -->
+			<article class="table">
+				<ul class="column" *ngFor="let datos of datoRecopilado12">
+					<li class="column-items">
+						{{ datos.afp }}
+					</li>
+					<li class="column-items">
+						{{ datos.fondo_a }}
+					</li>
+					<li class="column-items">
+						{{ datos.fondo_b }}
+					</li>
+					<li class="column-items">
+						{{ datos.fondo_c }}
+					</li>
+					<li class="column-items">
+						{{ datos.fondo_d }}
+					</li>
+					<li class="column-items">
+						{{ datos.fondo_e }}
+					</li>
+				</ul>
+			</article>
+
+			<article class="table">
+				<ul class="column">
+					<li class="column-items" *ngFor="let datos of posicion12">
+						{{ datos.texto }}
+					</li>
+				</ul>
+			</article><!-- table -->
+		</section><!-- cnt_table -->
+
+		<section class="cnt_info" *ngIf="truncarTextoDos === true">
+			<p class="cnt_info-data">
+				{{ parrafo12 | slice:0:115 }}
+			</p>
+			<button class="cnt_info-btn" (click)="moreMethodDos()">Leer Más</button>
+		</section>
+
+		<section class="cnt_info" *ngIf="truncarTextoDos === false">
+			<p class="cnt_info-data">
+				{{ parrafo12 }}
+			</p>
+			<button class="cnt_info-btn" (click)="lessMethodDos()">Leer Menos</button>
+		</section>
+
+		<p class="cnt_rrss-title">
+			Consulta la rentabilidad de periodos anteriores
+    </p>
+
+    <button class="cnt_rrss-btn" (click)="abrirPaginaRentabilidad();">Consultar</button>
+	</article> <!-- profitability -->
+</ion-content> <!-- content -->

@@ -1,0 +1,24 @@
+<app-header></app-header>
+
+
+<ion-content class="content_page">
+  <article class="cnt_rrss">
+    <p class="icon-backgrond">
+        <ion-icon name="icon-conversacion" class="icon icon-conversacion"></ion-icon>
+    </p>
+    <div class="cnt_rrss-title">{{ nombreConsultor }}</div>
+    <p class="cnt_rrss-subtitle">Ejecutivo Asignado</p>
+    <p class="cnt_rrss-text">
+      Para resolver tus dudas o necesitas ayuda, contáctate con tu ejecutivo desde cualquier lugar y recibe una atención personalizada.
+    </p>
+    <label class="list_item" (click)="enviarMailConsultor()">
+      <p class="list_item-link">Envíame un Correo</p>
+      <div class="list_item-back">
+        <ion-icon class="list_item-back-icon icon-email" name="icon-email"></ion-icon>
+      </div>
+    </label>
+
+    <button class="cnt_rrss-btn" (click)="llamarConsultor()">Llamar</button>
+  </article>
+
+</ion-content>

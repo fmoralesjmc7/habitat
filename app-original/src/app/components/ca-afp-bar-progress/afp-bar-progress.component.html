@@ -1,0 +1,17 @@
+<div *ngFor="let afp of displayAfp">
+  <div class="afp-bar-progress" [ngClass]="{ 'selected-difference': afp === afpSelected || afp === 'habitat' }" (click)="emitClick(afp)">
+    <p>{{ afp }}</p>
+    <ion-row>
+      <ion-col class="section-progress-bar" size="8">
+        <div class="progress-bar width-{{ percentages[afp]}} color-{{ afp }}"></div>
+      </ion-col>
+      <ion-col class="section-progress-bar" size="4">
+        <p>{{ lastValues[afp] | chileanCurrency}}</p>
+      </ion-col>
+    </ion-row>
+  </div>
+</div>
+<div class="text-disclaimer" *ngIf="textDisclaimer">
+  <ion-icon name="information-circle"></ion-icon>
+  {{ textDisclaimer }}
+</div>

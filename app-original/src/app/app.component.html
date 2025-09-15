@@ -1,0 +1,121 @@
+<ion-app class="ionic-app">
+  <ion-menu class="content_app" side="end" persistent="true" contentId="content" [swipeGesture]="true" (ionWillClose)="cerrarMenu()">
+    <ion-header class="header_menu">
+      <ion-title class="header_menu-title" *ngIf="!usuarioCliente">
+        <ion-icon class="iconh icon-back" (click)="toggleMenu()"></ion-icon>
+        <label class="header_menu-text">
+          ¡Bienvenido!
+        </label>
+      </ion-title>
+      <ion-title class="header_menu-title" *ngIf="usuarioCliente">
+        <ion-icon class="iconh icon-back" (click)="toggleMenu()"></ion-icon>
+        <label class="header_menu-text">
+          {{ nombreUsuario | formatoMayusculas }}
+        </label>
+      </ion-title>
+    </ion-header>
+
+    <ion-content class="menu">
+      <ion-list class="cnt_menu">
+        <ion-menu-toggle>
+          <button class="cnt_menu-item" ion-item (click)="openPage('HomeClientePage')" *ngIf="usuarioCliente">
+            <label class="cnt_menu-label">Home</label>
+            <ion-icon class="icon icon-home" ></ion-icon>
+          </button>
+        </ion-menu-toggle>
+        <hr class="solid-line" *ngIf="usuarioCliente">
+        <ion-menu-toggle>
+          <button class="cnt_menu-item" ion-item (click)="openPage('ClaveUnicaComponent')" *ngIf="usuarioCliente && tusDatosActivo">
+            <label class="cnt_menu-label">Tus Datos</label>
+            <ion-icon class="icon" name="person-outline"></ion-icon>
+          </button>
+        </ion-menu-toggle>
+        <hr class="solid-line" *ngIf="usuarioCliente && tusDatosActivo">
+        <ion-menu-toggle>
+          <button class="cnt_menu-item" ion-item (click)="openPage('HomeInvitadoPage')" *ngIf="!usuarioCliente">
+            <label class="cnt_menu-label">Home</label>
+            <ion-icon class="icon icon-home" ></ion-icon>
+          </button>
+        </ion-menu-toggle>
+        <hr class="solid-line"  *ngIf="!usuarioCliente">
+        <ion-menu-toggle>
+          <button class="cnt_menu-item" ion-item (click)="openPage('ConsultorPage')" *ngIf="usuarioConConsultor != null && usuarioCliente">
+            <label class="cnt_menu-label">Mi Ejecutivo</label>
+            <ion-icon class="icon icon-usuario-linea" ></ion-icon>
+          </button>
+        </ion-menu-toggle>
+        <hr class="solid-line"  *ngIf="usuarioConConsultor != null && usuarioCliente">
+        <ion-menu-toggle>
+          <button class="cnt_menu-item" ion-item (click)="openPage('IndicadoresPage')">
+            <label class="cnt_menu-label">Indicadores</label>
+            <ion-icon class="icon icon-indicadores" ></ion-icon>
+          </button>
+        </ion-menu-toggle>
+        <hr class="solid-line">
+        <ion-menu-toggle>
+          <button class="cnt_menu-item" ion-item (click)="openPage('ValorCuotaPage')">
+            <label class="cnt_menu-label">Valor Cuota</label>
+            <ion-icon class="icon icon-valor-cuota" ></ion-icon>
+          </button>
+        </ion-menu-toggle>
+        <hr class="solid-line">
+        <ion-menu-toggle>
+          <button class="cnt_menu-item" ion-item (click)="openPage('SucursalesPage')">
+            <label class="cnt_menu-label">Sucursales</label>
+            <ion-icon class="icon icon-sucursales" ></ion-icon>
+          </button>
+        </ion-menu-toggle>
+        <hr class="solid-line">
+        <ion-menu-toggle>
+          <button class="cnt_menu-item" ion-item (click)="openPage('ContactoPage')">
+            <label class="cnt_menu-label">Contacto</label>
+            <ion-icon class="icon icon-contacto" ></ion-icon>
+          </button>
+        </ion-menu-toggle>
+        <hr class="solid-line">
+        <ion-menu-toggle>
+          <button class="cnt_menu-item" ion-item (click)="openPage('planes-step-uno')" *ngIf="mostrarPlanDeAhorro()">
+            <label class="cnt_menu-label">Plan de Ahorro</label>
+            <ion-icon class="icon icon-plan-icon"></ion-icon>
+          </button>
+        </ion-menu-toggle>
+        <hr class="solid-line" *ngIf="mostrarPlanDeAhorro()">
+        <ion-menu-toggle>
+          <button class="cnt_menu-item" ion-item (click)="openPage('ConfiguracionPage')" *ngIf="usuarioCliente">
+            <label class="cnt_menu-label">Configuraciones</label>
+            <ion-icon class="icon icon-simulador"></ion-icon>
+          </button>
+        </ion-menu-toggle>
+        <hr class="solid-line">
+        <ion-menu-toggle>
+          <button class="cnt_menu-item" ion-item (click)="openPage('PoliticaPrivacidad')" *ngIf="usuarioCliente">
+            <label class="cnt_menu-label">Pol&iacute;tica de Privacidad</label> 
+            <ion-icon class="icon icon-politica-privacidad" ></ion-icon>
+          </button>
+        </ion-menu-toggle>
+        <hr class="solid-line" *ngIf="usuarioCliente">
+        <ion-menu-toggle>
+          <button class="cnt_menu-item" ion-item (click)="openPage('OtrasSuscripcionesPage')" *ngIf="usuarioCliente">
+            <label class="cnt_menu-label">Consolidación de Saldos</label> 
+            <ion-icon class="icon icon-otras-suscripciones" ></ion-icon>
+          </button>
+        </ion-menu-toggle>
+        <hr class="solid-line">
+
+        <button class="cnt_menu-item" ion-item (click)="openPage('SigninPage')" *ngIf="usuarioCliente">
+          <label class="cnt_menu-label">Cerrar Sesión</label> 
+          <ion-icon class="icon icon-cerrar-sesion" ></ion-icon>
+        </button>
+
+        <button class="cnt_menu-item" ion-item (click)="openPage('SigninPage')" *ngIf="!usuarioCliente">
+          <label class="cnt_menu-label">Iniciar Sesión</label> 
+          <ion-icon class="icon icon-cerrar-sesion" ></ion-icon>
+        </button>
+        
+        <hr class="solid-line">
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+
+  <ion-router-outlet id="content" main swipeBackEnabled="false"></ion-router-outlet>
+</ion-app>

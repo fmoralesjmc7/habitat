@@ -1,0 +1,213 @@
+<app-header [class.disable_header]="alertAyudaContextual || modalFondoRecaudador || modalFondo"></app-header>
+
+<ion-content class="content_page" [ngClass]="{'content_page--no_scroll': alertAyudaContextual || modalFondoRecaudador || modalFondo}">
+  <section class="container">
+
+    <app-step-items [active]="1"></app-step-items>
+
+    <ion-list class="accounts">
+      <h2 class="accounts-title" *ngIf="isShow(undefined!)">¿Cambiar o Distribuir mis Fondos? </h2>
+      <h3 class="accounts-subtitle" *ngIf="isShow(undefined!)">Revisa las características de los fondos
+        <ion-icon name="icon-informacion" class="icon icon-informacion" (click)="openHelp()"></ion-icon>
+      </h3>
+
+      <div *ngFor="let producto of cuentasSeleccionadasParaCDF">
+        <article class="accounts_cnt" [ngClass]="{'special_margin': isShow(producto.idProducto)}">
+          <ion-item lines="none" class="option" [ngClass]="{'editado': producto.fueModificado}" (click)="toggleLevel(producto.idProducto, producto.esModificable)"
+                    *ngIf="!isShow(producto.idProducto)">
+            <h3 class="option-title" [ngClass]="{'disabled': !producto.esModificable}">{{ producto.nombreCortoProducto }}</h3>
+            <ion-icon class="option-icon icon-plus" name="icn-plus" [ngClass]="{'disabled': !producto.esModificable}" *ngIf="!producto.fueModificado"></ion-icon>
+            <ion-icon class="option-icon_edit icon-editar" name="icon-editar" *ngIf="producto.fueModificado"></ion-icon>
+          </ion-item>
+          <div *ngIf="isShow(producto.idProducto)">
+            <ion-item lines="none" class="producto_detalle" (click)="toggleLevel(producto.idProducto, producto.esModificable)">
+              <ion-label class="balance-label">
+                <h3 class="title">{{ producto.nombreCortoProducto }}</h3>
+                <div class="balance">
+                  <h2 class="balance-subtitle">Saldo Total:</h2>
+                  <span class="balance-saldo">{{ producto.saldoTotal | formatoPesoChileno }}</span>
+                </div>
+              </ion-label>
+
+            </ion-item>
+            <article class="cnt_option">
+              <ion-label class="cnt_label">
+                <h3 class="cnt_option-subtitle">¿Cambiar o distribuir mis fondos?
+                  <ion-icon name="icon-informacion" class="icon icon-informacion" (click)="alertAyudaContextual = true"></ion-icon>
+                </h3>
+                <div class="btn_option">
+                  <button class="btn_option-item" (click)="tabsCambioFondo(producto)" [ngClass]="{'item--active': producto.esCambioFondo}">Cambio</button>
+                  <button class="btn_option-item" (click)="tabsDistribucionFondo(producto)" [ngClass]="{'item--active': producto.esDistribucionFondo}">Distribución</button>
+                </div>
+              </ion-label>
+            </article>
+
+            <article class="details" *ngIf="producto.esCambioFondo">
+              <h3 class="details-subtitle">Detalle de la Cuenta</h3>
+              <ion-card class="card">
+                <ion-card-content class="card_cnt" *ngFor="let fondo of producto.fondos">
+                  <article class="funds">
+                    <h3 class="funds-subtitle" *ngIf="fondo.esRecaudadorActual && !producto.estaDistribuida">Fondo Actual</h3>
+                    <h3 class="funds-subtitle" *ngIf="!fondo.esRecaudadorActual && producto.estaDistribuida">Fondo Actual</h3>
+                    <h3 class="funds-subtitle" *ngIf="fondo.esRecaudadorActual && producto.estaDistribuida">Fondo Actual Recaudador</h3>
+                    <div class="funds-letter" [ngClass]="{'letter--red': fondo.nombreFondo === 'A', 'letter--orange': fondo.nombreFondo === 'B', 'letter--green': fondo.nombreFondo === 'C', 'letter--cyan': fondo.nombreFondo === 'D', 'letter--blue': fondo.nombreFondo === 'E'}">
+											<span class="value">
+												{{ fondo.nombreFondo }}
+											</span>
+                    </div>
+                  </article>
+                  <article class="funds">
+                    <span class="funds-font funds-font--red">Saldo:</span>
+                    <span class="funds-font funds-font--red">{{ fondo.saldo | formatoPesoChileno }}</span>
+                  </article>
+                </ion-card-content>
+              </ion-card>
+              <h3 class="details-subtitle">Fondo de Destino</h3>
+              <ion-select name="fondo" class="details-select" placeholder="Selecciona Fondo"
+                          (ionChange)="fondoRecaudadorCF($event, producto)"
+                          [(ngModel)]="formularioDistribucionFondos[producto.idProducto -1].idFondoRecaudador"
+                          [interfaceOptions]="fondoDestino"
+                          okText="ACEPTAR" cancelText="CANCELAR">
+                <ion-select-option *ngFor="let fondo of listaFondoCDF" [value]="fondo.id">
+                  {{ fondo.nombre }}
+                </ion-select-option>
+              </ion-select>
+
+              <div class="dots">
+                ...
+              </div>
+
+            </article>
+
+            <article class="details_distri" *ngIf="producto.esDistribucionFondo">
+              <h3 class="details_distri-subtitle">Detalle de la Cuenta</h3>
+              <ion-card class="card" >
+                <ion-card-content class="card_cnt" *ngFor="let fondo of producto.fondos">
+                  <section class="content_distri">
+                    <article class="funds">
+                      <h3 class="funds-subtitle" *ngIf="fondo.esRecaudadorActual && !producto.estaDistribuida">Fondo Actual</h3>
+                      <h3 class="funds-subtitle" *ngIf="!fondo.esRecaudadorActual && producto.estaDistribuida">Fondo Actual</h3>
+                      <h3 class="funds-subtitle" *ngIf="fondo.esRecaudadorActual && producto.estaDistribuida">Fondo Actual Recaudador</h3>
+                      <div class="funds-letter" [ngClass]="{'letter--red': fondo.nombreFondo === 'A', 'letter--orange': fondo.nombreFondo === 'B', 'letter--green': fondo.nombreFondo === 'C', 'letter--cyan': fondo.nombreFondo === 'D', 'letter--blue': fondo.nombreFondo === 'E'}">
+												<span class="value">
+													{{ fondo.nombreFondo }}
+												</span>
+                      </div>
+                    </article>
+                    <article class="funds">
+                      <span class="funds-font funds-font--red">Saldo:</span>
+                      <span class="funds-font funds-font--red">{{ fondo.saldo | formatoPesoChileno }}</span>
+                    </article>
+                  </section>
+                </ion-card-content>
+              </ion-card>
+              <h3 class="details_distri-subtitle">Distribución de fondos</h3>
+              <ion-card class="card">
+                <ion-card-content class="card_cnt">
+                  <div class="porcent">
+                    <article class="porcent_cnt">
+                      <ion-label class="porcent_cnt-label" stacked>
+                        Fondo de destino 1
+                      </ion-label>
+                      <ion-select name="distFondoUno" class="porcent_cnt-select select--fund"
+                                  placeholder="Selecciona Fondo"  [(ngModel)]="producto.fondoUnoVista" (ionChange)="onChangeDistribucionUno($event, producto.idProducto);"
+                                  okText="ACEPTAR" cancelText="CANCELAR" [interfaceOptions]="fondoDestino">
+                        <ion-select-option *ngFor="let fondo of fondoRecUno" [value]="fondo.id">
+                          {{ fondo.nombre }}
+                        </ion-select-option>
+                      </ion-select>
+                    </article>
+
+                    <article class="porcent_cnt">
+                      <ion-label class="porcent_cnt-label" stacked>
+                        Porcentaje
+                      </ion-label>
+                      <ion-input solo-numeros class="porcent_cnt-input" (keyup)="detectaBotonIr($event.keyCode)" type="tel" [attr.maxlength]="3" [(ngModel)]="formularioDistribucionFondos[producto.idProducto - 1].distribucion[0].porcentaje"
+                                 (ionBlur)="onBlurPorcentajeDF(producto.idProducto, 0)" (ionChange)="validaMaximoEnPorcentajeDF(0, producto.idProducto)" placeholder="0%">
+                      </ion-input>
+                    </article>
+                    <p class="porcent-subfund">Saldo ${{ formularioDistribucionFondos[producto.idProducto - 1].distribucion[0].saldo | number:'1.0-0': 'es-CL' }}</p>
+                  </div>
+                  <div class="porcent">
+                    <article class="porcent_cnt">
+                      <ion-label class="porcent_cnt-label" stacked>
+                        Fondo de destino 2
+                      </ion-label>
+                      <ion-select name="distFondoDos" class="porcent_cnt-select select--fund"
+                                  placeholder="Selecciona Fondo" [(ngModel)]="producto.fondoDosVista" (ionChange)="onChangeDistribucionDos($event, producto.idProducto);"
+                                  [disabled]="seleccionPrimerFondoDistribucion[producto.idProducto -1].bloqueado"
+                                  okText="ACEPTAR" cancelText="CANCELAR" [interfaceOptions]="fondoDestino">
+                        <ion-select-option *ngFor="let fondo of fondoRecDos" [value]="fondo.id">
+                          {{ fondo.nombre }}
+                        </ion-select-option>
+                      </ion-select>
+                    </article>
+
+                    <article class="porcent_cnt">
+                      <ion-label class="porcent_cnt-label" stacked>
+                        Porcentaje
+                      </ion-label>
+                      <ion-input solo-numeros class="porcent_cnt-input" (keyup)="detectaBotonIr($event.keyCode)" type="tel" [attr.maxlength]="3" [(ngModel)]="formularioDistribucionFondos[producto.idProducto - 1].distribucion[1].porcentaje"
+                                 (ionBlur)="onBlurPorcentajeDF(producto.idProducto, 1)" (ionChange)="validaMaximoEnPorcentajeDF(1, producto.idProducto)" [disabled]="seleccionPrimerFondoDistribucion[producto.idProducto -1].bloqueado" placeholder="0%">
+                      </ion-input>
+                    </article>
+                    <p class="porcent-subfund">Saldo ${{ formularioDistribucionFondos[producto.idProducto - 1].distribucion[1].saldo | number:'1.0-0': 'es-CL' }}</p>
+                  </div>
+                </ion-card-content>
+              </ion-card>
+              <h3 class="details-subtitle">Nuevo Fondo Recaudador
+                <ion-icon name="icon-informacion" class="icon icon-informacion" (click)="modalFondoRecaudador = true"></ion-icon>
+              </h3>
+              <ion-select name="distFondoRecau" class="details-select" [disabled]="habilitaSelectorFondoRecaudadorDF[producto.idProducto -1].bloqueado"
+                          placeholder="Selecciona Fondo Recaudador" (ionChange)="preFondoRecaudadorDF($event, producto.idProducto)"
+                          [(ngModel)]="formularioDistribucionFondos[producto.idProducto - 1].idFondoRecaudador" okText="ACEPTAR" cancelText="CANCELAR"
+                          [interfaceOptions]="fondoRecaudador">
+                <ion-select-option *ngFor="let fondo of listaFondoDistribucionRecaudador[producto.idProducto -1]" [value]="fondo.id">
+                  {{ fondo.nombre }}
+                </ion-select-option>
+              </ion-select>
+              <div class="dots">
+                ...
+              </div>
+            </article>
+          </div>
+        </article>
+      </div>
+    </ion-list>
+  </section>
+
+  <section class="cnt_button">
+    <button class="cnt_button-next" [disabled]="desactivarBotonContinuar()" type="submit" block (click)="verificarSolicitudCDF()">Continuar</button>
+    <button class="cnt_button-cancel" type="submit" block *ngIf="!desactivarBotonContinuar()" (click)="cancelarSolicitudCDF()">Cancelar</button>
+  </section>
+</ion-content>
+
+<ayuda-contextual-titulo *ngIf="alertAyudaContextual" (bgClick)="alertAyudaContextual = !alertAyudaContextual" [isOpen]="alertAyudaContextual" [text]="tituloAlertAyudaContextual" [textDos]="infoUnoAlertAyudaContextual" [textTres]="infoDosAlertAyudaContextual"></ayuda-contextual-titulo>
+<ayuda-contextual *ngIf="modalFondoRecaudador" (bgClick)="modalFondoRecaudador = !modalFondoRecaudador" [isOpen]="modalFondoRecaudador" [text]="infoModalFondoRecaudador"></ayuda-contextual>
+
+<section class="modal_block" *ngIf="modalFondo">
+  <ion-slides class="cnt_slides" pager="true" effect="slide" speed="300" pager="true" spaceBetween="30">
+    <ion-slide class="modal_cnt" *ngFor="let slide of slides">
+      <ion-card class="modal">
+        <ion-icon class="icon_close icon-cerrar" (click)="modalFondo = false"></ion-icon>
+        <ion-card-header class="header">
+          <div [class]="slide.class">
+            <span class="value">{{ slide.tipoFondo }}</span>
+          </div>
+        </ion-card-header>
+        <ion-card-content class="body">
+          <h1 class="body-title">Si decides invertir en el Fondo {{ slide.tipoFondo }} debes considerar:</h1>
+          <p class="body-info">
+            {{ slide.parrafoUno }}
+          </p>
+          <p class="body-info">
+            {{ slide.parrafoDos }}
+          </p>
+          <p class="body-info">
+            {{ slide.parrafoTres }}
+          </p>
+        </ion-card-content>
+      </ion-card>
+    </ion-slide>
+  </ion-slides>
+</section>

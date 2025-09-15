@@ -1,0 +1,69 @@
+@import '../../../../theme/mixins';
+
+:host {
+  font: 1rem var(--fonts-weight-regular);
+  
+  .detalle-cuenta {
+    &-titulo {
+      font: 1.5rem var(--fonts-weight-medium);
+      text-align: center;
+      margin-bottom: 0;
+      color: var(--colors-gris-oscuro);
+    }
+
+    &-saldo {
+      font: 2rem var(--fonts-weight-medium);
+      text-align: center;
+      color: var(--colors-rojo-habitat);
+      margin: 0 0 30px 0;
+    }
+
+    .detalle-fondo {
+      padding: 0.938rem;
+      border-radius: 0.839rem;
+      width: 80%;
+      margin: 0 auto;
+      box-shadow: 0px 0px 1.118rem rgba(0, 0, 0, 0.2);
+      margin-bottom: 1.625rem; 
+
+      p {
+        margin: 0;
+      }
+      
+      .saldo-fondo {
+        font: 1.125rem var(--fonts-weight-bold);
+        color: var(--colors-rojo-habitat);
+      }
+
+      .saldo-info {
+        font: 1rem  var(--fonts-weight-regular);
+      }
+
+      .saldo-derecha {
+        text-align: right;
+      }
+
+      .fondo {
+        display: flex;
+        align-items: center;
+
+        section {
+          width: 100%;
+        }
+        
+        .info-fondo {
+          font: 0.625rem  var(--fonts-weight-bold);
+          margin-bottom: 5px;
+          text-align: center;
+        }
+  
+        .letra-fondo {
+          @include tipoFondo();
+          height: 1.938rem;
+          width: 1.938rem;
+          margin: 0 auto;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,30 @@
+:host {
+  .empleadores {
+    padding: 1.625rem;
+    padding-bottom: 0;
+    
+    .empleadores-titulo {
+      font: 1.5rem var(--fonts-weight-medium);
+      margin: 1.875rem 0.875rem;
+      color: var(--colors-gris-oscuro);
+    }
+
+    .texto_titulo {
+      font: 1rem var(--fonts-weight-bold);
+    }
+
+    .texto_regular {
+      font: 1rem var(--fonts-weight-regular);
+      margin-top: 0.313rem;
+      margin-bottom: 1.25rem;
+
+      &.ultimo-texto {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  ion-grid, ion-col {
+    padding: 0;
+  }
+}

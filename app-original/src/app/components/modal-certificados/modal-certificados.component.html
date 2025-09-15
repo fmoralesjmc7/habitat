@@ -1,0 +1,32 @@
+<section class="modal-certificados modal">
+    <article class="modal_cnt">
+        <ion-icon class="icon_close icon-cerrar" (click)="cerrarModal()"></ion-icon>
+        <ion-card class="modal">
+            <ion-card-header class="header">
+                <ion-row>
+                    <ion-col size="12" class="image_col">
+                        {{datosModal.icono}}
+                        <ion-icon class="icono {{datosModal.icono ? datosModal.icono : 'icon-lista'}}"></ion-icon>
+                    </ion-col>
+                    <ion-col size="12">
+                        <h3 class="body-title">
+                            Certificado de {{datosModal.titulo}}
+                        </h3>
+                    </ion-col>
+                </ion-row>
+            </ion-card-header>
+            <ion-card-content class="body">
+                <p class="body-text">
+                    {{datosModal.texto}}
+                </p>
+                <button class="body-btn boton-modal primario" *ngIf="datosModal.botonPrimario" (click)="solicitarCertificado()">
+                    {{datosModal.botonPrimario}}
+                </button>
+
+                <button class="body-btn boton-modal secundario" *ngIf="datosModal.botonSecundario" (click)="cerrarModal()">
+                    {{datosModal.botonSecundario}}
+                </button>
+            </ion-card-content>
+        </ion-card>
+    </article>
+</section>

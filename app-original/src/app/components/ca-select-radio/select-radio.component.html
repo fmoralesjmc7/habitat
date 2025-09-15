@@ -1,0 +1,14 @@
+<ion-list>
+  <ion-radio-group [(ngModel)]="value">
+    <h1>{{ data.title }}</h1>
+    <ion-item *ngFor="let element of data.list">
+      <ion-label *ngIf="data.type === 'fund'" [ngClass]="{'color-selected': value === element}">
+        Fondo {{ element }}
+      </ion-label>
+      <ion-label *ngIf="data.type === 'period'" [ngClass]="{'color-selected': value === element.toString() }">
+        {{ element === 15 ? 'Histórico' : element === 1 ? 'Últimos 12 meses' : 'Últimos ' + element + ' años' }}
+      </ion-label>
+      <ion-radio mode="md" slot="end" (click)="emitValue(element)" value="{{ element }}"></ion-radio>
+    </ion-item>
+  </ion-radio-group>
+</ion-list>

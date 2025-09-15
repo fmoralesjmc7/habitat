@@ -1,0 +1,81 @@
+<app-header></app-header>
+
+<ion-content class="contenido">
+    <h2 class="titulo">Cuentas Vigentes</h2>
+    <ion-card class="card_expandible" (click)="expandirComprimirItem(plan)" *ngFor="let plan of planesAmostrar">
+        <ion-card-header class="header_expandible">
+            <ion-item lines="none" class="option">
+                <h3 class="option-title texto_bold">{{plan.tipo  + " #" + plan.id + " - " + plan.nombre | formatoMayusculas}}</h3>
+                <ion-icon class="option-icon icon-arrow-down" [ngClass]="{'open': plan.expandible}"></ion-icon>
+            </ion-item>
+        </ion-card-header>
+
+        <ion-card-content class="contenido_expandible">
+            <app-expandable expandHeight="300px" [expanded]="plan.expandible">
+                <ion-grid class="grid_expandible">
+                    <ion-row>
+                        <ion-col size="6" class="col_expandible titulo_col texto_bold">
+                            Ahorro Mensual
+                        </ion-col>
+                        <ion-col size="6" class="col_expandible texto_col texto_bold">
+                            $ {{plan.ahorro | number:'1.0-0'}}
+                        </ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col size="6" class="col_expandible titulo_col">
+                            Fecha de inicio
+                        </ion-col>
+                        <ion-col size="6" class="col_expandible texto_col text-capitalize">
+                            {{plan.fechaInicio! | date: 'MMMM yyyy'}}
+                        </ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col size="6" class="col_expandible titulo_col">
+                            Fondo destino
+                        </ion-col>
+                        <ion-col size="6" class="col_expandible texto_col">
+                            <div class="bill"
+                                 [ngClass]="{'letter--red': plan.fondoDestino === '1', 'letter--orange': plan.fondoDestino === '2', 'letter--green': plan.fondoDestino === '3', 'letter--cyan': plan.fondoDestino === '4', 'letter--blue': plan.fondoDestino === '5'}">
+                                    <span class="value">
+                                        {{ plan.fondoDestino === '1' ? 'A': plan.fondoDestino === '2' ? 'B' : plan.fondoDestino === '3' ? 'C' : plan.fondoDestino === '4' ? 'D' : 'E' }}
+                                    </span>
+                            </div>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col size="6" class="col_expandible titulo_col">
+                            Empleador
+                        </ion-col>
+                        <ion-col size="6" class="col_expandible texto_col">
+                            <p class="texto_regular">{{plan.empleador.nombre}}</p>
+                            <p class="texto_regular">{{plan.empleador.rut}}</p>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col size="6" class="col_expandible titulo_col">
+                            Fecha de término
+                        </ion-col>
+                        <ion-col size="6" class="col_expandible texto_col text-capitalize">
+                            {{plan.indefinido ? 'Indefinido' : (plan.fechaTermino! | date: 'MMMM yyyy')}}
+                        </ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col size="6" class="col_expandible titulo_col2">
+                            Régimen Tributario
+                        </ion-col>
+                        <ion-col size="6" class="col_expandible">
+                            {{buscarRegimen(plan.regimen)}}
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
+            </app-expandable>
+        </ion-card-content>
+    </ion-card>
+</ion-content>
+
+<ion-footer>
+    <article class="cnt_button">
+        <button class="cnt_button-download" (click)="continuar()">Contratar Plan de Ahorro</button>
+        <button class="cnt_button-back" (click)="volverAlHome()">Ir al Home</button>
+    </article>
+</ion-footer>

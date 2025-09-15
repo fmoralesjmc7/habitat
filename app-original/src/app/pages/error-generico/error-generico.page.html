@@ -1,0 +1,36 @@
+<app-header (clickBackButton)="volverAtras()"></app-header>
+
+<ion-content>
+    <section class="grilla-error">
+        <ion-grid class="contenedor-error">
+            <ion-row class="columna-error">
+                <ion-col>
+                    <h1>¡Lo sentimos! <br> Ha ocurrido un error.</h1>
+                    <img alt="" src="./assets/imgs/error-img.gif?{{uuidGif}}">
+                    <p>¡No te preocupes! <br> Inténtalo nuevamente.</p>
+                    <button (click)="volverAlHome()">Volver al home</button>
+                </ion-col>
+            </ion-row>
+
+            <ion-row class="columna-redes">
+                
+                <p class="bajada-redes">Contáctanos a través de nuestros <br> canales de atención:</p>
+                
+                <section class="redes-sociales">
+                    <span (click)="abrirPageRRSS('twitter')" class="red-social">
+                        <img src="./assets/icon/redes/twitter.svg" alt="">
+                    </span>
+                    <span (click)="abrirPageRRSS('facebook')" class="red-social">
+                        <img src="./assets/icon/redes/facebook.svg" alt="">
+                    </span>
+                    <span (click)="abrirPageRRSS('linkedin')" class="red-social">
+                        <img src="./assets/icon/redes/linkedin.svg" alt="">
+                    </span>
+                    <span (click)="abrirPageRRSS('instagram')" class="red-social">
+                        <img src="./assets/icon/redes/instagram.svg" alt="">
+                    </span>
+                </section>
+            </ion-row>
+        </ion-grid>
+    </section>
+</ion-content>

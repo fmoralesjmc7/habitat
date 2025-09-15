@@ -1,0 +1,95 @@
+<ion-header class="header_app">
+    <ion-toolbar class="navbar">
+        <ion-buttons slot="start" class="nav-button button-left" (click)="backButton()">
+            <ion-icon class="btn-icon icon-back" name="icon-menu-hamb"></ion-icon>
+        </ion-buttons>
+        <figure class="logo">
+            <img alt="" class="logo-img" src="./assets/imgs/nuevo_logo_header.png">
+        </figure>
+        <ion-buttons slot="primary" class="nav-button button-right" (click)="toggleMenu()">
+            <ion-icon class="btn-icon icon-menu-hamb" name="icon-menu-hamb"></ion-icon>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content class="home_page">
+  <section class="home_content">
+    <ion-card class="home_content-card" >
+
+          <ion-grid>
+             <ion-row>
+               <ion-col size="12" class="text-item">
+
+                 <ul class="text">
+                   <li class="text-title"> Tu pensión estimada es de</li>
+                 </ul>  
+
+                 <ul class="text-saldo">
+                   <li class="text-saldo-item">{{ nuevoRetiroProgramado | formatoPesoChileno }}</li>
+                 </ul>    
+
+                 <ul class="text">
+                  <li class="text-item">Ahorra desde hoy en un <strong class="rojo">APV</strong> mensual y mejora tu pensión</li>
+                </ul>
+
+                <ul class="text">
+                  <li class="text-item-simulador_apv">
+                    <ion-range class="rango_apv" min="0" max="{{ rangoMaximo }}" step="5000" [(ngModel)]="cantidadUF" debounce="500" pin (ionChange)="cambioAhorro();">
+                    </ion-range>
+                  </li>
+                  <div class="rango">
+                    <span>$ 0</span>
+                    <span>{{ rangoMaximo| formatoPesoChileno }}</span>
+                  </div>
+                </ul>    
+
+                <ul class="text">
+                  <li class="text-info"> <p *ngIf="muestraTexto">
+                    Con un APV de <strong class="celeste">{{ calculoPesos | formatoPesoChileno }}</strong>, incrementas tu pensión en
+                    <strong class="rojo">{{ incrementoPension | formatoPesoChileno }}</strong>,
+                    lo que significa un aumento del <strong class="rojo">{{ incrementoPorcentaje | formatoPorcentaje }}%</strong>
+                  </p></li>
+                </ul>  
+
+                <ul class="text">
+                  <li class="text-legal" *ngIf="truncarTexto == true"> 
+                    <div class="text-legal-circle"></div>
+                    Los saldos de su Cuenta Obligatoria informada se proyectan de acuerdo al valor del Fondo C, que define la Superintendencia...
+                    <button class="information-btn" (click)="moreMethod()">
+                      Legal 
+                      <ion-icon class="icon icon-arrow-down" name="icon-arrow-down"></ion-icon>
+                    </button>
+                  </li>
+
+                  <li class="text-legal" *ngIf="truncarTexto == false"> 
+                    <div class="text-legal-circle"></div>
+                    Los saldos de su Cuenta Obligatoria informada se proyectan de acuerdo al valor del Fondo C, que define la Superintendencia de Pensiones en las tasas de rentabilidad (Fondo C: 5,42%). No se consideran saldos en cuentas voluntarias.
+                    <br><br><div class="text-legal-circle"></div>
+                    Los resultados presentados en la estimación realizada pueden variar y, por lo tanto, no constituyen derecho alguno.
+                    <br><br><div class="text-legal-circle"></div>
+                    Se considera como Beneficiarios a un cónyuge femenino 2 años menor y 2 años mayor si el cónyuge es masculino. No se consideran hijos.
+                    <br><br><div class="text-legal-circle"></div>
+                    La proyección se realiza hasta la edad legal de pensión, es decir, hasta los 60 años en el caso de mujeres y 65 años para hombres.
+                    <br><br><div class="text-legal-circle"></div>
+                    El monto de ahorro de un Plan APV se aplica desde el mes siguiente de la fecha de realizada la simulación hasta la edad legal de pensión.
+                    <br><br><div class="text-legal-circle"></div>
+                    La presente simulación proyectada se realiza de acuerdo a la opción Renta Vitalicia.
+                    <br><br><div class="text-legal-circle"></div>
+                    La presente simulación supone que continúas cotizando en la Cuenta de Cotizaciones Obligatorias el 10% de la remuneración informada, hasta la edad de pensión.
+              
+                    <button class="information-btn" (click)="lessMethod()">
+                      Legal
+                      <ion-icon class="icon icon-arrow-down open" name="icon-arrow-down"></ion-icon>
+                    </button>
+                  </li>
+                </ul>  
+               </ion-col>
+            </ion-row>
+          </ion-grid>
+          <button class="cnt_rrss-btn" (click)="abrirContratarAPV();">Contratar APV</button>
+          <button class="cnt_rrss-btn" (click)="abrirCambiateHabitat();">Cámbiate a Habitat</button>
+    
+    
+   </ion-card>
+ </section>
+</ion-content>

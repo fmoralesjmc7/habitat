@@ -1,0 +1,37 @@
+<app-header [showBackButton]="false"></app-header>
+
+<ion-content class="content_page">
+  <section class="container">
+    <app-step-items [active]="3"></app-step-items>
+
+    <section class="content">
+      <div class="content-icon">
+        <ion-icon class="icon-exito"></ion-icon>
+      </div>
+      <h2 class="content-title" *ngIf="productosClientesModificados.length < 2">
+        ¡Tu Solicitud ha sido realizada con éxito!
+      </h2>
+      <h2 class="content-title" *ngIf="productosClientesModificados.length > 1">
+        ¡Tus Solicitudes han sido realizadas con éxito!
+      </h2>
+      <p class="content-text">
+				<span *ngIf="productosClientesModificados.length == 1">
+					La solicitud <span class="bold">nº {{ numeroFolio }}</span> se materializará
+				</span>
+        <span *ngIf="productosClientesModificados.length != 1">
+					Las solicitudes
+					<span class="bold">nº {{ numeroFolio }}</span>
+					se materializarán
+				</span>
+        al cuarto día hábil siguiente de la fecha de suscripción.
+      </p>
+      <p class="content-text" *ngIf="envioDeCorreoExitoso && email">
+        Hemos enviado el comprobante a tu Email <span class="email">{{ email }}</span>
+      </p>
+    </section>
+    <section class="cnt_button">
+      <button class="cnt_button-download" (click)="descargarPdf()">Descargar</button>
+      <button class="cnt_button-back" (click)="volverAlHome()">Ir al Home</button>
+    </section>
+  </section><!-- container -->
+</ion-content>

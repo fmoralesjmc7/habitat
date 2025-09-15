@@ -1,0 +1,52 @@
+<app-header [titulo]="producto.nombreCortoProducto"></app-header>
+
+<ion-content class="home_page">
+  <section class="detalle-cuenta">
+
+    <h1 class="detalle-cuenta-titulo">Total ahorrado hasta la fecha</h1>
+    <p class="detalle-cuenta-saldo">{{ producto.saldoTotal | chileanCurrency }}</p>
+
+    <ion-card class="detalle-fondo" *ngFor="let fondo of producto.fondos">
+      <ion-grid>
+        <ion-row>
+          <ion-col size="2" class="fondo">
+            <section>
+              <p class="info-fondo">Fondo</p>
+              <div class="letra-fondo" [ngClass]="{'letter--red': fondo.nombreFondo === 'A', 'letter--orange': fondo.nombreFondo === 'B', 'letter--green': fondo.nombreFondo === 'C', 'letter--cyan': fondo.nombreFondo === 'D', 'letter--blue': fondo.nombreFondo === 'E'}">
+                <span class="value">
+                  {{ fondo.nombreFondo }}
+                </span>
+              </div>
+            </section>
+          </ion-col>
+          <ion-col size="9" offset="1">
+            <ion-row>
+              <ion-col size="5">
+                <p class="saldo-fondo">Saldo</p>
+              </ion-col>
+              <ion-col class="saldo-derecha">
+                <p class="saldo-fondo">{{ fondo.saldo | chileanCurrency }}</p>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col size="6">
+                <p class="saldo-info">N° Cuota:</p>
+              </ion-col>
+              <ion-col class="saldo-derecha">
+                <p class="saldo-info">{{ fondo.numeroCuotas | number:'1.1-2':'es-CL' }}</p>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col size="6">
+                <p class="saldo-info">Valor Cuota</p>
+              </ion-col>
+              <ion-col class="saldo-derecha">
+                <p class="saldo-info">{{ fondo.valorCuota | formatoPesoChileno }}</p>
+              </ion-col>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card>
+  </section>
+</ion-content>

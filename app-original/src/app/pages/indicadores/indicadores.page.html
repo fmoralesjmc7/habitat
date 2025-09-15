@@ -1,0 +1,13 @@
+<app-header></app-header>
+
+<ion-content class="content_page">
+	<article class="cnt_rrss">
+		<ion-title class="cnt_rrss-title" >Indicadores Económicos</ion-title>
+		<ion-list lines="none"  class="list">
+			<ion-item class="list-item" *ngFor="let registro of valores;" >
+				<a class="link">Valor {{ registro.nombre }}</a>
+        <span class="value">{{ registro.valor | formatoPesoChileno }}</span>
+			</ion-item>
+		</ion-list>
+	</article>
+</ion-content>

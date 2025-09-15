@@ -1,0 +1,41 @@
+@import '../../../theme/mixins';
+
+:host {
+
+  .steps {
+    @include steps();
+
+    .cnt_print {
+      border-radius: 50%;
+      font: .875rem var(--fonts-weight-bold);
+      color: var(--colors-blanco);
+      width: 2.5rem;
+      height: 2.5rem;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      text-align: center;
+      justify-content: center;
+      background: var(--colors-gris-semi-claro);
+      z-index: 100;
+    }
+
+    .active {
+      background: var(--colors-celeste) !important;
+    }
+
+    .first {
+      margin-left: 0px;
+    }
+
+    .last {
+      margin-right: 0px;
+    }
+
+    .between {
+      border: 3px dotted #0099CC;
+      margin-left: 10px;
+      margin-right: 10px;
+    }
+  }
+}

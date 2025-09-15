@@ -1,0 +1,117 @@
+@import '../../../../theme/mixins';
+
+:host {
+
+  .titulo {
+    @include title();
+    color: var(--colors-gris-oscuro);
+    width: 100%;
+    padding-top: 30px;
+  }
+
+  .contenido_expandible {
+    padding: 0px;
+  }
+
+  .header_expandible {
+    background-color: var(--colors-celeste);
+    color: var(--colors-blanco);
+    padding: 5px 10px 10px 10px;
+  }
+
+  .button-right {
+    right: 0;
+  }
+
+  .titulo_col {
+    background-color: var(--colors-light);
+    border-bottom: 1px solid var(--colors-blanco);
+  }
+
+  .texto_bold {
+    font: 1rem var(--fonts-weight-bold) !important;
+  }
+
+  .texto_regular {
+    font: 1rem var(--fonts-weight-regular) !important;
+  }
+
+  .col_expandible {
+    padding-left: 20px;
+    font: 1rem var(--fonts-weight-regular);
+  }
+
+  .titulo_col2 {
+    background-color: var(--colors-light);
+    border-bottom: 1px solid var(--colors-light);
+  }
+
+  .texto_col {
+    border-bottom: 1px solid var(--colors-light);
+    &-primero {
+      font: 1rem var(--fonts-weight-bold);
+    }
+  }
+
+  .grid_expandible {
+    padding: 2px 0px 0px 0px;
+  }
+
+  .cnt_button {
+    margin: 30px 20px 15px 15px;
+
+    &-download {
+      @include btn-general;
+      margin-bottom: 10px;
+    }
+
+    &-back {
+      @include btn-general;
+      background: var(--colors-blanco);
+      color: var(--colors-azul-oscuro);
+      border: 1px solid var(--colors-azul-oscuro);
+    }
+  }
+
+  .option {
+    height: 2.2rem;
+    padding: 0;
+    display: block;
+
+    margin: 0 0 0 -10px;
+    --border-radius: 3px;
+    transition: .3s ease all;
+    --background: var(--colors-celeste);
+
+    &-title {
+      color: var(--colors-blanco);
+      width: 100%;
+      margin-top: 0px;
+      font: 1rem var(--fonts-weight-regular);
+    }
+
+    &-icon {
+      color: var(--colors-blanco);
+      font-size: 1.2rem;
+      margin-bottom: 0.7rem;
+      padding-right: 5px;
+    }
+
+    .open{
+      transform: rotate(180deg);
+    }
+  }
+
+  .bill {
+    @include tipoFondo();
+    margin-left: 0px;
+    height: 22px;
+    width: 22px;
+  }
+
+  .card_expandible{
+    margin-top: 20px;
+    margin-bottom: 0px;
+    border-radius: 5px;
+  }
+}

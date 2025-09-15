@@ -1,0 +1,126 @@
+@import '../../../theme/mixins';
+
+:host {
+  .content_page {
+    .item-inner {
+      border-bottom: 0px !important;
+    }
+
+    .scroll-content {
+      padding: 40px 0 0;
+      overflow-y: hidden;
+    }
+
+    .cnt_rrss {
+      width: 90%;
+      padding-top: 40px;
+      margin: 0 auto;
+
+      .icon{
+        &-backgrond{
+          background-color: var(--colors-celeste);
+          width: 6rem;
+          height: 6rem;
+          margin: auto;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        &-conversacion{
+          font-size: 3.5rem;
+          color: var(--colors-blanco);      
+          margin: 0 auto;
+        }
+      }
+    
+      &-title {
+        @include title();
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+        width: 100%;
+        font: 1.3rem var(--fonts-weight-bold);
+
+        .toolbar-title {
+          @include title();
+          --padding: 0;
+        }
+      }
+
+      &-subtitle {
+        font: 1rem var(--fonts-weight-regular);
+        color: var(--colors-gris-oscuro);
+        margin: 1.25rem 0 0;
+        text-align: center;
+      }
+      &-text {
+        font: 1rem var(--fonts-weight-regular);
+        color: var(--colors-gris-oscuro);
+        margin: 3.25rem 0 0;
+        text-align: center;
+      }
+
+      .list_item{
+        border: none;
+        border-radius: 4px;
+        background: var(--colors-light);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 40px auto 0;
+        padding: 0 10px;
+        .item-inner{
+            .input-wrapper{
+                .label{
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    margin: 0;
+                    padding: 12px 10px;
+                }
+            }
+        }
+        &-link{
+            color: var(--colors-gris-oscuro);
+            font-size: 16px;
+
+        }
+        &-back{
+          background:  var(--colors-rojo-habitat);
+          width: 30px;
+          height: 30px;
+          border-radius: 50%;
+     
+          &-icon{
+            color: var(--colors-blanco);     
+            margin-left: 25%;
+            margin-top: 22%;
+        }
+      }
+    
+    }
+
+      &-btn {
+        @include btn-general();
+
+        margin: 25% 0 0;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 359px) {
+  .ios, .md {
+    page-contacto {
+      .content {
+        .cnt_rrss {
+          .list {
+            margin: 2.25rem 0 4rem;
+          }
+
+          //list-link
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,60 @@
+<app-header [titulo]="producto.nombreCortoProducto"></app-header>
+
+<ion-content class="home_page">
+  <section class="detalle-cuenta">
+
+    <h1 class="detalle-cuenta-titulo">Total ahorrado hasta la fecha</h1>
+    <p class="detalle-cuenta-saldo">{{ producto.saldoTotal | chileanCurrency }}</p>
+
+	<section *ngFor="let regimen of listResumenCuenta">
+		<ion-card class="detalle-regimenes">
+		  <ion-grid>
+			<ion-row class="detalle-titulo">
+				<p> Régimen Tributario: {{ regimen.titulo | formatoMayusculas }}</p>
+			</ion-row>
+			<ion-row class="detalle-contenido" *ngFor="let datos of regimen.cuentas">
+			  <ion-col size="2" class="fondo">
+				<section>
+					<p class="info-fondo">Fondo</p>
+					<div class="letra-fondo" [ngClass]="{'letter--red': datos.fondo === 'A', 'letter--orange': datos.fondo === 'B', 'letter--green': datos.fondo === 'C', 'letter--cyan': datos.fondo === 'D', 'letter--blue': datos.fondo === 'E'}">
+					  <span class="value">
+						{{ datos.fondo }}
+					  </span>
+					</div>
+				</section>
+			  </ion-col>
+			  <ion-col size="9" offset="1">
+				<ion-row>
+				  <ion-col size="5">
+					<p class="saldo-fondo">Saldo</p>
+				  </ion-col>
+				  <ion-col class="saldo-derecha">
+					<p class="saldo-fondo">{{ datos.saldo | chileanCurrency }}</p>
+				  </ion-col>
+				</ion-row>
+				<ion-row>
+				  <ion-col size="6">
+					<p class="saldo-info">N° Cuota:</p>
+				  </ion-col>
+				  <ion-col class="saldo-derecha">
+					<p class="saldo-info">{{ datos.nroCuota | number:'1.1-2':'es-CL' }}</p>
+				  </ion-col>
+				</ion-row>
+				<ion-row>
+				  <ion-col size="6">
+					<p class="saldo-info">Valor Cuota</p>
+				  </ion-col>
+				  <ion-col class="saldo-derecha">
+					<p class="saldo-info">{{ datos.valorCuota | formatoPesoChileno }}</p>
+				  </ion-col>
+				</ion-row>
+			  </ion-col>
+			</ion-row>
+			<ion-row class="detalle-total">
+				<p> Total: {{ regimen.totalMonto | formatoPesoChileno }}</p>
+			</ion-row>
+		  </ion-grid>
+		</ion-card>
+	</section>
+  </section>
+</ion-content>

@@ -1,0 +1,10 @@
+<app-header [titulo]="CONSTANTES.TITULO_HEADER_CERTIFICADOS" (clickBackButton)="volverAlHome()"></app-header>
+
+<ion-content class="content_page" forceOverscroll=false>
+    <section>
+        <certificados-listado-certificados *ngIf="listaTipoCertificado.length > 0" [listaTipoCertificado]="listaTipoCertificado" (selectCertificado)="seleccionaCertificado($event)"></certificados-listado-certificados>
+    </section>
+
+</ion-content>
+
+<app-modal-certificados *ngIf="verModalCertificado" [datosModal]="modalData" (envioCerrarModal)="cerrarModal()"></app-modal-certificados>

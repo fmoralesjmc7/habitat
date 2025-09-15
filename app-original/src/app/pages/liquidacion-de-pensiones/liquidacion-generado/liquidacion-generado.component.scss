@@ -1,0 +1,101 @@
+@import '../../../../theme/mixins';
+//section_content
+.success {
+  display: block;
+  width: 90%;
+  padding-top: 40px;
+  margin: 0 auto;
+
+  height: 70%;
+
+  .success_cnt {
+    height: 100%;
+
+    &-header {
+      &::after {
+        display: none;
+      }
+
+      .cnt_icon {
+        background: var(--colors-verde);
+        border-radius: 50%;
+        font-size: 3.125rem;
+        color: var(--colors-blanco);
+        width: 5rem;
+        height: 5rem;
+        margin: 0 auto;
+        margin-bottom: 2rem !important;
+        display: flex;
+        align-items: center;
+        text-align: center;
+        justify-content: center;
+
+      }
+    }
+
+    &-title {
+      @include title();
+      width: 85%;
+      text-align: center;
+      margin: 40px auto;
+    }
+
+    &-text {
+      font: 1rem var(--fonts-weight-regular);
+      width: 100%;
+      text-align: center;
+      margin: 0 0 24px;
+      color: var(--colors-gris-oscuro);
+
+      &:last-of-type {
+        margin: 0;
+      }
+
+      .bold {
+        font: 1rem var(--fonts-weight-medium);
+        text-transform: lowercase;
+      }
+    }
+  }
+
+  //succes_cnt
+  .cnt_btn {
+    margin: 2rem auto 2.5rem auto;
+
+    &-button {
+      @include btn-general();
+      margin: 0;
+
+      &:first-of-type {
+        margin: 0 0 15px;
+      }
+
+      &:nth-of-type(2) {
+        color: var(--colors-azul-oscuro);
+        background-color: var(--colors-blanco);
+        border: 1px solid var(--colors-azul-oscuro);
+      }
+    }
+  }
+}
+
+.botonera {
+  padding-top: 1.938rem;
+  .buttons-btn {
+      @include btn-general();
+      border-radius: 50px;
+      font-size: 1.125rem;
+      margin-bottom: 0.938rem;
+      background-color: var(--colors-blanco);
+      color: var(--color-celeste-button);
+      border: solid;
+      border-color:var(--color-celeste-button);
+      padding: 1.094rem 0;
+
+      &.btn-guardar {
+          background-color: var(--colors-rojo-oscuro);
+          border-color: var(--colors-rojo-oscuro);
+          color: var(--colors-blanco);
+      }
+  }
+}

@@ -1,0 +1,115 @@
+@import "../../../../theme/mixins";
+
+.rojo-habitat {
+  color: var(--colors-rojo-habitat);
+}
+
+:host {
+  .desuscripcion {
+    &-subtitle {
+      font: 0.875rem var(--fonts-weight-regular);
+      color: var(--colors-gris-oscuro);
+      margin: 1.25rem 0 0;
+      text-align: center;
+  
+      &:last-of-type {
+        margin-bottom: 20px; // Ajusta este valor según sea necesario
+      }
+    }
+  
+    .form {
+      &-btn {
+          @include btn-general();
+          border-radius: 50px;
+          font-size: 0.875rem;
+          margin-top: 1.875rem;
+          padding: 1rem;
+          &-huella {
+              vertical-align: bottom;
+              margin-left: 5px;
+              margin-bottom: 1px;
+          }
+  
+          &:disabled {
+              background-color: var(--color-gris-disabled);
+          }
+      }
+    }
+  }
+
+  .modal_confirmar_desuscripcion {
+    @include modal_gral();
+    .modal_cnt {
+      width: 85%;
+      max-width: 500px;
+      height: auto;
+      border-radius: 15px;
+      margin: 0 auto;
+      .icon_close {
+        position: absolute;
+        top: 9px;
+        left: 88%;
+        z-index: 10;
+        padding: 0.625rem;
+        font-size: 0.875rem;
+        color: var(--colors-celeste-link);
+      }
+      .modal {
+        padding: 1.25rem;
+        border-radius: 15px;
+        border-left: 5px solid;
+        border-color: var(--colors-celeste-link);
+  
+        .header {
+          margin: 18px auto 20px auto;
+          text-align: center;
+          font: 1.2rem var(--fonts-weight-bold);
+          color: var(--colors-azul-perfil);
+        }
+  
+        .body {
+          &-text {
+            font: .8rem var(--fonts-weight-medium);
+            margin-bottom: 1.6rem;
+          }
+          &-text-small {
+            font: .65rem var(--fonts-weight-medium);
+            margin-bottom: 1.6rem;
+          }
+          &-titulo {
+            font: 1.2rem var(--fonts-weight-bold);
+            margin-bottom: 1.6rem;
+          }
+          &-btn {
+            width: auto;
+            padding: 8px 18px;
+            border-radius: 50px;
+            background-color: var(--colors-blanco);
+            border: 1px solid;
+            border-color: var(--colors-celeste-link);
+            color: var(--color-celeste-button);
+          }
+  
+          .botonera-prudential {
+            margin-bottom: 1.6rem;
+            button {
+              width: 80%;
+              font-size: 1rem;
+              max-width: 350px;
+              margin: 0 auto;
+            }
+            .body-btn.btn-autorizar {
+              border-color: var(--colors-rojo-habitat);
+              background-color: var(--colors-rojo-habitat);
+              color: var(--colors-blanco);
+              margin-bottom: 10px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+
+

@@ -1,0 +1,92 @@
+@font-face {
+    font-family: 'icomoon';
+    src: url('/../assets/fonts/icomoon.eot?2vif1m');
+    src: url('/../assets/fonts/icomoon.eot?2vif1m#iefix') format('embedded-opentype'), url('/../assets/fonts/icomoon.ttf?2vif1m') format('truetype'), url('/../assets/fonts/icomoon.woff?2vif1m') format('woff'), url('/../assets/fonts/icomoon.svg?2vif1m#icomoon') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+[class^="icon-"],
+[class*=" icon-"] {
+    /* use !important to prevent issues with browser extensions that change fonts */
+    font-family: 'icomoon', sans-serif !important;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+@mixin makeIcon($arg,
+$val) {
+    .icon-#{$arg}:before,
+    .ion-ios-icon-#{$arg}:before,
+    .ion-ios-icon-#{$arg}-outline:before,
+    .ion-md-icon-#{$arg}:before,
+    .ion-md-icon-#{$arg}-outline:before {
+        content: $val;
+    }
+}
+
+@include makeIcon(fondos,"\e900");
+@include makeIcon(arrow-down,"\e901");
+@include makeIcon(back,"\e902");
+@include makeIcon(cerrar-sesion,"\e903");
+@include makeIcon(certificado,"\e904");
+@include makeIcon(configuracion,"\e905");
+@include makeIcon(calendario,"\e921");
+@include makeIcon(contacto,"\e906");
+@include makeIcon(deposito-directo,"\e907");
+@include makeIcon(plus,"\e908");
+@include makeIcon(cerrar,"\e909");
+@include makeIcon(editar,"\e90b");
+@include makeIcon(exito,"\e90c");
+@include makeIcon(home,"\e90d");
+@include makeIcon(indicadores,"\e90f");
+@include makeIcon(informacion,"\e910");
+@include makeIcon(menu,"\e911");
+@include makeIcon(pension,"\e912");
+@include makeIcon(preguntas-frecuentes,"\e913");
+@include makeIcon(simulador,"\e914");
+@include makeIcon(sucursales-relleno,"\e915");
+@include makeIcon(sucursales,"\e916");
+@include makeIcon(valor-cuota,"\e917");
+@include makeIcon(facebook,"\e90a");
+@include makeIcon(linkedin,"\e90e");
+@include makeIcon(twitter,"\e918");
+@include makeIcon(youtube,"\e919");
+@include makeIcon(error-generico,"\e91a");
+@include makeIcon(slide-1,"\e91b");
+@include makeIcon(slide-2,"\e91c");
+@include makeIcon(slide-3,"\e91d");
+@include makeIcon(slide-4,"\e91e");
+@include makeIcon(slide-5,"\e91f");
+@include makeIcon(slide-6,"\e920");
+@include makeIcon(conversacion,"\e922");
+@include makeIcon(habitat,"\e923");
+@include makeIcon(huella,"\e924");
+@include makeIcon(email,"\e925");
+@include makeIcon(usuario-linea,"\e926");
+@include makeIcon(centro-asesoria,"\e927");
+@include makeIcon(simulacion-pension,"\e928");
+@include makeIcon(contacto-home,"\e929");
+@include makeIcon(plan-icon,"\e92b");
+@include makeIcon(lista,"\e92c");
+@include makeIcon(check,"\e92d");
+@include makeIcon(notificacion,"\e92e");
+@include makeIcon(no-notification,"\e92f");
+@include makeIcon(ojo,"\e930");
+@include makeIcon(alerta,"\e933");
+@include makeIcon(menu-hamb,"\e931");
+@include makeIcon(datos-contacto,"\e932");
+@include makeIcon(datos-laborales,"\e934");
+@include makeIcon(datos-sociedades,"\e935");
+@include makeIcon(datos-bancarios,"\e936");
+@include makeIcon(liquidaciones,"\e93a");
+@include makeIcon(editar-lapiz,"\e937");
+@include makeIcon(politica-privacidad,"\e938");
+@include makeIcon(otras-suscripciones,"\e939");

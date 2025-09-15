@@ -1,0 +1,40 @@
+<div class="desuscripcion">
+    <p class="desuscripcion-subtitle">Actualmente tienes activada la consolidaci&oacute;n de saldos con <strong>Prudential AGF</strong>, que te
+        permite
+        visualizar en un solo lugar la informaci&oacute;n de tus ahorros e inversiones destinadas a tu
+        pensi&oacute;n.
+    </p>
+    <p class="desuscripcion-subtitle">Esta consolidaci&oacute;n solo considera una visualizaci&oacute;n de los ahorros desde la Sucursal Virtual de
+        AFP Habitat y en tu Habitat APP, no podr&aacute;s gestionar tus inversiones de <strong>Prudential AGF</strong>.</p>
+
+    <button class="form-btn" [disabled]="guardando" (click)="mostrarConfirmarDesuscripcion = true"> Desuscribir Consolidaci&oacute;n de Saldos Prudential AGF</button>
+</div>
+
+<section *ngIf="mostrarConfirmarDesuscripcion" class="modal_confirmar_desuscripcion">
+    <article class="modal_cnt">
+        <ion-icon class="icon-cerrar icon_close" (click)="mostrarConfirmarDesuscripcion = false"></ion-icon>
+        <ion-card class="modal">
+            <ion-card-header class="header">
+                Desuscribir Consolidaci&oacute;n de Saldos Prudential AGF
+            </ion-card-header>
+            <ion-card-content class="body">
+                <p class="body-text">
+                    Al solicitar la desuscripci&oacute;n de la consolidaci&oacute;n de saldos, Prudential AGF dejará de compartir tu informaci&oacute;n con AFP Habitat y, 
+                    por lo tanto, no podr&aacute;s ver tus saldos de Prudential en tu Sucursal Virtual de AFP Habitat ni en tu Habitat APP
+                </p>
+                <p class="body-titulo rojo-habitat">
+                    ¿Est&aacute;s seguro que deseas desuscribir?
+                </p>
+                <div class="botonera-prudential">
+                    <button class="body-btn btn-autorizar" (click)="guardarSuscripcion()">Aceptar</button>
+                    <button class="body-btn btn-cancelar" (click)="mostrarConfirmarDesuscripcion = false">Cancelar</button>
+                </div>
+            </ion-card-content>
+        </ion-card>
+    </article>
+</section>
+
+
+<ng-container *ngIf="modalExitoDesuscripcion">
+    <app-exito-desuscripcion (cerrarModal)="onCerrarModalExito()" ></app-exito-desuscripcion>
+</ng-container>

@@ -1,0 +1,220 @@
+@import "../../../../theme/mixins";
+
+:host {
+  .content_page {
+
+    .titulo {
+        font: 1.5rem var(--fonts-weight-medium);
+        margin: 0;
+        margin-bottom: 0.313rem;
+        color: var(--colors-gris-oscuro);
+
+        &.residencia {
+            margin-top: 1.875rem;
+        }
+    }
+
+    .datos {
+        &-obligatorios {
+            font-size: 0.875rem;
+            color: var(--colors-rojo-habitat);
+            margin-bottom: 1.25rem;
+        }
+
+        &-editar {
+            float: right;
+            .icon {
+                font-size: 0.75rem;
+                background-color: var(--colors-rojo-habitat-opacity30);
+                color: var(--colors-rojo-habitat);
+                padding: 0.5rem;
+                border-radius: 50%;
+                border: 1px solid var(--colors-rojo-habitat-opacity30);
+            }
+        }
+
+
+        &-contacto {
+            padding: 1.25rem;
+            padding-bottom: 2.5rem;
+            margin: 1.625rem;
+            margin-bottom: 0;
+        }
+
+        &-sin-residencia {
+            padding-bottom: 1.25rem;
+        }
+
+        &-formulario {
+            .label {
+                font: 0.875rem var(--fonts-weight-medium);
+                color: var(--color-gris-disabled);
+                margin-top: 1.875rem;
+                margin-bottom: 0.313rem;
+
+                &.primero {
+                    margin-top: 1.25rem;
+                }
+
+                span {
+                    color: var(--colors-rojo-habitat);
+                }
+            }
+
+            .dato {
+                font: 1rem var(--fonts-weight-medium);
+                color: var(--colors-gris-oscuro);
+                margin: 0;
+            }
+
+            .suscripcion {
+                margin: 1.25rem 0;
+                color: var(--colors-gris-oscuro);
+                font: 1rem var(--fonts-weight-medium);
+            }
+
+            .checkbox {
+                display: flex;
+
+                &-custom {
+                    --background-checked: var(--colors-blanco);
+                    --border-color-checked: var(--colors-gris-suave);
+                    --checkmark-color: var(--colors-gris-suave); 
+                    &.check_enabled {
+                        --border-color-checked: var(--color-azul-checked);
+                        --checkmark-color: var(--color-azul-checked);
+                    }
+                }
+
+                span {
+                    padding-left: 0.938rem;
+                    line-height: 1.5;
+                }
+            }
+
+            .contenedor-radio {
+                margin-top: 1.25rem;
+                .residencia {
+                    .radio-custom {
+                        --color	: var(--colors-gris-suave);
+                        --color-checked: var(--colors-gris-suave);
+                        &.radio_enabled {
+                            --color-checked: var(--color-azul-checked);
+                            --color: var(--color-azul-checked);
+                        }    
+                    }
+    
+                    span {
+                        vertical-align: middle;
+                        line-height: 1.5;
+                    }
+                }
+            }
+
+            &.edicion {
+                .borde-input {
+                    border-bottom: 1px solid;
+                    border-color: var(--color-gris-borde);
+                    --padding-bottom: 5px;
+                    --padding-top: 5px;
+                    --padding-start: 0 !important;
+                    --placeholder-font-style: italic;
+                    font-size: 1rem;
+
+                    &.separacion {
+                        margin-left: 1.25rem;
+                    }
+
+                    &.padding-start {
+                        --padding-start: 5px !important;
+                    }
+
+                    &::part(placeholder) {
+                        font-style: italic;
+                    }
+                }
+
+                .prefijo {
+                    display: flex;
+                    flex-wrap: wrap;
+                    span {
+                        margin-top: auto;
+                        margin-bottom: auto;
+                    }
+                }
+
+                .informacion {
+                    background-color: var(--color-celeste-info-fondo);
+                    border: 1px solid var(--colors-celeste-link);
+                    border-radius: 15px;
+                    margin-top: 1.25rem;
+                    padding: 20px;
+                    font-size: 0.875rem;
+
+                    .icon {
+                        &.icon-alerta {
+                          color: var(--colors-celeste-link);
+                          font-size: 1.75rem;
+                          border-radius: 50%;
+                          border: 2px solid var(--colors-celeste-link);
+
+                          &::before {
+                            content: "¡";
+                            font-family: var(--fonts-weight-bold);
+                            display: flex;
+                            justify-content: space-around;
+                            font-size: 1.4rem;
+                          }
+                        }
+                    }
+
+                    .texto_container {
+                        margin-left: 1.125rem;
+
+                        .texto_info {
+                            color: var(--colors-celeste-link);
+                            font: 1rem var(--fonts-weight-regular);
+
+                            &.bold {
+                                color: var(--colors-celeste-link);
+                                font: 1rem var(--fonts-weight-bold);
+                            }
+                        }
+                    }
+                }
+            }
+
+        }
+    }
+  }
+
+  .rojo {
+      border-color: var(--colors-rojo-oscuro) !important;
+      color: var(--colors-rojo-oscuro) !important;
+  }
+
+  .botonera {
+    padding: 1.875rem;
+    .buttons-btn {
+        @include btn-general();
+        border-radius: 50px;
+        font-size: 1.125rem;
+        margin-bottom: 0.938rem;
+        background-color: var(--colors-blanco);
+        color: var(--color-celeste-button);
+        border: solid;
+        border-color:var(--color-celeste-button);
+        padding: 1.094rem 0;
+
+        &.btn-guardar {
+            background-color: var(--colors-rojo-oscuro);
+            border-color: var(--colors-rojo-oscuro);
+            color: var(--colors-blanco);
+        }
+    }
+  }
+
+  ion-grid, ion-col {
+    padding: 0;
+  }
+}

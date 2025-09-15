@@ -1,0 +1,72 @@
+<app-header></app-header>
+
+<ion-content class="content_page" [ngClass]="{'no_scroll': infoServSucursalIsOpen}">
+    <capacitor-google-map id="map" #map *ngIf="gmsAvailable"></capacitor-google-map>
+    <section class="contenido" [ngClass]="{'gmsDisabled': !gmsAvailable }">
+        <ion-card class="card_sucursal" [ngClass]="{'seleted': sucursalSelected.nombre == sucursal.nombre }" *ngFor="let sucursal of sucursalPorRegion">
+            <ion-card-header class="card_header" (click)="showMap(sucursal)">
+                <ion-icon class="card_header-icon icon-sucursales-relleno"></ion-icon> 
+                <div class="detalle">
+                    <p class="detalle-comuna" [innerHtml]="sucursal.comuna"></p>
+                    <p class="detalle-direccion">{{ sucursal.direccion }}</p>
+                </div>
+
+            </ion-card-header>
+            <ion-card-content class="card_content">
+                <div class="card_content-info" [innerHtml]="sucursal.descripccion"></div>
+                <div class="link">
+                    <a class="link-detalle" (click)="showServicios(sucursal.servicios)">Trámites que puedo realizar ></a>
+                </div>
+            </ion-card-content>
+        </ion-card>
+        <ion-card class="card_busqueda" [ngClass]="{'card_busqueda--margin': infoServSucursalIsOpen}">
+            <ion-card-header class="titulo">
+                Busca Sucursales por Zona
+            </ion-card-header>
+            <ion-card-content class="card_content">
+                <h3 class="card_content-text">Sucursales por Zona</h3> 
+                <section class="box_zonas">
+                    <article class="box_zonas-item" [ngClass]="{'box_seleted--active': zonaSeleted == 'N'}" (click)="seleccionZona('N')">
+                        Norte
+                    </article>
+                    <div class="box_zonas-separator"></div>
+                    <article class="box_zonas-item" [ngClass]="{'box_seleted--active': zonaSeleted == 'C'}" (click)="seleccionZona('C')">
+                        Centro
+                    </article>
+                    <div class="box_zonas-separator"></div>
+                    <article class="box_zonas-item" [ngClass]="{'box_seleted--active': zonaSeleted == 'S'}" (click)="seleccionZona('S')">
+                        Sur
+                    </article>
+                </section>
+                <section class="box_options" *ngIf="regiones">
+                    <h3 class="box_options-text">Sucursales por Región</h3>
+                    <article class="item_regiones">
+                        <ion-select class="item_regiones-select" placeholder="Selecciona Región" [interfaceOptions]="selectOptionsRegiones"
+                            (ionChange)="onChangeRegiones($event)" okText="ACEPTAR" cancelText="CANCELAR"
+                            (ionDismiss)="eventoEliminaMapa()">
+                            <ion-select-option *ngFor="let region of regiones" [value]="region.id">{{ region.nombre }}</ion-select-option>
+                        </ion-select>
+                    </article>
+                </section>
+            </ion-card-content>
+        </ion-card>
+    </section>
+</ion-content>
+<section class="modal_info"  *ngIf="infoServSucursalIsOpen" (click)="closeModal()">
+    <article class="modal_cnt">
+        <ion-icon class="modal_cnt-close icon-cerrar" (click)="closeModal()"></ion-icon>
+        <ion-card class="modal">
+            <ion-card-header class="header">
+                Listado de Servicios
+            </ion-card-header>
+            <ion-card-content class="body">
+                <div class="body-info" *ngFor="let servicio of serviciosSucursal">
+                    <div class="icono">
+                        <ion-icon class="icon-exito"></ion-icon>
+                    </div>
+                    <p class="descripcion">{{ servicio.nombre }}</p>
+                </div>
+            </ion-card-content>
+        </ion-card>
+    </article>
+</section>

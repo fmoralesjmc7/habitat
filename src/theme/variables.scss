@@ -1,0 +1,55 @@
+// For information on how to create your own theme, please see:
+// http://ionicframework.com/docs/theming/
+
+@import 'icons';
+
+/* Custom fonts used by original app */
+@font-face {
+  font-family: 'roboto-regular';
+  src: url('../assets/fonts/roboto/roboto-regular.woff') format('woff'), url('../assets/fonts/roboto/roboto-regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'roboto-light';
+  src: url('../assets/fonts/roboto/roboto-light.woff') format('woff'), url('../assets/fonts/roboto/roboto-light.woff2') format('woff2');
+  font-weight: 300;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'roboto-medium';
+  src: url('../assets/fonts/roboto/roboto-medium.woff') format('woff'), url('../assets/fonts/roboto/roboto-medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'roboto-bold';
+  src: url('../assets/fonts/roboto/roboto-bold.woff') format('woff'), url('../assets/fonts/roboto/roboto-bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+}
+
+:root,
+:root[mode=md],
+:root[mode=ios] {
+  --fonts-roboto: 'roboto-regular';
+  --fonts-weight-regular: 'roboto-regular';
+  --fonts-weight-light: 'roboto-light';
+  --fonts-weight-medium: 'roboto-medium';
+  --fonts-weight-bold: 'roboto-bold';
+  --ion-font-family: 'roboto-regular';
+  --text-input-ios-show-focus-highlight: false;
+  --text-input-md-show-focus-highlight: false;
+}
+
+/* Minimal color variables required by tutorial styles */
+:root {
+  --colors-blanco: #FFFFFF;
+  --colors-rojo-habitat: #B4123B;
+  --colors-gris-oscuro: #4C4C4A;
+  --colors-gris-placholder: #707070;
+  --colors-gris-medio: #8B8B8B;
+  --color-gris-disabled: #BFBFBF;
+  --colors-celeste: #6BA4B8;
+  --colors-rojo-oscuro: #BF0D3E;
+}

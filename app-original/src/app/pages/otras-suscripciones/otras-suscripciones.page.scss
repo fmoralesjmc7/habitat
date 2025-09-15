@@ -1,0 +1,56 @@
+@import "../../../theme/mixins";
+
+:host {
+  .content_page {
+    
+    .item-inner {
+      border-bottom: 0px !important;
+    }
+
+    .scroll-content {
+      padding: 40px 0 0;
+      overflow-y: hidden;
+    }
+
+    .cnt_rrss {
+      width: 85%;
+      padding-top: 30px;
+      margin: 0 auto;
+    }
+
+    .no_habilitada {
+      .icono_row {
+        padding-top: 80px;
+      }
+      .cnt_icon {
+        font-size: 5rem;
+        margin: 0 auto;
+        display: flex;
+        color: var(--colors-amarillo);
+        align-items: center;
+        text-align: center;
+        justify-content: center;
+      }
+      .form-title{
+        padding-bottom: 0px !important;
+        text-align: center;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 359px) {
+  .ios, .md {
+    page-contacto {
+      .content {
+        .cnt_rrss {
+          .list {
+            margin: 2.25rem 0 4rem;
+          }
+
+          //list-link
+        }
+      }
+    }
+  }
+}

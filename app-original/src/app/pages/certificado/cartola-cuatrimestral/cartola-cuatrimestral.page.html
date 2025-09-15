@@ -1,0 +1,49 @@
+<app-header [titulo]="CONSTANTES.TITULO_HEADER_CERTIFICADOS"></app-header>
+
+<ion-content class="content_page">
+  <section class="section_cnt">
+    <div class="form">
+      <h2 class="form-title">
+        Cartola Cuatrimestral
+      </h2>
+
+      <div class="icon-container">
+        <svg width="76" height="44" viewBox="0 0 76 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M76 19.6971L73.5833 18.5262L42.1351 36.8154L38.8366 35.4702L36.331 36.9227L42.1351 39.3733L76 19.6971ZM76 16.233L73.5833 15.0621L39.7945 34.9223L42.1337 35.9079L76 16.233ZM76 9.29793L53.9125 0L20.0235 19.6762L42.1337 28.9741L76 9.29793ZM40.3998 14.0668C40.3998 11.9521 44.2188 9.87226 48.8942 9.87226C53.5936 9.87226 57.3887 11.9507 57.3887 14.0668C57.3887 16.155 53.5823 18.2516 48.8942 18.2516C44.2188 18.2543 40.3998 16.155 40.3998 14.0668ZM56.3574 24.3517L53.9435 23.1793L42.1365 29.9025L22.4473 21.777L22.1383 21.9428L22.1045 21.9219L0 34.7021L22.0847 44L43.0352 31.8946L43.0775 31.9043L56.3574 24.3517ZM28.7931 30.1144L22.1609 33.8908L25.7754 35.7448L14.5101 37.3646L16.2863 30.8574L19.4409 32.4982L25.8741 28.8375L28.7945 30.113L28.7931 30.1144Z" fill="#6BA4B8"/>
+        </svg>
+      </div>
+
+      <section class="form_cnt">
+        <p class="texto_certificado texto_certificado-info">Es un documento detallado que la AFP envía cada cuatro meses al afiliado que se encuentra cotizando, donde se le informa específicamente todos los movimientos que se han registrado en sus cuentas.</p>
+      </section>
+      
+      <section class="form_cnt">
+        <h3 class="titulo_certificado titulo_certificado-util">¿Para que sirve?</h3>
+        <p class="texto_certificado texto_certificado-info">Las Cartolas Cuatrimestrales son emitidas tres veces al año (Febrero, Junio y Octubre) para aquellos clientes cotizantes. Se encuentran disponibles de forma inmediata los tres últimos períodos.</p>
+      </section>
+
+      <section class="form_cnt">
+        <h3 class="titulo_opciones">Período de tiempo</h3>
+        <ion-select [placeholder]="'Selecciona Período'" name="tipoPeriodo" class="options-select"
+                    okText="ACEPTAR" cancelText="CANCELAR" [interfaceOptions]="periodoOptions"
+                    [(ngModel)]="periodoSeleccionado">
+          <ion-select-option *ngFor="let periodo of periodos"
+                             [value]="periodo">{{periodo.descripcion_periodo + " " + periodo.anio_periodo}}</ion-select-option>
+        </ion-select>
+      </section>
+
+      <section class="form_cnt fondo_link">
+        <a class="link" (click)="verModalFechasEnvio()"><u>Ver fechas de envío de Cartolas Cuatrimestrales</u></a>
+      </section>
+
+      <section class="form_cnt">
+        <button class="button" (click)="obtenerPDF()" [disabled]="!periodoSeleccionado['id_cartola']">
+          Solicitar
+        </button>
+        <button class="button button-cancelar" (click)="cancelar()">Cancelar</button>
+      </section>
+    </div>
+  </section>
+</ion-content>
+
+<app-modal-cuatrimetral *ngIf="mostrarModalAfiliados" (envioCerrarModal)="ocultarModalFechasEnvio()"></app-modal-cuatrimetral>

@@ -1,0 +1,191 @@
+<app-header (clickBackButton)="volverAlHome()"></app-header>
+
+<ion-content class="content_page" >
+  <section class="container">
+    <app-step-items [active]="1"></app-step-items>
+    <h2 class="container-title">Depósito Directo en Línea</h2>
+    <p class="container-text" *ngIf="!ctaSeleted">A continuación podrás realizar tu Depósito Directo de forma fácil,
+      rápida y segura a tu Cuenta 2 o APV a través de una transferencia bancaria. 
+      <br>
+      <span class="texto_negrita">Por favor, completa los siguientes datos</span>
+    </p>
+
+    <section class="card_cuentas" [ngClass]="{'card_cuentas--scroll': ctaSeleted != undefined}">
+
+      <article class="money_input" *ngIf="!email">
+        <h3 class="card_cuentas-text_item email_text">
+          Ingresa tu Mail
+        </h3>
+
+        <ion-input class="email_input" type="text" [(ngModel)]="depDir.email" (ionBlur)="validarEmail(depDir.email)">
+        </ion-input>
+      </article>
+
+      <h3 class="card_cuentas-text_item">Selecciona Cuenta a Depositar</h3>
+      <article class="box_selector">
+        <div class="box_selector-item" [ngClass]="{'box_selector-item--active': ctaSeleted == 'CAV'}" (click)="seleccionCta('CAV')">
+          Cuenta 2
+        </div>
+        <div class="box_selector-separator"></div>
+        <div class="box_selector-item" [ngClass]="{'box_selector-item--active': ctaSeleted == 'APV'}" (click)="seleccionCta('APV')">
+          APV
+        </div>
+      </article>
+    </section>
+    <section class="cnt_form" *ngIf="ctaSeleted == 'CAV' || ctaSeleted == 'APV'">
+      <div>
+        <article class="money_input">
+          <h3 class="money_input-title">
+            Monto a Depositar
+          </h3>
+
+          <ion-input class="money_input-input" placeholder="$" minlength="4" maxlength="10" type="tel"
+                      [(ngModel)]="depDir.monto" (ionBlur)="validaMontoMinMax(depDir)" 
+                     (keyup)="detectaBotonIr($any($event))" (keypress)="validaSoloNumeros($event)" (keyup.enter)="cambioFoco()"  (ionInput)="depDir.monto = formatoMonto($any($event.target).value)">
+          </ion-input>
+        </article>
+        <article class="card_cuentas" *ngIf="ctaSeleted == 'CAV'">
+          <h3 class="card_cuentas-text_item">
+            Régimen Tributario
+            <ion-icon class="icon icon-informacion" (click)="infoRegTribCAVIsOpen = true"></ion-icon>
+          </h3>
+          <h3 class="card_cuentas-text_item">
+            General
+          </h3>
+        </article>
+
+        <article class="card_cuentas" *ngIf="ctaSeleted == 'APV'">
+          <h3 class="card_cuentas-text_item">
+            Régimen Tributario 
+            <ion-icon class="icon icon-informacion" (click)="infoRegTribAPVIsOpen = true"></ion-icon>
+          </h3>
+          <div class="box_selector">
+            <div class="box_selector-item" [ngClass]="{'box_selector-item--active': regimenSeleted == 'A'}" (click)="seleccionRegimen('A')">
+              A
+            </div>
+            <div class="box_selector-separator"></div>
+            <div class="box_selector-item" [ngClass]="{'box_selector-item--active': regimenSeleted == 'B'}" (click)="seleccionRegimen('B')">
+              B
+            </div>
+          </div>
+        </article>
+
+        <article class="card_cuentas">
+          <h3 class="card_cuentas-text_item">
+            País de Origen de los Fondos
+          </h3>
+          <div class="content_item">
+            <ion-select class="content_item-select" [interfaceOptions]="selectOptionsPaisOrigenFondo" okText="ACEPTAR" cancelText="CANCELAR"
+              [(ngModel)]="depDir.paisOrigenFondo">
+              <ion-select-option *ngFor="let pais of origenesFondoPais" [value]="pais.id">{{ pais.nombre | formatoMayusculas}}</ion-select-option>
+            </ion-select>
+          </div>
+        </article>
+
+        <article class="card_cuentas">
+          <h3 class="card_cuentas-text_item">
+            Origen de los Fondos
+          </h3>
+          <div class="content_item">
+            <ion-select class="content_item-select" [interfaceOptions]="selectOptionsOrigenFondo" okText="ACEPTAR" cancelText="CANCELAR"
+              [(ngModel)]="depDir.origenFondo" (ionChange)="cleanOrigenFondo()">
+              <ion-select-option *ngFor="let origenFondo of origenesFondo" [value]="origenFondo.id">{{ origenFondo.nombre }}</ion-select-option>
+            </ion-select>
+          </div>
+        </article>
+
+        <article class="money_input" *ngIf="depDir.origenFondo === '08' && ctaSeleted == 'CAV'">
+          <h3 class="money_input-title">
+            Detallar el Origen
+          </h3>
+          <ion-input maxlength="40" type="text"  class="money_input-input" [(ngModel)]="depDir.descOrigen">
+          </ion-input>
+        </article>
+
+        <article class="card_cuentas"  *ngIf="ctaSeleted == 'CAV'">
+          <h3 class="card_cuentas-text_item">
+            Propósito del Depósito
+          </h3>
+          <div class="content_item">
+            <ion-select class="content_item-select" [interfaceOptions]="selectOptionsPropositos" okText="ACEPTAR" cancelText="CANCELAR"
+              [(ngModel)]="depDir.codigoProposito" (ionChange)="cleanProposito()">
+              <ion-select-option *ngFor="let proposito of propositos" [value]="proposito.valor">{{ proposito.descripcion }}</ion-select-option>
+            </ion-select>
+          </div>
+        </article>
+
+        <article class="money_input" *ngIf="depDir.codigoProposito === 'OTRO' && ctaSeleted == 'CAV'">
+          <h3 class="money_input-title">
+            Detallar el Propósito
+          </h3>
+          <ion-input maxlength="40" type="text"  class="money_input-input" [(ngModel)]="depDir.descProposito">
+          </ion-input>
+        </article>
+        
+        <article class="card_cuentas">
+          <h3 class="card_cuentas-text_item">
+            Medio de Pago
+            <ion-icon class="icon icon-informacion" (click)="infoMedPagoIsOpen = true"></ion-icon>
+          </h3>
+          <div class="content_item">
+            <ion-select class="content_item-select" [interfaceOptions]="selectOptionsMedioPago" okText="ACEPTAR" cancelText="CANCELAR"
+              (ionChange)="cambioMedioDePago()" [(ngModel)]="depDir.medioPago" placeholder="Selecciona Medio de Pago">
+              <ion-select-option *ngFor="let medPago of listaBancos" [value]="medPago.bank_id">
+                {{ medPago.name | formatoMayusculas }}
+              </ion-select-option>
+            </ion-select>
+          </div>
+        </article>
+
+      </div>
+    </section>
+    <article class="button_depdir" *ngIf="ctaSeleted == 'CAV' || ctaSeleted == 'APV'">
+      <button class="button_depdir-btn" (click)="continuar()" block [disabled]="bloqueaBotonContinuar()">
+        Continuar
+      </button>
+      <button class="button_depdir-btn btn_cancelar" (click)="cancelar()" block>
+        Cancelar
+      </button>
+    </article>
+  </section>
+</ion-content>
+
+<ayuda-contextual-khipu *ngIf="infoMedPagoIsOpen" (bgClick)="infoMedPagoIsOpen = !infoMedPagoIsOpen" [isOpen]="infoMedPagoIsOpen" [text]="infoMedPago"></ayuda-contextual-khipu>
+
+<section class="modal_info" *ngIf="infoRegTribCAVIsOpen">
+  <ion-slides class="cnt_slides" pager="false">
+    <ion-slide class="modal_cnt" *ngFor="let slide of slidesCav">
+      <ion-card class="modal">
+        <ion-icon class="icon_close icon-cerrar" (click)="infoRegTribCAVIsOpen = false"></ion-icon>
+        <ion-card-header class="header">
+          <ion-icon class="header-icon icon-informacion" icon-informacion></ion-icon>
+        </ion-card-header>
+        <ion-card-content class="body">
+          <h1 class="body-title">{{ slide.titulo }}</h1>
+          <p class="body-info">
+            {{ slide.text }}
+          </p>
+        </ion-card-content>
+      </ion-card>
+    </ion-slide>
+  </ion-slides>
+</section>
+
+<section class="modal_info" *ngIf="infoRegTribAPVIsOpen">
+  <ion-slides class="cnt_slides" pager="true" effect="slide" speed="300" pager="true" spaceBetween="30">
+    <ion-slide class="modal_cnt" *ngFor="let slide of slidesApv">
+      <ion-card class="modal">
+        <ion-icon class="icon_close icon-cerrar" (click)="infoRegTribAPVIsOpen = false"></ion-icon>
+        <ion-card-header class="header">
+          <ion-icon class="header-icon icon-informacion"></ion-icon>
+        </ion-card-header>
+        <ion-card-content class="body">
+          <h1 class="body-title">{{ slide.titulo }}</h1>
+          <p class="body-info">
+            {{ slide.text }}
+          </p>
+        </ion-card-content>
+      </ion-card>
+    </ion-slide>
+  </ion-slides>
+</section>

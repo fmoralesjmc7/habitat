@@ -1,0 +1,29 @@
+@import '../../../../theme/mixins';
+
+:host {
+    .seccion_informativa {
+        font: 0.875rem var(--fonts-weight-regular);
+        color: var(--colors-gris-oscuro);
+        margin: 1.25rem 0 0;
+        text-align: center;
+    }
+
+    .form {
+        &-btn {
+            @include btn-general();
+            border-radius: 50px;
+            font-size: 0.875rem;
+            margin-top: 1.875rem;
+            padding: 1rem;
+            &-huella {
+                vertical-align: bottom;
+                margin-left: 5px;
+                margin-bottom: 1px;
+            }
+
+            &:disabled {
+                background-color: var(--color-gris-disabled);
+            }
+        }
+    }
+}

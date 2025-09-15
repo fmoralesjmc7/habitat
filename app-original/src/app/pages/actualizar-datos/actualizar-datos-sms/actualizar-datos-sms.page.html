@@ -1,0 +1,152 @@
+<app-header [showBackButton]="false" titulo="Tus Datos"></app-header>
+<ion-content class="content_page">
+  <section class="container">
+
+    <ng-container *ngIf="!solicitudGenerada">
+      <h2 class="titulo">Clave Dinámica</h2>
+
+      <section class="box_time" *ngIf="!validadorTiempoCompleto">
+        <article class="box_time-item">
+          <span class="text">
+            {{ sMinutos }}:{{ sSegundos }}
+          </span>
+        </article>
+      </section>
+
+      <section class="box_btn" *ngIf="validadorTiempoCompleto">
+        <article class="box_btn-item">
+          <button class="btn_solicitar" (click)="solicitarNuevaClave()">
+            Solicitar Nueva Clave
+          </button>
+        </article>
+      </section>
+
+      <section class="box_text" *ngIf="!intentosFallidos">
+        <span class="texto_no_recibes">
+          Si aún no recibes la clave dinámica vía SMS, podrás solicitarla nuevamente en 59 segundos.
+        </span>
+      </section>
+
+      <section class="box_text" *ngIf="intentosFallidos">
+        <span class="alerta">
+          Intento {{ nroIntentosFallidos }} de 3. <br />
+          La clave ingresada no es válida.
+        </span>
+      </section>
+
+      <section class="box_inputs">
+        <section class="box_inputs-content">
+          <article class="item">
+            <ion-input class="text" #codigo0 size="1" solo-numeros [attr.minlength]="1" [attr.maxlength]="1" type="tel"
+              [(ngModel)]="codigo[0]" (keyup)="onKey($event, 0)">
+            </ion-input>
+          </article>
+          <article class="item">
+            <ion-input class="text" #codigo1 size="1" [attr.minlength]="1" [attr.maxlength]="1" type="tel"
+              [(ngModel)]="codigo[1]" (keyup)="onKey($event, 1)">
+            </ion-input>
+          </article>
+          <article class="item">
+            <ion-input class="text" #codigo2 size="1" [attr.minlength]="1" [attr.maxlength]="1" type="tel"
+              [(ngModel)]="codigo[2]" (keyup)="onKey($event, 2)">
+            </ion-input>
+          </article>
+          <article class="item">
+            <ion-input class="text" #codigo3 size="1" [attr.minlength]="1" [attr.maxlength]="1" type="tel"
+              [(ngModel)]="codigo[3]" (keyup)="onKey($event, 3)">
+            </ion-input>
+          </article>
+          <article class="item">
+            <ion-input class="text" #codigo4 size="1" [attr.minlength]="1" [attr.maxlength]="1" type="tel"
+              [(ngModel)]="codigo[4]" (keyup)="onKey($event, 4)">
+            </ion-input>
+          </article>
+          <article class="item">
+            <ion-input class="text" #codigo5 size="1" [attr.minlength]="1" [attr.maxlength]="1" type="tel"
+              [(ngModel)]="codigo[5]">
+            </ion-input>
+          </article>
+        </section>
+      </section>
+
+      <section class="box_text">
+        <span class="texto_para_realizar">
+            Para realizar la actualización de datos por favor ingresa la clave dinámica de 6 dígitos enviada a tu celular<br>+{{numeroCelularFormateado}}
+          <ion-icon class="icon icon-informacion" (click)="modalInfo = true"></ion-icon>
+        </span>
+      </section>
+
+      <section class="box_botones">
+        <button class="btn_realizar_solicitud" (click)="validarCodigoSMS()">
+          Realizar Actualización de Datos
+        </button>
+        <button class="btn_volver" (click)="mostrarConfirmacionVolver()">
+          Cancelar
+        </button>
+      </section>
+    </ng-container>
+  </section>
+</ion-content>
+
+<section class="modal_informativo" *ngIf="modalInfo" [@fadeInOut]>
+  <article class="modal_cnt">
+    <ion-icon class="icon_close icon-cerrar" (click)="modalInfo = false"></ion-icon>
+    <ion-card class="modal">
+      <ion-card-header class="header">
+        <ion-icon class="header-icon icon-informacion"></ion-icon>
+      </ion-card-header>
+      <ion-card-content class="body">
+        <h3 class="body-title">
+          ¿Número Incorrecto?
+        </h3>
+        <p class="body-text">
+          Si tu número de celular registrado no es el correcto, deberás actualizarlo en cualquiera de nuestras
+          <a class="link" (click)="irSucursales()">Sucursales.</a> o llamar a nuestro
+          <a class="link" (click)="llamarContactCenter()"> Contact Center.</a>
+        </p>
+      </ion-card-content>
+    </ion-card>
+  </article>
+</section>
+
+<section class="modal_informativo" *ngIf="modalIntentosSolicitudClave">
+  <article class="modal_cnt">
+    <ion-card class="modal">
+      <ion-card-header class="header">
+        <ion-icon class="header-icon icon-informacion"></ion-icon>
+      </ion-card-header>
+      <ion-card-content class="body">
+        <h3 class="body-title">
+          Has superado el límite de intentos diarios de clave dinámica
+        </h3>
+        <p class="body-text">
+          Por favor, vuelve a intentarlo mañana. Si tienes dudas, acércate a cualquiera de nuestras 
+          <a class="link" (click)="irSucursales()">Sucursales.</a> o llama a
+          nuestro
+          <a class="link" (click)="llamarContactCenter()"> Contact Center.</a>
+        </p>
+        <button class="body-btn" (click)="volverAlHome()">Volver al Home</button>
+      </ion-card-content>
+    </ion-card>
+  </article>
+</section>
+
+<section class="modal_informativo" *ngIf="mostrarPopUpMaxIntentosFallidos">
+  <article class="modal_cnt">
+    <ion-card class="modal">
+      <ion-card-header class="header">
+        <ion-icon class="header-icon icon-informacion"></ion-icon>
+      </ion-card-header>
+      <ion-card-content class="body">
+        <h3 class="body-title">
+          Clave Dinámica Incorrecta
+        </h3>
+        <p class="body-text">
+          Has agotado los intentos de verificación de la clave enviada. <br>
+          Has click en <span class="destacado">Volver a intentar </span>y podrás realizar nuevamente esta operación.
+        </p>
+        <button class="body-btn" (click)="volverAIntentarSMS()">Volver a Intentar</button>
+      </ion-card-content>
+    </ion-card>
+  </article>
+</section>

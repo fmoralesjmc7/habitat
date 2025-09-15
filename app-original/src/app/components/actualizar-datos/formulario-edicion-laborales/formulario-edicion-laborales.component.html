@@ -1,0 +1,192 @@
+<section class="content_page"  *ngIf="datosUsuario">
+
+  <ion-card class="datos-contacto" *ngIf="datosUsuario">
+    <span class="datos-editar" (click)="cerrarEdicion()">
+      <ion-icon class="icon icon-cerrar"></ion-icon>
+    </span>   
+
+    <ion-grid class="datos-formulario edicion">
+      <ion-row>
+        <ion-col>
+          <p class="titulo">Datos Laborales</p>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <span class="datos-obligatorios">*Datos obligatorios</span> 
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+            <p class="label primero">Renta líquida</p>
+            <ion-row>
+              <ion-col>
+                <ion-select class="borde-input" okText="ACEPTAR" cancelText="CANCELAR" [(ngModel)]="rangoRentaSeleccionada"
+                  placeholder="Seleccione renta">
+                  <ion-select-option *ngFor="let renta of listadoRangosRenta" [value]="renta.id">
+                    {{ renta.rango}}
+                  </ion-select-option>
+                </ion-select>
+              </ion-col>
+            </ion-row>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+            <p class="label">Profesión u oficio</p>
+            <ion-row>
+              <ion-col>
+                <ion-select class="borde-input" okText="ACEPTAR" cancelText="CANCELAR" [(ngModel)]="profesionSeleccionada"
+                  placeholder="Seleccione profesión u oficio">
+                  <ion-select-option *ngFor="let profesion of listadoProfesiones" [value]="profesion.id_profesion">
+                    {{ profesion.nombre_profesion}}
+                  </ion-select-option>
+                </ion-select>
+              </ion-col>
+            </ion-row>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+            <p class="label">Cargo</p>
+            <ion-row>
+              <ion-col>
+                <ion-select class="borde-input" okText="ACEPTAR" cancelText="CANCELAR" [(ngModel)]="cargoSeleccionado"
+                  placeholder="Seleccione cargo">
+                  <ion-select-option *ngFor="let cargo of listadoCargos" [value]="cargo.id_cargo">
+                    {{ cargo.nombre_cargo}}
+                  </ion-select-option>
+                </ion-select>
+              </ion-col>
+            </ion-row>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <ion-grid class="datos-formulario edicion" *ngIf="datosUsuario">
+      <ion-row>
+        <ion-col>
+          <p class="titulo residencia">Dirección comercial</p>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <span class="datos-obligatorios">*Datos obligatorios</span> 
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+            <p class="label">Región<span>*</span></p>
+            <ion-row>
+              <ion-col>
+                <ion-select class="borde-input" okText="ACEPTAR" cancelText="CANCELAR" [(ngModel)]="direccionSeleccionada.id_region" placeholder="Selecciona Región"
+                  (ionChange)="cambioRegion(direccionSeleccionada.id_region)" [ngClass]="{'rojo': validadorRegion,'normal': !validadorRegion }">
+    
+                  <ion-select-option *ngFor="let region of listadoRegiones" [value]="region.id_region">
+                    {{ region.nombre_region }}
+                  </ion-select-option>
+                </ion-select>
+              </ion-col>
+            </ion-row>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+            <p class="label">Ciudad<span>*</span></p>
+            <ion-row>
+              <ion-col>
+                <ion-select class="borde-input" okText="ACEPTAR" cancelText="CANCELAR" [(ngModel)]="direccionSeleccionada.id_ciudad"
+                  placeholder="Selecciona Ciudad" (ionChange)="cambioCiudad(direccionSeleccionada.id_ciudad)"
+                  [ngClass]="{'rojo': validadorCiudad,'normal': !validadorCiudad }">
+                  <ion-select-option *ngFor="let ciudad of listadoCiudadesVisibles" [value]="ciudad.id_ciudad">
+                    {{ ciudad.nombre_ciudad}}
+                  </ion-select-option>
+                </ion-select>
+              </ion-col>
+            </ion-row>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+            <p class="label">Comuna<span>*</span></p>
+            <ion-row>
+              <ion-col>
+                <ion-select class="borde-input" okText="ACEPTAR" cancelText="CANCELAR" [(ngModel)]="direccionSeleccionada.id_comuna"
+                  placeholder="Selecciona Comuna" [ngClass]="{'rojo': validadorComuna,'normal': !validadorComuna }">
+                  <ion-select-option *ngFor="let comuna of listadoComunasVisibles" [value]="comuna.id_comuna">
+                    {{ comuna.nombre_comuna }}
+                  </ion-select-option>
+                </ion-select>
+              </ion-col>
+            </ion-row>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+            <p class="label">Calle<span>*</span></p>
+            <ion-row>
+              <ion-col>
+                <ion-input class="borde-input"
+                  [(ngModel)]="direccionSeleccionada.calle" 
+                  [attr.maxlength]="100"
+                  [ngClass]="{'rojo': validadorCalle,'normal': !validadorCalle }">
+                </ion-input>
+              </ion-col>
+            </ion-row>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="5">
+            <p class="label">Número<span>*</span></p>
+            <ion-row>
+              <ion-col>
+                <ion-input class="borde-input"
+                  [(ngModel)]="direccionSeleccionada.numero"
+                  [ngClass]="{'rojo': validadorNumero,'normal': !validadorNumero }"
+                  maxlength="10">
+                </ion-input>
+              </ion-col>
+            </ion-row>
+        </ion-col>
+        <ion-col offset="1">
+            <p class="label">Depto.</p>
+            <ion-row>
+              <ion-col>
+                <ion-input class="borde-input"
+                  [(ngModel)]="direccionSeleccionada.departamento"
+                  maxlength="6">
+                </ion-input>
+              </ion-col>
+            </ion-row>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="5">
+            <p class="label">Block</p>
+            <ion-row>
+              <ion-col>
+                <ion-input class="borde-input" [(ngModel)]="direccionSeleccionada.block"  maxlength="100">
+                </ion-input>
+              </ion-col>
+            </ion-row>
+        </ion-col>
+        <ion-col offset="1">
+            <p class="label">Villa/Población</p>
+            <ion-row>
+              <ion-col>
+                <ion-input class="borde-input" [(ngModel)]="direccionSeleccionada.villa" [attr.maxlength]="50"></ion-input>
+              </ion-col>
+            </ion-row>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-card>
+
+  <actualizar-datos-listado-empleadores #listadoEmpleadoresEditar [datosUsuario]="datosUsuario"></actualizar-datos-listado-empleadores>
+  
+  <section class="botonera">
+    <button class="buttons-btn btn-guardar" (click)="guardarDatosPersonales()">Guardar Datos</button>
+    <button #btnCancelar class="buttons-btn" (click)="cerrarEdicion()">Cancelar</button>
+  </section>
+
+</section>

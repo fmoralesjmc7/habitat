@@ -1,0 +1,214 @@
+<app-header></app-header>
+
+<ion-content class="content_page">
+    <section class="container">
+        <app-step-items [active]="2"></app-step-items>
+        
+        <h2 class="titulo">Confirma tus Montos a Girar</h2>
+
+        <ng-container *ngFor="let regimenGiro of listadoRegimenesAGirar">
+            <article class="box_titulo">
+                {{ regimenGiro.nombreRegimen | formatoMayusculas}}
+            </article>
+
+            <article class="box_detalle">
+                <ng-container *ngFor="let fondoGiro of regimenGiro.listadoFondos; let esUltimoFondo=last">
+                    <article class="box_detalle_fondo">
+                        <ion-grid>
+                            <ion-row>
+                                <ion-col class="row_titulo">Fondo:</ion-col>
+                                <ion-col>
+                                    <div float-right class="bill" [ngClass]="{'letter--red': fondoGiro.nombreFondo  === 'A', 'letter--orange': fondoGiro.nombreFondo  === 'B', 'letter--green': fondoGiro.nombreFondo === 'C', 'letter--cyan': fondoGiro.nombreFondo  === 'D', 'letter--blue': fondoGiro.nombreFondo  === 'E'}">
+                                        <span class="value">
+                                            {{ fondoGiro.nombreFondo }}
+                                        </span>
+                                    </div>
+                                </ion-col>
+                            </ion-row>
+
+                            <ion-row>
+                                <ion-col class="row_titulo">Monto Bruto a Girar:</ion-col>
+                                <ion-col text-right class="row_valor">{{ fondoGiro.montoBruto | formatoPesoChileno }}
+                                </ion-col>
+                            </ion-row>
+
+                            <ion-row>
+                                <ion-col class="row_titulo">Total Cuotas a Girar:</ion-col>
+                                <ion-col text-right class="row_valor">{{ fondoGiro.totalCuotasGirarFormat }}</ion-col>
+                            </ion-row>
+
+                            <ion-row class="columna_monto_final">
+                                <ion-col class="row_titulo text_destacado">Monto Líquido a Girar:</ion-col>
+                                <ion-col text-right class="row_valor text_destacado">
+                                    {{ fondoGiro.montoLiquido | formatoPesoChileno}}</ion-col>
+                            </ion-row>
+
+                            <ion-row *ngIf="regimenGiro.listadoFondos.length > 1">
+                                <div class="separador_giro"></div>
+                            </ion-row>
+
+                            <ion-row class="columna_monto_final" *ngIf="esUltimoFondo && regimenGiro.listadoFondos.length > 1">
+                                <ion-col class="row_titulo">Monto Total a Girar:</ion-col>
+                                <ion-col class="row_valor text_monto_total" text-right>
+                                    {{ obtenerMontoTotalAGirar(regimenGiro) | formatoPesoChileno}}</ion-col>
+                            </ion-row>
+                        </ion-grid>
+                    </article>
+                </ng-container>
+            </article>
+
+        </ng-container>
+
+        <section class="informacion">
+            <p class="informacion-text">
+                {{ CONSTANTES.TEXTO_INFORMATIVO_STEP_2_GIRO }}
+            </p>
+        </section>
+
+        <section class="contenedor_combo">
+            <h3 class="contenedor_combo-text_item">Banco a Depositar
+                <ion-icon class="icon icon-informacion" (click)="mostrarModalBanco = true"></ion-icon>
+            </h3>
+            <div class="content_item">
+                <ion-select 
+                    class="content_item-select" 
+                    [interfaceOptions]="tituloBancoADepositar"
+                    [(ngModel)]="idBancoSeleccionado" 
+                    (ionChange)="eventoOnChangeBanco()" 
+                    okText="ACEPTAR" 
+                    cancelText="CANCELAR" 
+                    placeholder="Selecciona Banco"
+                    [disabled]="validacionValeVistaCOVID">
+                    <ion-select-option *ngFor="let banco of listadoBancosGeneral" [value]="banco.IdEntidad">
+                        {{ banco.NombreEntidad | formatoMayusculas}}
+                    </ion-select-option>
+                </ion-select>
+            </div>
+        </section>
+
+        <section class="contenedor_combo" *ngIf="validadorComboTipoCuenta">
+            <h3 class="contenedor_combo-text_item">Tipo de Cuenta</h3>
+            <div class="content_item">
+                <ion-select 
+                    class="content_item-select"
+                    [interfaceOptions]="tituloTipoCuenta"
+                    [(ngModel)]="idTipoCuentaSeleccionada" 
+                    (ionChange)="eventoOnChangeTipoCuenta()" 
+                    okText="ACEPTAR" 
+                    cancelText="CANCELAR" 
+                    placeholder="Selecciona Tipo de Cuenta">
+                    <ion-select-option *ngFor="let tipoCuenta of listadoTipoCuenta" [value]="tipoCuenta.IdTipoCuenta">
+                        {{ tipoCuenta.TipoCuenta | formatoMayusculas}}
+                    </ion-select-option>
+                </ion-select>
+            </div>
+        </section>
+
+        <section class="input_cuenta" *ngIf="validadorInputCuenta">
+            <h3 class="contenedor_combo-text_item">Número de Cuenta
+                <ion-icon class="icon icon-informacion" (click)="mostrarModalNumeroCuenta = true"></ion-icon>
+            </h3>
+            <ion-input class="input_cuenta-input" (keypress)="formatNumeroCuenta($event)" (keyup.enter)="validarIntroRealizarGiro()" [attr.minlength]="6" [attr.maxlength]="18" type="tel" [(ngModel)]="numeroCuenta" (input)="numeroCuenta" (ionBlur)="validarBotonRealizarGiro()" (ionBlur)="soloNumeros()" placeholder="Ingresa Número de Cuenta">
+            </ion-input>
+        </section>
+
+        <section class="contenedor_combo" *ngIf="validacionGiroCOVID">
+            <ion-row class="row_formulario">
+                <ion-col size="1" class="columna_valor">
+                    <ion-checkbox class="checkbox-square caja_checkbox" (ionChange)="seleccionTipoValeVistaCOVID()"
+                                  [(ngModel)]="validacionValeVistaCOVID" mode="md"></ion-checkbox>
+                </ion-col>
+                <ion-col size="11" class="" (click)="validacionValeVistaCOVID = !validacionValeVistaCOVID">
+                    <p class="informacion-text">
+                        No tengo cuenta bancaria y quiero retirar a través de Vale Vista en cualquier sucursal de <strong>Banco Santander</strong>
+                    </p>
+                </ion-col>
+            </ion-row>
+        </section>
+
+        <section #botoneraCuenta class="contenedor_botonera">
+            <button class="btn_realizar_solicitud" (click)="eventoRealizarSolicitudGiro()" [disabled]="validarBotonRealizarGiro()">
+                Continuar
+            </button>
+            <button class="btn_volver" (click)="eventoCancelar()">
+                Cancelar
+            </button>
+        </section>
+    </section>
+</ion-content>
+
+<section class="modal_condiciones" [class.modal_condiciones--show]="validadorModalCondicionesGiro" ion-fixed>
+    <section class="modal_condiciones-section">
+        <ion-icon class="modal_condiciones-section-icon icon-informacion"></ion-icon>
+        <p class="modal_condiciones-section-text modal_condiciones-section-text-title">
+            {{CONSTANTES.TEXTO_TITULO_MODAL_CONDICIONES}}</p>
+        <p class="modal_condiciones-section-text">{{CONSTANTES.TEXTO_1_MODAL_CONCIONES}}</p>
+        <p class="modal_condiciones-section-text modal_condiciones-section-text-segundo">
+            {{CONSTANTES.TEXTO_2_MODAL_CONCIONES}}</p>
+        <button class="boton_ver_codiciones" (click)="leerCondiciones()">{{CONSTANTES.TEXTO_3_MODAL_CONCIONES}}</button>
+        <button class="btn_aceptar" (click)="eventoAceptarCondiciones()">Acepta Condiciones</button>
+        <button class="btn_cancelar" (click)="validadorModalCondicionesGiro = false">Cancelar</button>
+    </section>
+</section>
+
+<section class="modal_informativo" *ngIf="mostrarModalBanco" [@fadeInOut]>
+    <article class="modal_cnt">
+        <ion-icon class="icon_close icon-cerrar" (click)="mostrarModalBanco = false"></ion-icon>
+        <ion-card class="modal">
+            <ion-card-header class="header">
+                <ion-icon class="header-icon icon-informacion"></ion-icon>
+            </ion-card-header>
+            <ion-card-content class="body">
+                <h3 class="body-title">
+                    {{CONSTANTES.TITULO_MODAL_BANCO_STEP_2_GIRO}}
+                </h3>
+                <p class="body-text">
+                    {{CONSTANTES.TEXTO_1_MODAL_BANCO_STEP_2_GIRO}}
+                </p>
+                <p class="body-text">
+                    {{CONSTANTES.TEXTO_2_MODAL_BANCO_STEP_2_GIRO}}
+                </p>
+            </ion-card-content>
+        </ion-card>
+    </article>
+</section>
+
+<section class="modal_informativo" *ngIf="mostrarModalNumeroCuenta" [@fadeInOut]>
+    <article class="modal_cnt">
+        <ion-icon class="icon_close icon-cerrar" (click)="mostrarModalNumeroCuenta = false"></ion-icon>
+        <ion-card class="modal">
+            <ion-card-header class="header">
+                <ion-icon class="header-icon icon-informacion"></ion-icon>
+            </ion-card-header>
+            <ion-card-content class="body">
+                <h3 class="body-title">
+                    {{CONSTANTES.TITULO_MODAL_NUMERO_CUENTA}}
+                </h3>
+                <p class="body-text">
+                    {{CONSTANTES.TEXTO_MODAL_NUMERO_CUENTA}}
+                </p>
+            </ion-card-content>
+        </ion-card>
+    </article>
+</section>
+
+<section class="modal_informativo" *ngIf="modalCuentaBloqueada" [@fadeInOut]>
+    <article class="modal_cnt">
+        <ion-icon class="icon_close icon-cerrar" (click)="modalCuentaBloqueada = false"></ion-icon>
+        <ion-card class="modal">
+            <ion-card-header class="header">
+                <ion-icon class="header-icon icon-informacion"></ion-icon>
+            </ion-card-header>
+            <ion-card-content class="body">
+                <h3 class="body-title">
+                   La cuenta bancaria no está habilitada
+                </h3>
+                <p class="body-text">
+                    Por razones de seguridad, esta cuenta no está habilitada para hacer Giros debido a que es una Cuenta {{tipoCuentaBloqueada | formatoMayusculas}}. 
+                    Puedes modificar tu cuenta bancaria o bien selecciona la opción para Vale Vista en Banco Santander.
+                </p>
+                <button class="btn-aceptar-apv" (click)="modalCuentaBloqueada = false">Aceptar</button>
+            </ion-card-content>
+        </ion-card>
+    </article>
+</section>

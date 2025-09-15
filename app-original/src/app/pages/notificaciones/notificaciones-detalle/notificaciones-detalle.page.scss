@@ -1,0 +1,30 @@
+:host {
+  .content_page {
+    --ion-background-color: var(--colors-light);
+
+    .content_grid {
+      background: var(--colors-blanco);
+      color: var(--colors-gris-oscuro);
+      padding: 15px;
+      margin: 7px;
+
+      .texto_pequeno {
+        font: .875rem var(--fonts-weight-regular);
+      }
+
+      .link {
+        color: var(--colors-celeste);
+      }
+
+      .title {
+        text-transform: none;
+        width: 100%;
+        display: block;
+        padding: 0px;
+        margin: 0px;
+        font: 1rem var(--fonts-weight-bold);
+      }
+    }
+
+  }
+}

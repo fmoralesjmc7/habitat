@@ -1,0 +1,6 @@
+  <div class="container-fund-option" *ngFor="let fund of funds">
+    <div class="fund-option checked-fund-{{ fund.value }}" [ngClass]="{'no-checked': !fund.checked }" (click)="checked(fund)">
+      <p>Fondo</p>
+      <h1>{{ fund.value }}</h1>
+    </div>
+  </div>

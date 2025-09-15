@@ -1,0 +1,52 @@
+@mixin btn-general {
+  width: 100%;
+  border-radius: 4px;
+  background: var(--colors-rojo-habitat);
+  color: var(--colors-blanco);
+  font: 1.125rem var(--fonts-weight-medium);
+  text-transform: initial;
+  position: relative;
+  padding: .625rem 0;
+  box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.1);
+  &:disabled {
+    background-color: var(--colors-gris-medio);
+    opacity: 1;
+  }
+}
+
+@mixin bg_modal() {
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 11;
+  display: flex;
+  align-items: center;
+  opacity: 1;
+  visibility: visible;
+  transition: .3s ease all;
+  overflow-y: hidden;
+}
+
+@mixin modal_gral {
+  @include bg_modal();
+  .modal_cnt {
+    width: 80%;
+    max-width: 320px;
+    height: auto;
+    margin: 0 auto;
+    position: relative;
+    top: 0;
+    background-color: var(--colors-blanco);
+    &-close { color: var(--colors-celeste); position: absolute; top: 3px; left: 88%; z-index: 10; padding: 10px; font-size: 1rem; }
+    .modal { width: 100%; margin: 0 auto; box-shadow: 0 0 0 0; border-radius: 4px; padding: 20px 30px; }
+    .modal .header { width: 100%; margin: 20px auto 40px auto; padding: 0; display: flex; align-items: center; justify-content: center; }
+    .modal .header-icon { font-size: 1.875rem; color: var(--colors-rojo-habitat); }
+    .modal .body { width: 100%; margin: 0 auto; height: auto; overflow-y: hidden; text-align: center; padding: 0; }
+    .modal .body-title { color: var(--colors-gris-oscuro); font: 1.125rem var(--fonts-weight-bold); margin: 0 0 30px; text-align: center; }
+    .modal .body-text { color: var(--colors-gris-oscuro); font: 1rem var(--fonts-weight-regular); margin: 0 auto 60px auto; }
+    .modal .body-btn { @include btn-general(); }
+  }
+}

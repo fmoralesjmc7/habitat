@@ -1,0 +1,115 @@
+@import "../../../../theme/mixins";
+
+:host {
+  .content_page {
+    .encabezado {
+      background-color: var(--colors-rojo-habitat);
+      padding: 1.25rem 1.625rem;
+      color: var(--colors-blanco);
+      box-shadow: inset 0px 4px 0px -3px var(--color-linea-gris);
+
+      .principales {
+        margin-bottom: 1.25rem;
+        border-bottom: .5px solid;
+        border-color: var(--colors-light);
+        
+        .nombre {
+          font: 1.5rem var(--ion-font-family-bold);
+          margin: 0;
+        }
+
+        img {
+          width: 5.25rem;
+          float: right;
+          padding-right: 0.313rem;
+        }
+
+        .info {
+          font-size: 0.875rem;
+          margin-top: 0.5rem;
+          border-radius: 50%;
+          color: var(--colors-rojo-habitat);
+          background-color: var(--colors-blanco);
+  
+          &::before {
+            content: "¡";
+            font-family: var(--ion-font-family-bold);
+            text-align: center;
+            display: flex;
+            align-content: stretch;
+            justify-content: space-around;
+            font-size: 0.7rem;
+          }
+        }
+      }
+
+      .secundarios {
+        margin: 0;
+        font: 1rem var(--ion-font-family-regular);
+        span {
+          font: 1rem var(--ion-font-family-bold);
+        }
+
+        &.rut {
+          margin-bottom: 1.25rem;
+          margin-top: 0.313rem;
+        }
+      }
+
+      .icono-persona {
+        font-size: 5.25rem;
+        align-items: center;
+        float: right;
+      }
+    }
+
+    .botonera {
+      .ultima-actualizacion {
+        text-align: center;
+        margin-top: 1.875rem;
+        font-size: 0.875rem;
+        color: var(--color-gris-actualizacion);
+      }
+
+      .opciones-cambio {
+        border-radius: 0.839rem;
+        margin: 1.25rem 1.625rem;
+        box-shadow: 0px 0px 1.118rem rgba(0, 0, 0, 0.1);
+        margin-bottom: 1.625rem;
+        text-align: center;
+        color: var(--colors-gris-oscuro);
+        
+        .opcion {
+          padding: 1.813rem 3.688rem;
+          p {
+            margin: 0;
+            padding-top: 0.625rem;
+            font-family: var(--ion-font-family-medium);
+          }
+          .icono {
+            font-size: 2.813rem;
+            color: var(--colors-rojo-habitat);
+            width: 100%;
+          }
+
+          &.border {
+            &-bottom {
+              border-color: var(--color-gris-borde) !important;
+              border-bottom: 1.17px solid;
+            }
+
+            &-derecha {
+              border-color: var(--color-gris-borde) !important;
+              border-right: 1.17px solid;
+            }
+          }
+        }
+
+      }
+    }
+
+    ion-grid, ion-col {
+      padding: 0;
+    }
+  }
+}

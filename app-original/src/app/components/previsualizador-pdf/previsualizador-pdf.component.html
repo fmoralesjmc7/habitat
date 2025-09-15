@@ -1,0 +1,12 @@
+<section class="contenedor-pdf" data-cy="previsualizadorPDF">
+  <ngx-extended-pdf-viewer
+    [base64Src]="pdfBase64"
+    [useBrowserLocale]="true"
+    [height]="heightPdf"
+    [backgroundColor]="backgroundColor"
+    [showBorders]="false"
+    [showToolbar]="false"
+    (pageRendered)="onPageRendered($event)"
+  >
+  </ngx-extended-pdf-viewer>
+</section>

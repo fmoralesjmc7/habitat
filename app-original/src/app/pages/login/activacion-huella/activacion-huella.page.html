@@ -1,0 +1,21 @@
+<ion-content class="content">
+  <section class="cnt_acceso cnt_acceso-img">
+    <section class="print">
+      <div class="cnt_print-icon">
+        <img alt="" src="./assets/icon/biometria/{{tipoBiometria}}.svg" class="icon-{{tipoBiometria}}" />
+      </div>
+
+      <h2 class="cnt_print-title">
+        Inicia sesión con tu {{textoTipoBiometria}}
+      </h2>
+
+      <p class="cnt_print-text">
+        Recuerda que otras personas que hayan registrado previamente su {{textoTipoBiometria}}, también podrán iniciar sesión.
+      </p>
+    </section>
+    <section class="buttons">
+      <button class="buttons-btn" (click)="mostrarModalHuella()">Activar</button>
+      <button class="buttons-btn buttons-btn--blue" (click)="cambiarPaginaSinHuella()">Ahora No</button>
+    </section>
+  </section>
+</ion-content>

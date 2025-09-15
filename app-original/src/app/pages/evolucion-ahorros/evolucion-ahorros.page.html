@@ -1,0 +1,83 @@
+<app-header (clickBackButton)="volverAlHome()"></app-header>
+
+<ion-content class="content_page" forceOverscroll="false">
+  <!-- Sección principal - Solo se muestra cuando no está cargando y no hay error -->
+  <section class="section_blnc" *ngIf="!errorCarga">
+    <!-- Título de la página -->
+    <h2 class="blnc-title">Evolución de tus Ahorros</h2>
+
+    <!-- Fecha de actualización y selector de cuentas -->
+    <ion-grid>
+      <ion-row>
+        <!-- Fecha de actualización -->
+        <ion-col size="5" class="ion-align-items-center d-flex">
+          <p class="font10">
+            {{ fechaActualizacion || 'Cargando fecha...' }}
+          </p>
+        </ion-col>
+
+        <!-- Selector de cuentas -->
+        <ion-col size="7">
+          <ion-item class="cuentas">
+            <ion-select aria-label="cuentas" interface="action-sheet" [value]="cuentaSeleccionada" slot="end"
+              class="select-cuentas" (ionChange)="recibeOpcionSelect($event)" cancel-text="Cancelar">
+              <ion-select-option [value]="cuenta.valor" *ngFor="let cuenta of cuentas">
+                {{ cuenta.texto }}
+              </ion-select-option>
+            </ion-select>
+            <ion-icon name="chevron-forward-outline" slot="end" class="arrow-icon"></ion-icon>
+          </ion-item>
+        </ion-col>
+
+      </ion-row>
+    </ion-grid>
+
+    <ion-segment class="nav-rentabilidad ion-align-items-center" [value]="segmentValue"
+      (ionChange)="onSegmentChange($event)">
+      <ion-segment-button class="custom-segment-button" [value]="rango.id" *ngFor="let rango of rangoMes">
+        <ion-label>{{ rango.label }}</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+    <br>
+    <!-- Gráfico -->
+    <div class="chart-container">
+      <canvas #chartCanvas baseChart [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions"
+        [chartType]="lineChartType"></canvas>
+
+    </div>
+
+    <!-- Información de ahorro -->
+    <ion-grid>
+      <ion-row>
+        <!-- Total ahorrado -->
+        <ion-col size="6">
+          <ion-card class="box-info-ahorro">
+            <ion-card-content>
+              <h2>Tu Total Ahorrado</h2>
+              <ion-card-title class="txt_danger">${{totalAhorrado | number}}</ion-card-title>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+
+        <!-- Variación -->
+        <ion-col size="6">
+          <ion-card class="box-info-ahorro">
+            <ion-card-content>
+              <p>Variación</p>
+              <p class="valor-var">${{variacion.valor | number}}</p>
+              <hr />
+              <p class="font12">
+                En {{periodoSeleccionado}} tus ahorros han rentado un
+                <strong
+                  [ngClass]="{'txt_danger': variacion.porcentaje<0, 'txt_success': variacion.porcentaje>=0}">{{variacion.porcentaje}}%
+                  <ion-icon [name]="variacion.porcentaje >= 0 ? 'caret-up' : 'caret-down'"
+                    [ngClass]="{'txt_danger': variacion.porcentaje<0, 'txt_success': variacion.porcentaje>=0}"></ion-icon></strong>
+              </p>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </section>
+
+</ion-content>

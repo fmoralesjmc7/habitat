@@ -1,0 +1,30 @@
+<app-header [showBackButton]="false"></app-header>
+
+<ion-content class="content_page">
+    <section class="container">
+        <app-step-items [active]="3"></app-step-items>
+        <article class="container-icon">
+            <ion-icon class="icon-exito"></ion-icon>
+        </article>
+        <h2 class="container-title">
+            Tu depósito directo fue ingresado con éxito
+        </h2>
+        <p class="container-text">
+            Recuerda que el depósito se materializará en un plazo de seis días hábiles siguientes a esta transacción y
+            se acreditará en el Fondo vigente de tu cuenta, previa validación de tu banco.
+            Si no has elegido un Fondo, se asignará de acuerdo a tu edad.
+        </p>
+
+        <p class="container-text">
+            Se está creando tu comprobante para descargar, esto podría tardar un momento.
+        </p>
+
+        <p class="container-text" *ngIf="email">
+            También enviaremos una copia de esta solicitud a tu correo electrónico <span class="email">{{ email }}</span>
+        </p>
+        <article class="cnt_button">
+            <button class="cnt_button-download" (click)="descargarPdf()">Descargar</button>
+            <button class="cnt_button-back" (click)="volverAlHome()">Ir al Home</button>
+        </article>
+    </section>
+</ion-content>

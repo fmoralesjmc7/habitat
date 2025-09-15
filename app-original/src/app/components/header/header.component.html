@@ -1,0 +1,22 @@
+<ion-header class="header_app">
+    <ion-toolbar class="navbar">
+        <ion-buttons *ngIf="showBackButton" 
+                    slot="start" 
+                    [class.nav-titulo]="titulo"
+                    class="nav-button button-left" 
+                    (click)="backButton()">
+            <ion-icon class="btn-icon icon-back" name="icon-menu-hamb"></ion-icon>
+        </ion-buttons>
+        <ion-buttons *ngIf="!showBackButton" slot="start" class="nav-button button-left" ></ion-buttons>
+
+        <h1 (click)="backButton()" *ngIf="titulo">{{titulo}}</h1>
+
+        <figure *ngIf="!titulo" class="logo">
+            <img alt="" class="logo-img" src="./assets/imgs/nuevo_logo_header.png">
+        </figure>
+
+        <ion-buttons *ngIf="!titulo || showMenuHamb" slot="primary" class="nav-button button-right" (click)="toggleMenu()">
+            <ion-icon class="btn-icon icon-menu-hamb" name="icon-menu-hamb"></ion-icon>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>

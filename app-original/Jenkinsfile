@@ -1,0 +1,135 @@
+def remote = [:]
+pipeline {
+    agent {
+        label "agente-ubuntu-large"
+    }
+
+    tools {
+        nodejs 'node-18.0.0'
+    }
+    environment {
+        UNLOCK=obtenerParametro('keychain.unlock')
+        DEBE_INSTALAR = "false"
+        TOKEN_SONAR = credentials('sonar-token-app')
+        URL_SONAR=obtenerParametro('sonar.url')
+        ESLINT_PLUGIN_DIFF_COMMIT = "master"
+    }
+    stages {
+        stage('Build') {
+            steps {
+                echo "Iniciando... ${env.BRANCH_NAME}"
+                sh "npm --version"
+                sh "node -v"
+                sh "npm ci"
+                sh "npx jetify"
+                sh "sh update-props.sh ${env.BRANCH_NAME}"
+                sh "ionic build"
+                sh "ionic cap sync --no-build"
+            }
+        }
+        stage('Lint') {
+            when {
+                expression {
+                    return DEBE_INSTALAR == 'false'
+                }
+            }
+            steps {
+                script {
+                    try {
+                        echo "Ejecutar Revision Codigo"
+                        sh "npm run lint"
+                    } catch (exc) {
+                        echo "Ejecucion de Lint con errores !"
+                    }
+                }
+            }
+        }
+        stage('Pruebas Unitarias') {
+            when {
+                expression {
+                    return DEBE_INSTALAR == 'false'
+                }
+            }
+            steps {
+                script {
+                    echo "Ejecutar Revision Codigo"
+                    sh "npm run pre-push"
+                }
+            }
+        }
+        stage('Revision Codigo') {
+            when {
+                expression {
+                    return DEBE_INSTALAR == 'false'
+                }
+            }
+            steps {
+                script {
+                    try {
+                        echo "Ejecutar Revision Codigo"
+                        sh "node sonar.js"
+                    } catch (exc) {
+                        echo "Ejecucion de sonar con errores !"
+                    }
+                }
+            }
+        }
+        stage('Release Android') {
+            when {
+                beforeAgent true
+                expression {
+                    return DEBE_INSTALAR == 'true' && ( currentBuild.result == null || currentBuild.result == 'SUCCESS' )
+                }
+            }
+            steps {
+                sh "sh scripts/build-android.sh"
+                archiveArtifacts artifacts: 'android/app/build/outputs/apk/debug/*.apk', fingerprint: true
+            }
+        }
+        stage('Release IOS') {
+            when {
+                beforeAgent true
+                expression {
+                    return DEBE_INSTALAR == 'true' && ( currentBuild.result == null || currentBuild.result == 'SUCCESS' )
+                }
+            }
+            steps {
+                sh "sh scripts/build-ios.sh"
+                archiveArtifacts artifacts: 'ios/build/App.ipa', fingerprint: true
+            }
+        }
+    }
+}
+
+
+
+def obtenerParametro(parametro){
+    configFileProvider([configFile(fileId: "base-configuracion", variable: 'configFile')]) {
+        def props = readProperties file: "$configFile"
+        return props[parametro]
+    }
+}
+def obtenerPerfil(branch){
+    def perfil = 'uat'
+    if (branch.startsWith('master')) {
+        perfil = 'production'
+    }
+    return perfil;
+}
+def debeInstalar(branch) {
+    def res = 'false'
+
+    if (branch.startsWith('release')) {
+        res = 'true'
+    } else if (branch.endsWith('pipeline-new')) {
+        res = 'true'
+    } else if (branch.startsWith('feature')) {
+        res = 'false'
+    } else if (branch == 'develop') {
+        res = 'true'
+    } else if (branch == 'pre-develop') {
+        res = 'true'
+    }
+
+    return res;
+}

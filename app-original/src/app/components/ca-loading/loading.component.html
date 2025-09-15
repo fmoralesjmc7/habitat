@@ -1,0 +1,8 @@
+<div class="main-container" *ngIf="showLoading">
+  <div class="container-image illus-loading"></div>
+  <div class="container-text move fadeInUp duration-50">
+    <div *ngFor="let text of textLoading; let index = index">
+      <h1 class="title-start fadeInUp fadeIn duration-{{ (index === 0 ? '0' : '') + 5*(index + 1) }} delay-{{ index + 1 }}">{{ text }}</h1>
+    </div>
+  </div>
+</div>

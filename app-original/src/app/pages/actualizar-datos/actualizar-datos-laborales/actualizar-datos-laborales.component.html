@@ -1,0 +1,166 @@
+<app-header titulo="Tus Datos" [showMenuHamb]="!modoEdicion" (clickBackButton)="volverAlHome()" ></app-header>
+
+<ion-content class="content_page">
+
+  <section *ngIf="!modoEdicion">
+    <ion-card class="datos-contacto">
+      <span class="datos-editar" (click)="editarDatos()">
+        <ion-icon class="icon icon-editar-lapiz"></ion-icon>
+      </span>
+  
+      <ion-grid class="datos-formulario" *ngIf="datosUsuario">
+        <ion-row>
+          <ion-col>
+            <p class="titulo">Datos Laborales</p>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+              <p class="label primero">Renta líquida</p>
+              <ng-container *ngIf="datosUsuario.nombreRenta; else sinDatos">
+                <p class="dato">{{datosUsuario.nombreRenta}}</p>
+              </ng-container>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+              <p class="label">Profesión u oficio</p>
+              <ng-container *ngIf="datosUsuario.nombreProfesion; else sinDatos">
+                <p class="dato">{{datosUsuario.nombreProfesion}}</p>
+              </ng-container>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+              <p class="label">Cargo</p>
+              <ng-container *ngIf="datosUsuario.nombreCargo; else sinDatos">
+                <p class="dato">{{datosUsuario.nombreCargo}}</p>
+              </ng-container>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+      <ion-grid class="datos-formulario" *ngIf="datosUsuario">
+        <ion-row>
+          <ion-col>
+            <ion-row>
+                <ion-col>
+                  <p class="titulo residencia">Datos de Residencia</p>
+                </ion-col>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+              <p class="label primero">Región</p>
+              <ng-container *ngIf="direccionSeleccionada.nombre_region; else sinDatos">
+                <p class="dato">{{direccionSeleccionada.nombre_region}}</p>
+              </ng-container>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+              <p class="label">Ciudad</p>
+              <ng-container *ngIf="direccionSeleccionada.nombre_ciudad; else sinDatos">
+                <p class="dato">{{direccionSeleccionada.nombre_ciudad}}</p>
+              </ng-container>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+              <p class="label">Comuna</p>
+              <ng-container *ngIf="direccionSeleccionada.nombre_comuna; else sinDatos">
+                <p class="dato">{{direccionSeleccionada.nombre_comuna}}</p>
+              </ng-container>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+              <p class="label">Calle</p>
+              <ng-container *ngIf="direccionSeleccionada.calle; else sinDatos">
+                <p class="dato">{{direccionSeleccionada.calle}}</p>
+              </ng-container>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+              <p class="label">Número</p>
+              <ng-container *ngIf="direccionSeleccionada.numero; else sinDatos">
+                <p class="dato">{{direccionSeleccionada.numero}}</p>
+              </ng-container>
+          </ion-col>
+          <ion-col>
+              <p class="label">Depto.</p>
+              <ng-container *ngIf="direccionSeleccionada.departamento; else sinDatos">
+                <p class="dato">{{direccionSeleccionada.departamento}}</p>
+              </ng-container>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+              <p class="label">Block</p>
+              <ng-container *ngIf="direccionSeleccionada.block; else sinDatos">
+                <p class="dato">{{direccionSeleccionada.block}}</p>
+              </ng-container>
+          </ion-col>
+          <ion-col>
+              <p class="label">Villa/Población</p>
+              <ng-container *ngIf="direccionSeleccionada.villa; else sinDatos">
+                <p class="dato">{{direccionSeleccionada.villa}}</p>
+              </ng-container>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card>
+
+    <actualizar-datos-listado-empleadores *ngIf="datosUsuario" #listadoEmpleadoresEditar [datosUsuario]="datosUsuario"></actualizar-datos-listado-empleadores>
+    
+    <section class="botonera">
+      <button class="buttons-btn" (click)="volverAlHome()">Volver</button>
+    </section>
+  </section>
+  
+
+  <!--Componente despliegue de edición de datos de contacto-->
+  <section class="content_page" *ngIf="modoEdicion">
+    <app-formulario-edicion-laborales 
+      (volverVisualizar)="volverVisualizar()"
+      [datosUsuario]="datosUsuarioInput" 
+      [direccionSeleccionada]="direccionSeleccionadaInput" 
+      [listadoRegiones]="listadoRegiones"
+      [listadoComunas]="listadoComunas"
+      [listadoCiudades]="listadoCiudades"
+      [listadoComunasVisibles]="listadoComunasVisibles"
+      [listadoCiudadesVisibles]="listadoCiudadesVisibles"
+      [listadoRangosRenta]="listadoRangosRenta"
+      [listadoCargos]="listadoCargos"
+      [listadoProfesiones]="listadoProfesiones">
+    </app-formulario-edicion-laborales>
+  </section>
+</ion-content>
+
+
+<ng-template #sinDatos><p class="dato">-</p></ng-template>
+
+<section class="modal_informativo" *ngIf="modalSinCelularValido">
+  <article class="modal_cnt">
+    <ion-icon class="icon_close icon-cerrar" (click)="modalSinCelularValido = false"></ion-icon>
+    <ion-card class="modal alerta">
+      <ion-card-header class="header">
+        <ion-icon class="header-icon icon-informacion"></ion-icon>
+      </ion-card-header>
+      <ion-card-content class="body">
+        <h3 class="body-title">
+          Sin Número de Celular válido
+        </h3>
+        <p class="body-text">
+          No tienes registrado número de celular válido para realizar la actualización de datos.
+          Regístralo en cualquiera de nuestras <a class="link"
+          (click)="irSucursales()">Sucursales</a> o llama a nuestro <a class="link"
+            (click)="llamarContactCenter()"> Contact Center.</a>
+        </p>
+        <button class="body-btn" (click)="modalSinCelularValido = false">Aceptar</button>
+      </ion-card-content>
+    </ion-card>
+  </article>
+</section>

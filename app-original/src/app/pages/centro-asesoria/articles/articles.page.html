@@ -1,0 +1,31 @@
+<app-header-centro-asesoria [headerElements]="headerElements" (clickLeftButton)="goTo('home')"></app-header-centro-asesoria>
+
+<ion-content>
+  <div class="container-articles" *ngIf="!loadingArticles">
+    <ion-searchbar class="search-bar" placeholder="Buscar" (ionChange)="filterArticles($any($event).detail.value)"></ion-searchbar>
+    <div class="principal-article" *ngFor="let article of principalArticlesInView" (click)="goToArticle(article, 'principal')">
+      <div class="container-image" >
+        <img *ngIf="article.mainImageUrl" [src]="article.mainImageUrl" alt="">
+      </div>
+      <h1>{{ article.title }}</h1>
+      <p [innerHTML]="article.subtitle"></p>
+      <p class="date-article">{{ getDate(article.publishDate) | date : "longDate" }}</p>
+    </div>
+    <div class="normal-article" *ngFor="let article of normalArticlesInView" (click)="goToArticle(article, 'normal')">
+      <div class="container-text">
+        <h1>{{ article.title }}</h1>
+        <p [innerHTML]="article.subtitle"></p>
+        <p class="date-article">{{ getDate(article.publishDate) | date : "longDate" }} &bull; {{ article.readingTime }} min de lectura</p>
+      </div>
+      <div class="container-image">
+        <div class="image-article">
+          <img *ngIf="article.mainImageUrl" [src]="article.mainImageUrl" alt="">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container-spinner" *ngIf="loadingArticles">
+    <ion-spinner name="bubbles"></ion-spinner>
+    <p>Cargando artículos...</p>
+  </div>
+</ion-content>

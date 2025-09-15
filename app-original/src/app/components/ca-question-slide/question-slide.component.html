@@ -1,0 +1,28 @@
+<div class="content-form" *ngIf="loadingFormGroup">
+  <div class="container-image {{ questionSlideText.classIllustration }}"></div>
+  <div class="section-question">
+    <h6 slot="end" class="steps-questionary">Paso {{ slideNumber }} de {{ totalSlides }}</h6>
+    <h1 class="question-simulator">{{ questionSlideText.question }}</h1>
+    <div [formGroup]="formGroup" class="answer-questionary">
+      <ion-item (keyup.enter)="onClickButton()" *ngIf="questionSlideText.typeInput === 'number' || questionSlideText.typeInput === 'money'">
+        <ion-input solo-numeros [disabled]="currentSlide !== slideNumber" *ngIf="questionSlideText.typeInput === 'number'" type="tel" pattern="[0-9]*" [placeholder]="questionSlideText.placeholder" [formControlName]="questionSlideText.formControlName!"></ion-input>
+        <ion-input [disabled]="currentSlide !== slideNumber" *ngIf="questionSlideText.typeInput === 'money'" (ionBlur)="validateNumber()" type="tel" [value]="showAmount | chileanCurrency" (ionChange)="modifyAmount($event)" placeholder="$" [attr.maxlength]="questionSlideText.maxlength"></ion-input>
+      </ion-item>
+      <app-gender-options *ngIf="questionSlideText.typeInput === 'gender'" (clickGender)="emitGenderValue($event)" [selectGenderFemale]="selectGenderFemale" [selectGenderMale]="selectGenderMale"></app-gender-options>
+      <app-select-picker #componenteSeleccionMes *ngIf="questionSlideText.typeInput === 'picker'" (clickOption)="emitDensityValue($event)" [pickerOptions]="pickerOptions"></app-select-picker>
+      <app-select-fund *ngIf="questionSlideText.typeInput === 'select-fund'" (changeFunds)="emitFunds($event)"></app-select-fund>
+      <div *ngIf="textError && errorCondition" class="text-warning">
+        <ion-text>{{ textError }}.</ion-text>
+      </div>
+    </div>
+
+    <p class="explanatory-text" *ngIf="slideNumber != 3">{{ questionSlideText.explanatory }}</p>
+    <p class="explanatory-text" *ngIf="slideNumber == 3">{{ questionSlideText.explanatory }} <a class="explanatory-link" (click)="onClickCertificados()">{{ questionSlideText.link }}</a> {{ questionSlideText.explanatory2 }}</p>
+    <div class="container-button button--simulator">
+      <ion-button [disabled]="disableButton" (click)="onClickButton()" class="primary-button inactive">
+        {{ questionSlideText.textButton }}
+      </ion-button>
+    </div>
+  </div>
+
+</div>

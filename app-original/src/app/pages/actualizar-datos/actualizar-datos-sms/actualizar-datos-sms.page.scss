@@ -1,0 +1,194 @@
+@import '../../../../theme/mixins';
+
+:host {
+    .content_page {
+        display: block;
+        background: var(--colors-blanco);
+        padding: 40px 0 0;
+
+        .scroll-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            padding: 40px 0 60px;
+        }
+
+        .container {
+            display: block;
+            width: 92%;
+            margin: 0 auto;
+            .titulo {
+                display: block;
+                margin-bottom: 1.188rem;
+                margin-top: 1.875rem;
+                width: 100%;
+                padding: 0;
+                text-align: center;
+                font: 1.5rem var(--fonts-weight-bold);
+                color: var(--colors-gris-oscuro);
+            }
+
+            .box_time {
+                display: flex;
+                justify-content: center;
+
+                &-item {
+                    height: 5.65%;
+                    width: 63.89%;
+                    text-align: center;
+
+                    .text {
+                        color: var(--colors-celeste);
+                        font: 2.5rem var(--fonts-weight-bold);
+                        letter-spacing: 2px;
+                        line-height: 30px;
+                        
+                    }
+                }
+            }
+
+            .box_text {
+                width: 100%;
+                margin: 1.25rem 0;
+                display: flex;
+                justify-content: center;
+
+                span {
+                    width: 90%;
+                    color: var(--colors-gris-oscuro);
+                    letter-spacing: -0.44px;
+                    font: .875rem var(--fonts-weight-regular);
+                    line-height: 16px;
+                    text-align: center;
+                }
+                .texto_para_realizar {
+                    font: 1rem var(--fonts-weight-regular);
+                }
+                .alerta {
+                    color: var(--colors-rojo-habitat);
+                }
+            }
+
+            .box_inputs {
+                display: flex;
+                justify-content: center;
+
+                &-content {
+                    display: flex;
+                    flex-direction: row;
+                    flex-wrap: nowrap;
+                    justify-content: space-around;
+                    width: 65%;
+                    text-align: center;           
+
+                    .item {
+                        height: 30px;
+                        width: 30px;
+
+                        .text {
+                            height: 30px;
+                            width: 30px;
+                            border-radius: 4px;
+                            background-color: var(--colors-gris-semi-claro);
+                            color: var(--colors-gris-oscuro);
+                            font: 1rem var(--fonts-weight-regular);
+                            text-align: center;
+
+                            .text-input{
+                                width: 100%;
+                                height: 100%;
+                                margin: 0 auto;
+                                text-align: center;
+                            }
+                        }
+                    }
+                }
+            }
+
+            .box_btn {
+                display: flex;
+                justify-content: center;
+
+                &-item {
+                    width: 65%;
+
+                    .btn_solicitar {
+                        @include btn-general;
+                        margin: 0 auto;
+                        background: var(--colors-celeste);
+                        border-radius: 25px;
+                    }
+                }
+            }
+
+            .box_botones {
+                width: 80%;
+                margin: 0 auto;
+                margin-top: 3.313rem;
+                align-self: flex-end;
+                text-align: center;
+
+                .btn_realizar_solicitud, .btn_download, .btn_volver {
+                    @include btn-general;
+                    border-radius: 50px;
+                    padding: 1.125rem 0;
+                }
+
+                .btn_volver {
+                    @include btn-general();
+                    color: var(--color-celeste-button);
+                    background-color: var(--colors-blanco);
+                    border: 1px solid var(--color-celeste-button);
+                    margin: 0px auto 0px auto;
+                    align-self: flex-end;
+                    margin-top: 1.25rem;
+                    border-radius: 50px;
+                    padding: 1.125rem 0;
+                }
+            }
+        }
+    }
+
+    .modal_info{
+        @include modal_gral();
+        .modal_cnt{
+            border-radius: 4px;
+            .modal{
+                .header {
+                    margin: 20px auto 14px auto;
+                }
+                .icon_close {
+                    color: var(--colors-celeste);
+                    position: absolute;
+                    top: 0;
+                    left: 88%;
+                    z-index: 10;
+                    padding: .625rem;
+                    font-size: .875rem;
+                }
+
+                .body{
+                    &-text{
+                        &:first-of-type{
+                            margin: 0 auto 20px auto;
+                        }
+                        .texto_celeste{
+                            color: var(--colors-celeste);
+                            font: 1rem var(--fonts-weight-medium);
+                        }
+                        .medium{
+                            color: var(--colors-celeste);
+                            font: 1rem var(--fonts-weight-medium);
+                        }
+                        .destacado {
+                            font: 1rem var(--fonts-weight-bold);
+                        }
+                    }
+                    &-btn {
+                        margin: 20px 0 20px 0px;
+                    }
+                }
+            }
+        }
+    }
+}

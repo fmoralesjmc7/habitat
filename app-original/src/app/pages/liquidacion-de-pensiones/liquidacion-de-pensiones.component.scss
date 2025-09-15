@@ -1,0 +1,313 @@
+@import '../../../theme/mixins';
+
+:host {
+  .content_page {
+    background: var(--colors-blanco);
+
+    &.content_page--succes {
+      .scroll-content {
+        overflow-y: scroll;
+      }
+    }
+
+    ion-item {
+      --ion-safe-area-left: 0;
+    }
+
+    .label-no-margin {
+      margin: 0;
+    }
+
+    .scroll-content {
+      padding: 40px 0 0;
+      overflow-y: hidden;
+    }
+
+    .section_cnt {
+      display: block;
+      margin: 0 auto;
+      width: 90%;
+      height: 100%;
+      padding-top: 40px;
+
+      .form {
+        height: 100%;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+
+        &-title {
+          color: var(--colors-gris-oscuro);
+          text-transform: none;
+          width: 100%;
+          display: block;
+          padding: 0px;
+          margin: 0px;
+          font: 1.125rem var(--fonts-weight-bold);
+          text-align: center;
+
+        }
+
+        .form_cnt {
+          box-sizing: unset;
+          margin: 1rem 0 0 0;
+
+          .titulo_certificado {
+            color: var(--colors-azul-oscuro);
+            font: .9rem var(--fonts-weight-bold);
+
+            &-dos {
+              margin-top: 0px;
+            }
+          }
+
+          .texto_certificado {
+            margin-bottom: 0px;
+            font: .9rem var(--fonts-weight-regular);
+            color: var(--colors-gris-oscuro);
+          }
+
+          .texto_periodo {
+            margin-bottom: 0px;
+            font: .9rem var(--fonts-weight-regular);
+            padding-top: 1.1rem;
+            padding-bottom: 1.1rem;
+            color: var(--colors-gris-oscuro);
+          }
+
+          .texto_no_disponible {
+            margin-bottom: 0px;
+            font: .9rem var(--fonts-weight-regular);
+            padding-top: 1.1rem;
+            padding-bottom: 1.1rem;
+            color: var(--color-rojo-no-disponible);
+            white-space: normal;
+          }
+
+          .titulo_opciones {
+            margin-top: 5px;
+            font: 1rem var(--fonts-weight-regular);
+          }
+
+          .form_radio {
+            --color-checked: var(--colors-linkedin);
+            --color: var(--colors-linkedin);
+          }
+
+          .row_radio {
+            margin-top: 5px;
+          }
+
+          .button {
+            @include btn-general;
+            margin: 20px 0 15px 0;
+
+            &-blue {
+              color: var(--colors-azul-oscuro);
+              background-color: var(--colors-blanco);
+              border: 1px solid var(--colors-azul-oscuro);
+              margin: 0px auto 20px auto;
+            }
+
+          }
+
+          .options {
+            padding: 0;
+            margin: 0 0 2.0rem;
+
+            .item-inner {
+              padding: 0;
+            }
+
+            &-label {
+              font-size: 1rem;
+              color: var(--colors-gris-oscuro);
+              margin: 0 0 .625rem;
+
+              .icon {
+                font-size: .75rem;
+              }
+            }
+
+            &-select {
+              @include select();
+            }
+          }
+        }
+      }
+
+      //form
+    }
+
+    //section_content
+    .success {
+      display: block;
+      width: 90%;
+      padding-top: 40px;
+      margin: 0 auto;
+
+      height: 70%;
+
+      .success_cnt {
+        height: 100%;
+
+        &-header {
+          &::after {
+            display: none;
+          }
+
+          .cnt_icon {
+            background: var(--colors-verde);
+            border-radius: 50%;
+            font-size: 3.125rem;
+            color: var(--colors-blanco);
+            width: 5rem;
+            height: 5rem;
+            margin: 0 auto;
+            margin-bottom: 2rem !important;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            justify-content: center;
+
+          }
+        }
+
+        &-title {
+          @include title();
+          width: 85%;
+          text-align: center;
+          margin: 40px auto;
+        }
+
+        &-text {
+          font: 1rem var(--fonts-weight-regular);
+          width: 100%;
+          text-align: center;
+          margin: 0 0 24px;
+          color: var(--colors-gris-oscuro);
+
+          &:last-of-type {
+            margin: 0;
+          }
+
+          .bold {
+            font: 1rem var(--fonts-weight-medium);
+            text-transform: lowercase;
+          }
+        }
+      }
+
+      //succes_cnt
+      .cnt_btn {
+        margin: 2rem auto 2.5rem auto;
+
+        &-button {
+          @include btn-general();
+          margin: 0;
+
+          &:first-of-type {
+            margin: 0 0 30px;
+          }
+
+          &:nth-of-type(2) {
+            background: var(--colors-azul-oscuro);
+          }
+        }
+      }
+    }
+
+    .alert-title.sc-ion-alert-ios {
+      font-size: 1rem !important;
+    }
+
+    .alert-title.sc-ion-alert-md {
+      font-size: 1rem !important;
+    }
+
+    .alert-head {
+      text-align: center;
+    }
+
+    //success
+  }
+
+  .label-datetime {
+    color: var(--color-gris-label);
+    padding-left: 1rem;
+    margin: 0 !important;
+    font-size: 1rem;
+    &.label-datetime--active {
+      color: inherit;
+    }
+  }
+  .btn-modal {
+    height: 40px;
+    margin-top: -10px;
+  }
+
+  .botonera {
+    padding-top: 1.938rem;
+    .buttons-btn {
+        @include btn-general();
+        border-radius: 50px;
+        font-size: 1.125rem;
+        margin-bottom: 0.938rem;
+        background-color: var(--colors-blanco);
+        color: var(--color-celeste-button);
+        border: solid;
+        border-color:var(--color-celeste-button);
+        padding: 1.094rem 0;
+  
+        &.btn-guardar {
+            background-color: var(--colors-rojo-oscuro);
+            color: var(--colors-blanco);
+            border: 0;
+            &:disabled {
+              background-color: var(--colors-gris-medio);
+              opacity: 1;
+            }
+        }
+    }
+  }
+  //content-page
+}
+
+ion-modal.md {
+  --width: 290px;
+  --height: 300px;
+  --border-radius: 8px;
+}
+
+ion-modal.ios {
+  --width: 290px;
+  --height: 250px;
+  --border-radius: 8px;
+}
+
+/* Reset */
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+.card {
+	flex-grow: 1;
+	padding: 0.3rem;
+	margin: 1.1rem;
+	background: var(--colors-blanco);
+	border-radius: 4px;
+}
+
+.badge-custom {
+  padding: 3px 15px 3px 15px;
+  border-radius: 10px;
+  background: var(--ion-color-fund-c);
+}
+
+
+
+
+
+

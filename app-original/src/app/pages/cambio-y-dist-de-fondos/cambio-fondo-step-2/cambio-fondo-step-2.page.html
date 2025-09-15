@@ -1,0 +1,186 @@
+<app-header [showBackButton]="false"></app-header>
+
+<ion-content class="content_page">
+  <section class="container">
+    <app-step-items [active]="2"></app-step-items>
+
+    <h2 class="container-title">Confirmar tu Solicitud de Cambio o Distribución de Fondo</h2>
+    <ng-container *ngFor="let producto of productosClientesModificados">
+      <ion-card class="accounts_cnt" *ngIf="producto.esCambioFondo">
+        <h2 class="accounts_cnt-title">
+          {{ producto.nombreCortoProducto }}
+        </h2>
+        <section class="accounts_cnt-detail">
+          <h2 class="title">Detalle Cuenta</h2>
+          <section class="accounts">
+            <section class="details" *ngFor="let fondo of producto.fondos">
+
+              <div class="details-row">
+                <div class="data">
+                  <span *ngIf="fondo.esRecaudadorActual && !producto.estaDistribuida">Fondo Actual:</span>
+                  <span *ngIf="!fondo.esRecaudadorActual && producto.estaDistribuida">Fondo Actual:</span>
+                  <span *ngIf="fondo.esRecaudadorActual && producto.estaDistribuida">Fondo Actual Recaudador:</span>
+                </div>
+                <div class="data">
+                  <div class="bill" [ngClass]="{'letter--red': fondo.nombreFondo === 'A', 'letter--orange': fondo.nombreFondo === 'B', 'letter--green': fondo.nombreFondo === 'C', 'letter--cyan': fondo.nombreFondo === 'D', 'letter--blue': fondo.nombreFondo === 'E'}">
+										<span class="value">
+											{{ fondo.nombreFondo }}
+										</span>
+                  </div>
+                </div>
+              </div>
+              <div class="details-row">
+                <div class="data">
+                  Saldo:
+                </div>
+                <div class="data">
+                  {{ fondo.saldo | formatoPesoChileno }}
+                </div>
+              </div>
+            </section><!-- details -->
+          </section>
+        </section> <!-- accounts_cnt-detail -->
+        <section class="iteration_data">
+          <h2 class="iteration_data-title">
+            Cambio de Fondo
+          </h2>
+          <ul class="iteration_data-column">
+            <li class="data">
+              <ng-container *ngFor="let fondo of producto.fondos">
+                <div class="bill" [ngClass]="{'letter--red': fondo.nombreFondo === 'A', 'letter--orange': fondo.nombreFondo === 'B', 'letter--green': fondo.nombreFondo === 'C', 'letter--cyan': fondo.nombreFondo === 'D', 'letter--blue': fondo.nombreFondo === 'E'}">
+										<span class="value">
+											{{ fondo.nombreFondo }}
+										</span>
+                </div>
+              </ng-container>
+            </li>
+            <li class="row"></li>
+            <li class="data">
+              <div class="bill" [ngClass]="{'letter--red': producto.fondoRecaudador.nombreCorto === 'A', 'letter--orange': producto.fondoRecaudador.nombreCorto === 'B', 'letter--green': producto.fondoRecaudador.nombreCorto === 'C', 'letter--cyan': producto.fondoRecaudador.nombreCorto === 'D', 'letter--blue': producto.fondoRecaudador.nombreCorto === 'E'}">
+									<span class="value">
+										{{ producto.fondoRecaudador.nombreCorto }}
+									</span>
+              </div>
+            </li>
+          </ul><!-- column -->
+          <ul class="detail_distri-percent">
+            <li class="data">Porcentaje:</li>
+            <li class="data">{{porcentajeCien}}</li>
+          </ul>
+        </section><!-- iteration_data -->
+        <!-- iteration_data -->
+      </ion-card> <!-- accounts_cnt -->
+      <!-- Si es DISTRIBUCIÓN DE FONDOS-->
+      <ion-card class="accounts_cnt" *ngIf="producto.esDistribucionFondo">
+        <h2 class="accounts_cnt-title">
+          {{ producto.nombreCortoProducto }}
+        </h2>
+        <section class="accounts_cnt-detail">
+          <h2 class="title">Detalle Cuenta</h2>
+          <section class="accounts">
+            <section class="details" *ngFor="let fondo of producto.fondos">
+              <div class="details-row">
+                <div class="data">
+                  <span *ngIf="fondo.esRecaudadorActual && !producto.estaDistribuida">Fondo Actual:</span>
+                  <span *ngIf="!fondo.esRecaudadorActual && producto.estaDistribuida">Fondo Actual:</span>
+                  <span *ngIf="fondo.esRecaudadorActual && producto.estaDistribuida">Fondo Actual Recaudador:</span>
+                </div>
+                <div class="data">
+                  <div class="bill" [ngClass]="{'letter--red': fondo.nombreFondo === 'A', 'letter--orange': fondo.nombreFondo === 'B', 'letter--green': fondo.nombreFondo === 'C', 'letter--cyan': fondo.nombreFondo === 'D', 'letter--blue': fondo.nombreFondo === 'E'}">
+										<span class="value">
+											{{ fondo.nombreFondo }}
+										</span>
+                  </div>
+                </div>
+              </div>
+              <div class="details-row">
+                <div class="data">
+                  Saldo:
+                </div>
+                <div class="data">
+                  {{ fondo.saldo | formatoPesoChileno }}
+                </div>
+              </div>
+            </section><!-- details -->
+          </section>
+        </section> <!-- accounts_cnt-detail -->
+        <section class="iteration_data">
+          <h2 class="iteration_data-title">
+            Distribución de Fondos
+          </h2>
+          <article class="detail_distri" *ngFor="let fondoNuevo of producto.nuevaDistribucion; let i = index">
+            <ul class="detail_distri-column">
+              <li class="data" *ngIf="producto.estaDistribuida">
+                <ng-container *ngFor="let fondo of producto.fondos; let f = index">
+                  <div class="bill" [ngClass]="{'letter--red': fondo.nombreFondo === 'A', 'letter--orange': fondo.nombreFondo === 'B', 'letter--green': fondo.nombreFondo === 'C', 'letter--cyan': fondo.nombreFondo === 'D', 'letter--blue': fondo.nombreFondo === 'E'}">
+										<span class="value">
+											{{ fondo.nombreFondo }}
+										</span>
+                  </div>
+                </ng-container>
+              </li>
+              <li class="data" *ngIf="!producto.estaDistribuida">
+                <ng-container *ngFor="let fondo of producto.fondos">
+                  <div class="bill" [ngClass]="{'letter--red': fondo.nombreFondo === 'A', 'letter--orange': fondo.nombreFondo === 'B', 'letter--green': fondo.nombreFondo === 'C', 'letter--cyan': fondo.nombreFondo === 'D', 'letter--blue': fondo.nombreFondo === 'E'}">
+										<span class="value">
+											{{ fondo.nombreFondo }}
+										</span>
+                  </div>
+                </ng-container>
+              </li>
+              <li class="row"></li>
+              <li class="data">
+                <div class="bill" [ngClass]="{'letter--red': fondoNuevo.nombreCorto  === 'A', 'letter--orange': fondoNuevo.nombreCorto  === 'B', 'letter--green': fondoNuevo.nombreCorto  === 'C', 'letter--cyan': fondoNuevo.nombreCorto  === 'D', 'letter--blue': fondoNuevo.nombreCorto  === 'E'}">
+									<span class="value">
+										{{ fondoNuevo.nombreCorto }}
+									</span>
+                </div>
+              </li>
+            </ul><!-- column -->
+            <ul class="detail_distri-percent">
+              <li class="data">Porcentaje:</li>
+              <li class="data">{{ fondoNuevo.porcentaje }}%</li>
+            </ul>
+            <ul class="detail_distri-info">
+              <li class="data">Saldo:</li>
+              <li class="data">${{ fondoNuevo.saldo | number:'1.0-0': 'es-CL' }}</li>
+            </ul>
+          </article>
+          <article class="iteration_closure">
+            <h2 class="iteration_closure-title">
+              Nuevo Fondo Recaudador:
+            </h2>
+            <div class="iteration_closure-fondo">
+              <div class="bill" [ngClass]="{'letter--red': producto.fondoRecaudador.nombreCorto === 'A', 'letter--orange': producto.fondoRecaudador.nombreCorto === 'B', 'letter--green': producto.fondoRecaudador.nombreCorto === 'C', 'letter--cyan': producto.fondoRecaudador.nombreCorto === 'D', 'letter--blue': producto.fondoRecaudador.nombreCorto === 'E'}">
+								<span class="value">
+									{{ producto.fondoRecaudador.nombreCorto }}
+								</span>
+              </div>
+            </div>
+          </article>
+        </section> <!-- iteration -->
+      </ion-card> <!-- accounts_cnt -->
+    </ng-container>
+
+    <section class="information" *ngIf="truncarTexto == true">
+      <p class="information-text">
+        {{ textInformativo | slice:0:115 }}...
+      </p>
+      <button class="information-btn" (click)="moreMethod()">
+        Leer Más
+      </button>
+    </section>
+    <section class="information" *ngIf="truncarTexto == false">
+      <p class="information-text">
+        {{ textInformativo }}
+      </p>
+      <button class="information-btn" (click)="lessMethod()">
+        Leer Menos
+      </button>
+    </section>
+    <section class="cnt_button">
+      <button class="cnt_button-next" (click)="generarSolicitudCDF()">Solicitar</button>
+      <button class="cnt_button-cancel" (click)="cancelarSolicitudCDF()">Cancelar</button>
+    </section>
+  </section> <!-- container -->
+</ion-content>

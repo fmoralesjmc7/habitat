@@ -1,0 +1,19 @@
+<section class="seccion_informativa">
+    <p>Recuerda que tenemos una alianza con <strong>Prudential AFG</strong> que te permite consolidar en un solo lugar la información de tus ahorros e inversiones destinadas a tu pensión.</p>
+    <p>Como ya sabes, puedes hacer seguimiento a tu proyección actual de pensión y así tomar mejores decisiones de ahorro e inversión</p>
+    <p>Esta consolidación solo considera una visualización de los ahorros, desde la Sucursal Virtual de AFP Habitat y en tu Habitat APP,  no podr&aacute;s gestionar tus inversiones de <strong>Prudential AGF</strong></p>
+    <p><strong>Puedes volver a consolidar tus saldos de AFP Habitat y Prudential AFG cuando lo desees.</strong></p>
+
+    <button class="form-btn" 
+        [disabled]="guardando" 
+        (click)="guardarSuscripcion()"
+        >Autorizar Consolidación de Saldos Prudential AGF
+    </button>  
+</section>
+
+<ng-container *ngIf="mostrarModalFelicitaciones">
+    <app-modal-prudential-felicitaciones 
+        [ventanaOrigen]="ventanaActual"
+        (cerrarModal)="onCerrarModalFelicitaciones()">
+    </app-modal-prudential-felicitaciones>
+</ng-container>

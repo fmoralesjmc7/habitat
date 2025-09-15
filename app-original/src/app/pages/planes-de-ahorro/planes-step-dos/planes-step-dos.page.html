@@ -1,0 +1,224 @@
+<app-header></app-header>
+
+<ion-content class="content">
+    <section class="profitability">
+        <app-step-items [active]="2"></app-step-items>
+        <h2 class="profitability-title">
+            Confirma tus datos
+        </h2>
+        <section class="cnt_table">
+            <article class="header">
+                <span class="header-text">Datos de tu nuevo plan {{cuentaSeleccionada === CONSTANTES.ID_PRODUCTO_CUENTA_2 ? "Cuenta 2" : "APV"}}</span>
+            </article>
+            <article class="table">
+                <ion-grid class="table_grid">
+                    <ion-row class="column">
+                        <ion-col size="8" class="column-items">
+                            <p class="texto-left">Monto:</p>
+
+                        </ion-col>
+                        <ion-col size="4" class="column-items">
+                            <p class="texto-right">
+                                {{solicitudDePlan.tipoSeleccionado.nombre_tipo_moneda === CONSTANTES.TEXTO_SIGNO_PESO ? solicitudDePlan.tipoSeleccionado.nombre_tipo_moneda + ' ' + solicitudDePlan.montoSeleccionado : solicitudDePlan.montoSeleccionado + ' ' + solicitudDePlan.tipoSeleccionado.nombre_tipo_moneda}}
+                        </ion-col>
+                    </ion-row>
+                    <ion-row class="column">
+                        <ion-col size="8" class="column-items">
+                            <p class="texto-left">Fondo:</p>
+                        </ion-col>
+                        <ion-col size="4" class="column-items">
+                            <div class="bill texto-right"
+                                 [ngClass]="{'letter--red': solicitudDePlan.fondoSeleccionado.id_tipo_fondo === 1, 'letter--orange': solicitudDePlan.fondoSeleccionado.id_tipo_fondo === 2, 'letter--green': solicitudDePlan.fondoSeleccionado.id_tipo_fondo === 3, 'letter--cyan': solicitudDePlan.fondoSeleccionado.id_tipo_fondo === 4, 'letter--blue':  solicitudDePlan.fondoSeleccionado.id_tipo_fondo === 5}">
+                                    <span class="value">
+                                        {{ solicitudDePlan.fondoSeleccionado.id_tipo_fondo === 1 ? 'A': solicitudDePlan.fondoSeleccionado.id_tipo_fondo === 2 ? 'B' : solicitudDePlan.fondoSeleccionado.id_tipo_fondo === 3 ? 'C' : solicitudDePlan.fondoSeleccionado.id_tipo_fondo === 4 ? 'D' : 'E' }}
+                                    </span>
+                            </div>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row class="column">
+                        <ion-col size="6" class="column-items">
+                            <p class="texto-left"> Régimen tributario:</p>
+                        </ion-col>
+                        <ion-col size="6" class="column-items">
+                            <p class="texto-right">{{ solicitudDePlan.regimenSeleccionado.nombre_regimen | formatoMayusculas}}</p>
+
+                        </ion-col>
+                    </ion-row>
+                    <ion-row class="column">
+                        <ion-col size="6" class="column-items">
+                            <p class="texto-left">Fecha de inicio:</p>
+                        </ion-col>
+                        <ion-col size="6" class="column-items">
+                            <p class="texto-right text-capitalize">{{solicitudDePlan.primerDescuento! | date: 'MMMM yyyy'}}</p>
+
+                        </ion-col>
+                    </ion-row>
+                    <ion-row class="column">
+                        <ion-col size="6" class="column-items ultima_col">
+                            <p class="texto-left">Fecha de término:</p>
+                        </ion-col>
+                        <ion-col size="6" class="column-items ultima_col">
+                            <p class="texto-right" *ngIf="solicitudDePlan.fechaIndefinida">Indefinida</p>
+                            <p class="texto-right text-capitalize"
+                               *ngIf="!solicitudDePlan.fechaIndefinida">{{fechaTermino! | date: 'MMMM yyyy'}}</p>
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
+            </article>
+        </section> <!-- cnt_table -->
+
+        <section class="cnt_table">
+            <article class="header">
+                <span class="header-text">Datos de tu trabajo</span>
+            </article>
+            <article class="table">
+                <ion-grid class="table_grid">
+                    <ion-row class="column">
+                        <ion-col size="4" class="column-items">
+                            <p class="texto-left">Cargo:</p>
+                        </ion-col>
+                        <ion-col size="8" class="column-items">
+                            <p class="texto-right">{{solicitudDePlan.cargoSeleccionado.nombre_cargo | formatoMayusculas}}</p>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row class="column">
+                        <ion-col size="8" class="column-items ultima_col">
+                            <p class="texto-left">Renta imponible:</p>
+                        </ion-col>
+                        <ion-col size="4" class="column-items ultima_col">
+                            <p class="texto-right">{{solicitudDePlan.rentaImponible | formatoMayusculas}}</p>
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
+            </article>
+        </section>
+
+        <section class="cnt_table">
+            <article class="header">
+                <span class="header-text">Datos de tu empleador actual</span>
+            </article>
+            <article class="table">
+                <ion-grid class="table_grid">
+                    <ion-row class="column">
+                        <ion-col size="4" class="column-items" id="col_texto">
+                            <p class="texto-left">Empleador:</p>
+                        </ion-col>
+                        <ion-col size="8" class="column-items" id="col_texto2">
+                            <p class="texto-right">{{solicitudDePlan.empleadorSeleccionado.razon_social}}</p>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row class="column">
+                        <ion-col size="4" class="column-items">
+                            <p class="texto-left">Rut:</p>
+
+                        </ion-col>
+                        <ion-col size="8" class="column-items">
+                            <p class="texto-right">{{solicitudDePlan.rutEmpleador}} - {{solicitudDePlan.dvEmpleador}}</p>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row class="column">
+                        <ion-col size="4" class="column-items" id="col_region">
+                            <p class="texto-left">Región:</p>
+
+                        </ion-col>
+                        <ion-col size="8" class="column-items" id="col_region2">
+                            <p class="texto-right">{{solicitudDePlan.regionSeleccionada.nombre_region}}</p>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row class="column">
+                        <ion-col size="4" class="column-items">
+                            <p class="texto-left">Comuna:</p>
+                        </ion-col>
+                        <ion-col size="8" class="column-items">
+                            <p class="texto-right">{{solicitudDePlan.comunaSeleccionada.nombre_comuna}}</p>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row class="column">
+                        <ion-col size="4" class="column-items" id="col_calle">
+                            <p class="texto-left">Calle:</p>
+                        </ion-col>
+                        <ion-col size="8" class="column-items" id="col_calle2">
+                            <p class="texto-right">{{solicitudDePlan.calle}}</p>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row class="column">
+                        <ion-col size="4" class="column-items">
+                            <p class="texto-left">Número:</p>
+                        </ion-col>
+                        <ion-col size="8" class="column-items">
+                            <p class="texto-right">{{solicitudDePlan.numero}}</p>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row class="column" *ngIf="solicitudDePlan.oficina">
+                        <ion-col size="4" class="column-items">
+                            <p class="texto-left">Oficina:</p>
+                        </ion-col>
+                        <ion-col size="8" class="column-items">
+                            <p class="texto-right">{{solicitudDePlan.oficina}}</p>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row class="column" *ngIf="solicitudDePlan.correo">
+                        <ion-col size="4" class="column-items ultima_col">
+                            <p class="texto-left">Email:</p>
+                        </ion-col>
+                        <ion-col size="8" class="column-items ultima_col">
+                            <p class="texto-right">{{solicitudDePlan.correo}}</p>
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
+            </article>
+        </section>
+
+        <section class="cnt_table">
+            <ion-grid class="no_padding">
+                <ion-row *ngIf="cuentaSeleccionada === CONSTANTES.ID_PRODUCTO_CUENTA_2">
+                    <ion-col size="12" class="columna_valor">
+                        <a class="regular link" (click)="verModalMandato()"><u>Leer mandato de Suscripción a Cuenta de
+                            Ahorro Voluntario
+                            (Cuenta 2)</u></a>
+                    </ion-col>
+                </ion-row>
+                <ion-radio-group>
+                    <ion-row class="radio_row" *ngIf="cuentaSeleccionada === CONSTANTES.ID_PRODUCTO_CUENTA_2">
+                        <ion-col size="1">
+                            <ion-radio mode="md" class="form_radio"
+                                    (click)="seleccionaMandato(CONSTANTES.ACEPTA_MANDATO)"></ion-radio>
+                        </ion-col>
+                        <ion-col size="5" class="left_padding">
+                            <span class="texto_informativo texto_checkbox">Acepto el</span>
+                            <br>
+                            <span class="texto_informativo texto_checkbox"> mandato</span>
+                        </ion-col>
+
+                        <ion-col size="1">
+                            <ion-radio mode="md" class="form_radio"
+                                    (click)="seleccionaMandato(CONSTANTES.RECHAZA_MANDATO)"></ion-radio>
+                        </ion-col>
+                        <ion-col size="5" class="left_padding">
+                            <span class="texto_informativo texto_checkbox">No acepto el</span>
+                            <br>
+                            <span class="texto_informativo texto_checkbox">mandato</span>
+                        </ion-col>
+                    </ion-row>
+                </ion-radio-group>
+                <ion-row *ngIf="cuentaSeleccionada === CONSTANTES.ID_PRODUCTO_CUENTA_2">
+                    <ion-col size="1" class="columna_valor">
+                        <ion-checkbox mode="md" class="checkbox-square caja_checkbox"
+                                      [checked]="solicitudDePlan.declaraMandato"
+                                      [(ngModel)]="solicitudDePlan.declaraMandato"></ion-checkbox>
+                    </ion-col>
+                    <ion-col size="11" class="columna_valor left_padding col_checkbox sin_sangria">
+                        <span class="texto_informativo texto_checkbox">Declaro haber leído y entendido el Mandato de Cuenta 2.</span>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </section>
+        <button class="profitability-button" [disabled]="!validarEstadoBotonAceptar()" (click)="continuarStep3()">
+            Confirmar
+        </button>
+        <button class="profitability-button profitability-button-blue" (click)="eventoCancelar()">Cancelar</button>
+    </section>
+</ion-content>
+
+<app-modal-general *ngIf="mostrarModalMandato" [dataModal]="modalData" [tipoModal]="tipoModal"
+                   (envioCerrarModal)="ocultarModalMandato()"></app-modal-general>

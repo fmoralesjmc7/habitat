@@ -1,0 +1,6 @@
+<section class="context_help_bg" [class.context_help_bg--show]="isOpen" (click)="bgWasClicked()" ion-fixed>
+  <section class="context_help" (click)="click()">
+    <ion-icon name="icon-informacion" class="context_help-icon icon-informacion"></ion-icon>
+    <p class="context_help-text">{{ text }}</p>
+  </section>
+</section>

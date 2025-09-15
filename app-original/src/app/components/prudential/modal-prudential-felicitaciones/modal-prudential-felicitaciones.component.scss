@@ -1,0 +1,115 @@
+@import "../../../../theme/mixins";
+
+.rojo-habitat {
+  color: var(--colors-rojo-habitat);
+}
+
+:host {
+  .modal-felicitaciones {
+    @include modal_gral();
+    .modal_cnt {
+      width: 85%;
+      max-width: 500px;
+      height: auto;
+      border-radius: 15px;
+      margin: 0 auto;
+
+      .icon_close {
+        position: absolute;
+        top: 9px;
+        left: 88%;
+        z-index: 10;
+        padding: 0.625rem;
+        font-size: 0.875rem;
+        color: var(--colors-verde);
+      }
+
+      .modal {
+        padding: 1.75rem;
+        border-radius: 15px;
+        border-left: 5px solid;
+        border-color: var(--colors-verde);
+
+        .header {
+          margin: 30px auto 20px auto;
+          text-align: center;
+
+          &-text {
+            font: 1.8rem var(--fonts-weight-bold);
+            color: var(--colors-azul-perfil);
+          }
+        }
+
+        .body {
+          &-text {
+            font: 1.3rem var(--fonts-weight-medium);
+            margin-bottom: 20px;
+          }
+          &-text-small {
+            font: 1rem var(--fonts-weight-medium);
+            margin-bottom: 20px;
+          }
+          &-titulo {
+            font: 1.6rem var(--fonts-weight-bold);
+            margin-bottom: 20px;
+          }
+          &-btn {
+            width: auto;
+            padding: 12px 24px;
+            border-radius: 50px;
+            background-color: var(--colors-blanco);
+            border: 1px solid;
+            border-color: var(--colors-celeste-link);
+            color: var(--color-celeste-button);
+          }
+
+          .botonera-prudential {
+            margin-bottom: 20px;
+
+            button {
+              width: 100%;
+            }
+
+            .body-btn.btn-autorizar {
+              border-color: var(--colors-rojo-habitat);
+              background-color: var(--colors-rojo-habitat);
+              color: var(--colors-blanco);
+              margin-bottom: 10px;
+            }
+          }
+        }
+      }
+    }
+
+    &-saldos-consolidados {
+      @extend .modal-felicitaciones;
+      margin-top: 20px;
+      .modal {
+        .header {
+          &-text {
+            font: 1.2rem var(--fonts-weight-bold) !important;
+          }
+        }
+        .body {
+          &-text {
+            font: .8rem var(--fonts-weight-medium) !important;
+          }
+          &-text-small {
+            font: .65rem var(--fonts-weight-medium) !important;
+          }
+          &-titulo {
+            font: 1rem var(--fonts-weight-bold) !important;
+          }
+        }
+      }
+    }
+  }
+
+  .icon-exito-prudential {
+    width: 100px;
+    height: 50px;
+    background-position: center;
+    background-size: 50px;
+    margin: 0 auto;
+  }
+}

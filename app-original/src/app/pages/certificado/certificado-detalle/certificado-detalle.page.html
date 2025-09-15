@@ -1,0 +1,168 @@
+<app-header [titulo]="CONSTANTES.TITULO_HEADER_CERTIFICADOS"></app-header>
+
+<ion-content class="content_page">
+    <section class="section_cnt">
+        <div class="form">
+            <h2 class="form-title">
+                Certificado de {{certificado['tipo']}}
+            </h2>
+
+            <div class="icon-container">
+                <svg *ngIf="certificado['tipo'] === 'Movimientos'" width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M43.475 12.4062C42.4578 11.0266 41.039 9.41094 39.4828 7.85938C37.9265 6.30781 36.3031 4.89844 34.914 3.88438C32.5515 2.1625 31.4062 1.96094 30.7469 1.96094H8.02498C6.0031 1.96094 4.35779 3.59844 4.35779 5.60625V44.9906C4.35779 47.0031 6.0031 48.6359 8.02498 48.6359H41.739C43.7609 48.6359 45.4062 46.9984 45.4062 44.9906V16.55C45.4062 15.8969 45.2047 14.7547 43.475 12.4047V12.4062ZM37.4062 9.92344C38.8125 11.3203 39.914 12.5859 40.7312 13.6328H33.6797V6.61563C34.7312 7.42812 36 8.52656 37.4062 9.92344ZM42.475 44.9953C42.475 45.3922 42.1375 45.7266 41.7406 45.7266H8.02654C7.62966 45.7266 7.29216 45.3938 7.29216 44.9953V5.61094C7.29216 5.21406 7.62966 4.87969 8.02654 4.87969C8.02654 4.87969 30.7453 4.87969 30.7484 4.87969V15.0891C30.7484 15.8969 31.4062 16.5469 32.214 16.5469H42.475V44.9953Z" fill="#6BA3B7"/>
+                    <path d="M35.8968 39.7906H15.4781C14.6703 39.7906 14.0203 38.8891 14.0203 37.7781C14.0203 36.6672 14.6734 35.7656 15.4781 35.7656H35.8968C36.7046 35.7656 37.3546 36.6672 37.3546 37.7781C37.3546 38.8891 36.7046 39.7906 35.8968 39.7906Z" fill="#6BA3B7"/>
+                    <path d="M35.8968 34.1531H15.4781C14.6703 34.1531 14.0203 33.2516 14.0203 32.1406C14.0203 31.0297 14.6734 30.1281 15.4781 30.1281H35.8968C36.7046 30.1281 37.3546 31.0297 37.3546 32.1406C37.3546 33.2516 36.7046 34.1531 35.8968 34.1531Z" fill="#6BA3B7"/>
+                    <path d="M35.8968 28.5219H15.4781C14.6703 28.5219 14.0203 27.6203 14.0203 26.5094C14.0203 25.3984 14.6734 24.4969 15.4781 24.4969H35.8968C36.7046 24.4969 37.3546 25.3984 37.3546 26.5094C37.3593 27.6203 36.7046 28.5219 35.8968 28.5219Z" fill="#6BA3B7"/>
+                    <path d="M19.2781 20.3375V21.6188H16.9484V20.3672C16 20.1188 15.3453 19.5516 14.7172 18.7219L16.3062 17.2953C16.9906 18.111 17.6187 18.5344 18.114 18.5344C18.6219 18.5344 18.9906 18.2734 18.9906 17.7188C18.9906 17.15 18.8328 16.8 17.6781 16.2922C15.6531 15.4031 14.9094 14.6297 14.9094 13.0266C14.9094 11.7141 15.6656 10.6672 16.9484 10.2875V9.0047H19.2781V10.2734C20.1078 10.5078 20.675 11 21.2734 11.7438L19.6578 13.1844C18.9562 12.3547 18.6359 12.0906 17.9953 12.0906C17.5297 12.0906 17.2687 12.4406 17.2687 12.8172C17.2687 13.3563 17.5297 13.6641 18.564 14.1125C20.6203 15.0141 21.3765 15.8609 21.3765 17.5656C21.3765 19.0406 20.5297 19.9891 19.2781 20.3391V20.3375Z" fill="#6BA3B7"/>
+                </svg>
+
+                <svg *ngIf="certificado['tipo'] !== 'Movimientos'" width="69" height="50" viewBox="0 0 69 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M55.2527 48.6145H7.06722C4.22366 48.6145 1.90958 46.2711 1.90958 43.3916V6.04214C1.90958 3.1626 4.22366 0.819244 7.06722 0.819244H62.189C65.0326 0.819244 67.3467 3.1626 67.3467 6.04214V36.3614C67.3467 37.3614 66.5496 38.1687 65.562 38.1687C64.5745 38.1687 63.7774 37.3614 63.7774 36.3614V6.04214C63.7774 5.1566 63.0635 4.4337 62.189 4.4337H7.06722C6.19274 4.4337 5.47887 5.1566 5.47887 6.04214V43.3855C5.47887 44.271 6.19274 44.9939 7.06722 44.9939H55.2527C56.2402 44.9939 57.0373 45.8012 57.0373 46.8012C57.0373 47.8012 56.2343 48.6144 55.2527 48.6144V48.6145Z" fill="#6BA4B8"/>
+                    <path d="M19.6549 22.1085C15.8834 22.1085 12.8138 19 12.8138 15.1807C12.8138 11.3614 15.8834 8.25299 19.6549 8.25299C23.4265 8.25299 26.4961 11.3614 26.4961 15.1807C26.4961 19 23.4265 22.1085 19.6549 22.1085ZM19.6549 11.8675C17.8524 11.8675 16.3831 13.3554 16.3831 15.1807C16.3831 17.006 17.8524 18.494 19.6549 18.494C21.4574 18.494 22.9268 17.006 22.9268 15.1807C22.9268 13.3554 21.4633 11.8675 19.6549 11.8675Z" fill="#6BA4B8"/>
+                    <path d="M29.5538 40.5783H9.60141L9.28611 39.1687C9.21475 38.8373 7.51931 30.9759 11.2909 26.1988C13.1231 23.8856 15.8358 22.7109 19.3515 22.7109C22.8732 22.7109 25.6156 23.8856 27.4955 26.2049C31.3622 30.9699 29.8929 38.7953 29.8274 39.1266L29.5537 40.5784L29.5538 40.5783ZM12.552 36.9639H26.5199C26.7043 34.8494 26.7221 30.9157 24.7411 28.4879C23.5514 27.0301 21.7905 26.3193 19.3634 26.3193C16.9482 26.3193 15.2289 27.0181 14.0927 28.4458C12.1594 30.8855 12.3081 34.8615 12.552 36.9639H12.552Z" fill="#6BA4B8"/>
+                    <path d="M56.8351 18.2892H35.8178C34.8303 18.2892 34.0332 17.4819 34.0332 16.4819C34.0332 15.4819 34.8303 14.6747 35.8178 14.6747H56.8351C57.8226 14.6747 58.6197 15.4819 58.6197 16.4819C58.6197 17.4819 57.8226 18.2892 56.8351 18.2892Z" fill="#6BA4B8"/>
+                    <path d="M56.8351 26.7229H35.8178C34.8303 26.7229 34.0332 25.9157 34.0332 24.9157C34.0332 23.9157 34.8303 23.1085 35.8178 23.1085H56.8351C57.8226 23.1085 58.6197 23.9157 58.6197 24.9157C58.6197 25.9157 57.8226 26.7229 56.8351 26.7229Z" fill="#6BA4B8"/>
+                    <path d="M56.8351 35.759H35.8178C34.8303 35.759 34.0332 34.9518 34.0332 33.9518C34.0332 32.9518 34.8303 32.1446 35.8178 32.1446H56.8351C57.8226 32.1446 58.6197 32.9518 58.6197 33.9518C58.6197 34.9518 57.8226 35.759 56.8351 35.759Z" fill="#6BA4B8"/>
+                </svg>
+            </div>
+
+            <section class="form_cnt">
+                <p class="texto_certificado texto_certificado-info">{{certificado['que_es']}}</p>
+            </section>
+
+            <section class="form_cnt">
+                <h3 class="titulo_certificado titulo_certificado-util">¿Para que sirve?</h3>
+                <p class="texto_certificado">{{certificado['para_que_sirve']}}</p>
+            </section>
+
+            <section class="form_cnt selecciona-section">
+                <h3 class="titulo_seleccion">Selecciona el tipo de cuenta y período</h3>
+            </section>
+
+            <ion-radio-group value="{{opcionResumidoActiva}}" style="width: 100%;">
+                <section class="form_cnt" *ngIf="mostrarResumidoDetallado">
+                    <ion-row class="row_radio">
+                        <ion-col size="1" (click)="seleccionOpcionResumido()">
+                            <ion-radio value="true" mode="md" class="form_radio"></ion-radio>
+                        </ion-col>
+                        <ion-col size="3" (click)="seleccionOpcionResumido()">
+                            <span class="texto_certificado">Resumido</span>
+                        </ion-col>
+    
+                        <ion-col size="1" (click)="seleccionOpcionDetallado()">
+                            <ion-radio value="false" mode="md" class="form_radio"></ion-radio>
+                        </ion-col>
+                        <ion-col size="5" (click)="seleccionOpcionDetallado()">
+                            <span class="texto_certificado">Detallado</span>
+                        </ion-col>
+                    </ion-row>
+                </section>
+            </ion-radio-group>
+
+            <section class="form_cnt" *ngIf="showSelectorTipoCuenta">
+                <h3 class="titulo_opciones">Tipo de cuenta</h3>
+                <ion-select [placeholder]="'Cuenta Obligatoria'" name="tipoCuenta" class="options-select"
+                          [interfaceOptions]="tipoCuentaOptions" (ionChange)="cambioTipoCuenta()"
+                          [(ngModel)]="tipoCuenta" okText="ACEPTAR" cancelText="CANCELAR">
+                    <ion-select-option *ngFor="let tipoCuenta of listaTipoCuenta"
+                                     [value]="tipoCuenta">{{tipoCuenta.tipo}}</ion-select-option>
+                </ion-select>
+            </section>
+
+            <section class="form_cnt" *ngIf="showSelectorPeriodo">
+                <h3 class="titulo_opciones">Período de tiempo</h3>
+                <ion-select [placeholder]="'Elegir Período'" [interfaceOptions]="tipoPerOptions"
+                          [(ngModel)]="tipoPeriodo" (ionChange)="cambioTipoPeriodo()"
+                          name="tipoPeriodo" class="options-select" okText="ACEPTAR" cancelText="CANCELAR">
+                    <ion-select-option *ngFor="let tipoPeriodo of listaTipoPeriodo"
+                                     [value]="tipoPeriodo">{{tipoPeriodo.tipo}}</ion-select-option>
+                </ion-select>
+            </section>
+
+            <section class="form_cnt" *ngIf="showFormDate">
+                <ion-grid lines="none" class="date_item">
+                    <ion-row class="text-row">
+                        <ion-col size="6" class="no_padding_col">
+                            <ion-label class="date_item-label" stacked>Fecha Inicio</ion-label>
+                        </ion-col>
+                        <ion-col size="6">
+                            <ion-label class="date_item-label" stacked>Fecha Término</ion-label>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col size="6" class="no_padding_col">
+                            <article class="date_item-left">
+                                <ion-list>
+                                    <ion-item class="btn-modal" id="open-modal-desde">
+                                        <ion-label class="label-datetime"
+                                                   [ngClass]="{'label-datetime--active' : labelDesde !== 'mm/yyyy'}">
+                                            {{labelDesde}}
+                                        </ion-label>
+                                    </ion-item>
+                
+                                    <ion-modal trigger="open-modal-desde">
+                                        <ng-template>
+                                            <ion-content>
+                                                <ion-datetime
+                                                    locale="es-CL"
+                                                    presentation="month-year"
+                                                    class="date_item-select"
+                                                    [min]="fechaInicioHabitat"
+                                                    [max]="fechaMaximaActual"
+                                                    (ionChange)="calcularFechaHasta()" [(ngModel)]="fechaDesde"
+                                                    showDefaultButtons="true"
+                                                    cancelText="CANCELAR"
+                                                    doneText="ACEPTAR">
+                                                </ion-datetime>
+                                            </ion-content>
+                                        </ng-template>
+                                    </ion-modal>
+                                </ion-list>
+                            </article>
+                        </ion-col>
+
+                        <ion-col size="6" class="no_padding_col">
+                            <article class="date_item-right">
+                                <ion-list>
+                                    <ion-item class="btn-modal" [disabled]="habilitaFechaHasta" id="open-modal-hasta">
+                                        <ion-label class="label-datetime"
+                                                   [ngClass]="{'label-datetime--active' : labelHasta !== 'mm/yyyy'}">
+                                            {{labelHasta}}
+                                        </ion-label>
+                                    </ion-item>
+                
+                                    <ion-modal trigger="open-modal-hasta">
+                                        <ng-template>
+                                            <ion-content>
+                                                <ion-datetime
+                                                    locale="es-CL"
+                                                    presentation="month-year"
+                                                    class="date_item-select"
+                                                    [min]="fechaMinimaCalculada"
+                                                    [max]="fechaMaximaCalculada"
+                                                    (ionChange)="seleccionFechaHasta()" [(ngModel)]="fechaHasta"
+                                                    [disabled]="habilitaFechaHasta"
+                                                    showDefaultButtons="true"
+                                                    cancelText="CANCELAR"
+                                                    doneText="ACEPTAR">
+                                                </ion-datetime>
+                                            </ion-content>
+                                        </ng-template>
+                                    </ion-modal>
+                                </ion-list>
+                            </article>
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
+            </section>
+
+            <section class="form_cnt">
+                <button class="button" (click)="solicitarCertificado()" [disabled]="!validarCampos()">
+                    Solicitar
+                </button>
+                <button class="button button-cancelar" (click)="cancelar()">Cancelar</button>
+            </section>
+        </div>
+    </section>
+</ion-content>
+

@@ -1,0 +1,23 @@
+<ion-content fullscreen class="tutorial_content">
+  <section class="tutorial_section">
+    <swiper-container
+      class="tutorial_slides"
+      pagination='{"clickable": true}'
+      (slidechange)="onSlideChange($event)"
+    >
+      <swiper-slide *ngFor="let slide of slides">
+        <div class="slide">
+          <i class="icon {{ slide.icon }}"></i>
+          <h2 class="slide-title">{{ slide.title }}</h2>
+          <p class="slide-texto">{{ slide.description }}</p>
+        </div>
+      </swiper-slide>
+    </swiper-container>
+
+    <section class="button_section">
+      <button class="button_section-continuar" (click)="continuar()">
+        {{ showBtn ? '¡Comenzar!' : 'Saltar' }}
+      </button>
+    </section>
+  </section>
+</ion-content>

@@ -1,0 +1,8 @@
+<app-header-centro-asesoria [headerElements]="headerElements" (clickRightButton)="closeModal()"></app-header-centro-asesoria>
+<div class="result-filters">
+  <app-select-checkbox *ngFor="let item of dataCheckbox" [data]="item" (changeValues)="changeValues(item.type, $event)"></app-select-checkbox>
+  <app-select-radio *ngFor="let item of dataRatio" [data]="item" (changeOption)="changeValues(item.type, $event)"></app-select-radio>
+  <div class="container-button">
+    <ion-button class="primary-button" (click)="applyFilters()" [disabled]="!validateFilter()">Aplicar filtros</ion-button>
+  </div>
+</div>

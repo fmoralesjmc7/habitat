@@ -1,0 +1,251 @@
+@import '../../../theme/mixins';
+
+:host {
+  .content_page {
+    .item-inner {
+      border-bottom: 0px !important;
+    }
+
+    .scroll-content {
+      padding: 40px 0 0;
+      overflow-y: auto;
+    }
+
+    .cnt_rrss {
+      width: 90%;
+      padding-top: 40px;
+      margin: 0 auto;
+      padding-bottom: 40px;
+
+      &-title {
+        @include title();
+        position: relative;
+        text-align: center;
+        font-size: 1.33rem;
+
+        .toolbar-title {
+          @include title();
+          --padding: 0;
+        }
+      }
+
+      &-subtitle {
+        font: 0.89rem var(--fonts-weight-regular);
+        color: var(--colors-gris-oscuro);
+        margin: 1.25rem 0 1.5rem;
+        text-align: center;
+      }
+
+      .social-links {
+        margin-bottom: 2rem;
+      }
+
+      .social-item {
+        display: flex;
+        align-items: center;
+        padding: 15px;
+        background-color: #F0F6F8;
+        border-radius: 6px;
+        margin-bottom: 10px;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+        position: relative;
+        width: 100%;
+        height: 80px;
+        box-sizing: border-box;
+        margin-right: auto;
+        
+        &:before {
+          content: '';
+          position: absolute;
+          left: 0;
+          top: 0;
+          bottom: 0;
+          width: 4px;
+          background-color: #3F69B4;
+          border-top-left-radius: 6px;
+          border-bottom-left-radius: 6px;
+        }
+        
+        &:nth-child(3):before,
+        &:nth-child(4):before {
+          background-color: #1BA0F1;
+        }
+      }
+
+      .icon-container {
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        margin-right: 15px;
+      }
+
+      .text-container {
+        flex: 1;
+      }
+
+      .link {
+        color: var(--colors-gris-oscuro);
+        font: 1rem var(--fonts-weight-regular);
+        font-size: 1rem;
+      }
+
+      .icon {
+        font-size: 2.22rem;
+
+        &.icon-instagram {
+          color: #e4405f;
+        }
+
+        &.icon-twitter {
+          color: #1da1f2;
+        }
+
+        &.icon-x {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        &.icon-facebook {
+          color: #1877f2;
+        }
+
+        &.icon-linkedin {
+          color: #0077b5;
+        }
+      }
+
+      .contact-center {
+        margin-top: 3rem;
+
+        &-title {
+          @include title();
+          position: relative;
+          text-align: center;
+          margin-bottom: 1.5rem;
+          font-size: 1.11rem;
+
+          .toolbar-title {
+            @include title();
+            --padding: 0;
+          }
+        }
+
+        &-description {
+          font: 0.89rem var(--fonts-weight-regular);
+          color: var(--colors-gris-oscuro);
+          margin: 0 0 1.5rem;
+          text-align: left;
+          line-height: 1.5;
+        }
+
+        &-schedule {
+          font: 0.89rem var(--fonts-weight-regular);
+          color: var(--colors-text-principal);
+          margin: 1rem 0 2rem;
+          text-align: left;
+          
+          .bold {
+            font-family: var(--fonts-weight-bold);
+          }
+        }
+      }
+
+      .phone-item {
+        display: flex;
+        align-items: center;
+        padding: 15px;
+        background-color: #F0F6F8;
+        border-radius: 6px;
+        margin-bottom: 10px;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+        position: relative;
+        width: 100%;
+        height: 80px;
+        box-sizing: border-box;
+        margin-right: auto;
+        
+        &:before {
+          content: '';
+          position: absolute;
+          left: 0;
+          top: 0;
+          bottom: 0;
+          width: 4px;
+          background-color: #B4123B;
+          border-top-left-radius: 6px;
+          border-bottom-left-radius: 6px;
+        }
+      }
+
+      .phone-icon-container {
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        margin-right: 15px;
+      }
+
+      .phone-text-container {
+        flex: 1;
+      }
+
+      .phone-number {
+        color: var(--colors-gris-oscuro);
+        font: 0.89rem var(--fonts-weight-regular);
+      }
+
+      .icon-phone {
+        color: #B4123B;
+        font-size: 2.22rem;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 359px) {
+  :host {
+    .content_page {
+      .cnt_rrss {
+        .social-links {
+          margin-bottom: 1.5rem;
+        }
+
+        .social-item {
+          padding: 12px;
+        }
+
+        .icon-container {
+          margin-right: 10px;
+        }
+
+        .contact-center {
+          &-title {
+            font-size: 1.5rem;
+          }
+
+          &-description {
+            font-size: 0.9rem;
+          }
+
+          &-schedule {
+            font-size: 1rem;
+          }
+        }
+
+        .phone-item {
+          padding: 12px;
+        }
+
+        .phone-number {
+          font-size: 1rem;
+        }
+      }
+    }
+  }
+}

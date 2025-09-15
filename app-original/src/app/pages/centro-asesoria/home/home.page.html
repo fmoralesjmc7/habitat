@@ -1,0 +1,58 @@
+<app-header (clickBackButton)="goToHome()"></app-header>
+<ion-content no-bounce forceOverscroll="false">
+    <div class="container-home">
+        <div class="container-tool">
+            <h1 class="titulo">¡Bienvenido al Centro de Asesoría!</h1>
+            <div class="section-tool">
+                <ion-card class="main-tool escaladegrises" (click)="goTo('noDisponibleSimulador')"
+                          *ngIf="ocultarSimuladorPension; else loggedOut;">
+                    <div class="image-tool illus-simulator"></div>
+                    <div class="title-tool">Simulador de pensión <br> interactivo</div>
+                </ion-card>
+                <ng-template #loggedOut>
+                    <ion-card class="main-tool" (click)="goTo('simulator-start')">
+                        <div class="image-tool illus-simulator"></div>
+                        <div class="title-tool">Simulador de pensión <br> interactivo</div>
+                    </ion-card>
+                </ng-template>
+                <ion-card class="secondary-tools left-tool" (click)="goTo('tax-benefit-start')">
+                    <div class="image-tool illus-home-benefits"></div>
+                    <p class="title-tool">Comparador de<br>beneficios APV</p>
+                </ion-card>
+                <ion-card class="secondary-tools right-tool" (click)="goTo('benchmark-start')">
+                    <div class="image-tool illus-benchmark"></div>
+                    <div class="title-tool">Comparador de <br> Rentabilidad: <br> AFP y multifondos</div>
+                </ion-card>
+            </div>
+        </div>
+
+        <div class="container-article">
+            <div class="header-articles-home">
+                <div class="section-title">
+                    <ion-icon name="rocket"></ion-icon>
+                    <p>Publicaciones más recientes</p>
+                </div>
+                <div class="everything-articles" (click)="goTo('articles')">
+                    <p>VER TODO</p>
+                    <ion-icon name="chevron-forward"></ion-icon>
+                </div>
+            </div>
+            <ion-slides class="section-articles" [options]="slideOpts" *ngIf="articles">
+                <ion-slide class="article" *ngFor="let article of articles" (click)="goToArticle(article)">
+                    <ion-card>
+                        <img alt="" class="image-article" src="{{ article.mainImageUrl }}">
+                        <div class="container-info">
+                            <p class="title-article">{{ article.title }}</p>
+                            <p class="subtitle-article">{{ article.subtitle }}</p>
+                        </div>
+                    </ion-card>
+                </ion-slide>
+            </ion-slides>
+            <div class="container-spinner" *ngIf="!articles">
+                <ion-spinner name="bubbles"></ion-spinner>
+                <p>Cargando artículos...</p>
+            </div>
+        </div>
+    </div>
+</ion-content>
+

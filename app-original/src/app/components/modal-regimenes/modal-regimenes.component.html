@@ -1,0 +1,107 @@
+<section class="modal_slide">
+    <ion-slides class="cnt_slides" *ngIf="tipoCuentaNumber === 4" pager="true" effect="slide" speed="300" spaceBetween="30">
+        <ion-slide class="modal_cnt" *ngFor="let slideCuenta of slidesRegimenes">
+            <ion-card class="modal">
+                <ion-icon class="icon_close icon-cerrar" (click)="cerrarModal()"></ion-icon>
+                <ion-card-header class="header">
+                    <ion-icon class="header-icon icon-informacion"></ion-icon>
+                    <h2 class="header-title">{{slideCuenta.titulo}}</h2>
+                </ion-card-header>
+
+                <ion-card-content class="body" *ngIf="tipoCuentaNumber === 4">
+                    <p class="body-info">
+                        {{slideCuenta.textoTitulo}}
+                    </p>
+                    <p class="body-sub-title">
+                        {{slideCuenta.subtitulo1}}
+                    </p>
+                    <ion-grid class="lista_items" *ngIf="slideCuenta.informativo1">
+                        <ion-row class="item">
+                            <ion-col class="row_img">
+                                <ion-icon class="item-icon icon-exito"></ion-icon>
+                            </ion-col>
+                            <ion-col class="row_texto">
+                                <p class="item-texto">{{slideCuenta.informativo1}}</p>
+                            </ion-col>
+                        </ion-row>
+                    </ion-grid>
+                    <p class="body-info-regimen">
+                        {{slideCuenta.texto1}}
+                    </p>
+                    <p class="body-sub-title">
+                        {{slideCuenta.subtitulo2}}
+                    </p>
+                    <ion-grid class="lista_items" *ngIf="slideCuenta.informativo2">
+                        <ion-row class="item">
+                            <ion-col class="row_img">
+                                <ion-icon class="item-icon icon-exito"></ion-icon>
+                            </ion-col>
+                            <ion-col class="row_texto">
+                                <p class="item-texto">{{slideCuenta.informativo2}}</p>
+                            </ion-col>
+                        </ion-row>
+                    </ion-grid>
+                    <p class="body-info-regimen">
+                        {{slideCuenta.texto2}}
+                    </p>
+                </ion-card-content>
+            </ion-card>
+        </ion-slide>
+    </ion-slides>
+
+    <ion-slides class="cnt_slides" *ngIf="tipoCuentaNumber === 2" pager="false">
+        <ion-slide class="modal_cnt" *ngFor="let slideCuenta of slidesRegimenes">
+            <ion-card class="modal">
+                <ion-icon class="icon_close icon-cerrar" (click)="cerrarModal()"></ion-icon>
+                <ion-card-header class="header">
+                    <ion-icon class="header-icon icon-informacion"></ion-icon>
+                    <h2 class="header-title">{{slideCuenta.titulo}}</h2>
+                </ion-card-header>
+                <ion-card-content class="body">
+                    <p class="body-sub-title">
+                        {{slideCuenta.subtitulo1}}
+                    </p>
+
+                    <p class="body-info-regimen">
+                        {{slideCuenta.texto1}}
+                    </p>
+
+                    <ion-grid class="lista_items" *ngIf="slideCuenta.listadoInformativos1">
+                        <ion-row class="item" *ngFor="let item of slideCuenta.listadoInformativos1">
+                            <ion-col class="row_img">
+                                <ion-icon class="item-icon icon-exito"></ion-icon>
+                            </ion-col>
+                            <ion-col class="row_texto">
+                                <p class="item-texto">{{item.titulo}}</p>
+                            </ion-col>
+                        </ion-row>
+                    </ion-grid>
+
+                    <p class="body-sub-title">
+                        {{ slideCuenta.subtitulo2 }}
+                    </p>
+
+                    <ion-grid class="lista_items" *ngIf="slideCuenta.listadoInformativos2">
+                        <ion-row class="item" *ngFor="let item of slideCuenta.listadoInformativos2">
+                            <ion-col class="row_img">
+                                <ion-icon class="item-icon icon-exito"></ion-icon>
+                            </ion-col>
+                            <ion-col class="row_texto">
+                                <p class="item-texto">{{item.titulo}}</p>
+                            </ion-col>
+                        </ion-row>
+                    </ion-grid>
+
+                    <p class="body-info-regimen">
+                        {{slideCuenta.texto2}}
+                    </p>
+                    <p class="body-info-regimen">
+                        {{slideCuenta.texto3}}
+                    </p>
+                </ion-card-content>
+
+
+            </ion-card>
+        </ion-slide>
+    </ion-slides>
+</section>

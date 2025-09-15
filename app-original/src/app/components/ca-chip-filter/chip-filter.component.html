@@ -1,0 +1,7 @@
+<ion-slides [options]="slideOpts">
+  <ion-slide *ngFor="let filter of filters">
+    <ion-chip outline="true">
+      <ion-label>{{ filter }}</ion-label>
+    </ion-chip>
+  </ion-slide>
+</ion-slides>

@@ -1,0 +1,34 @@
+<app-header [titulo]="CONSTANTES.TITULO_HEADER_CERTIFICADOS" [showBackButton]="false"></app-header>
+
+<ion-content>
+  <section class="success">
+    <section class="success_cnt">
+      <header class="success_cnt-header">
+        <div class="cnt_icon">
+          <ion-icon class="icon-exito"></ion-icon>
+        </div>
+      </header>
+      <h1 class="success_cnt-title">
+        {{desde === CONSTANTES.ES_CERTIFICADOS ? CONSTANTES.TITULO_EXITO_CERTIFICADOS : CONSTANTES.TITULO_EXITO_CARTOLAS}}
+      </h1>
+      <p class="success_cnt-text" *ngIf="desde != CONSTANTES.ES_CUATRIMESTRAL && desde != CONSTANTES.ES_CARTOLAS">
+        {{desde === CONSTANTES.ES_CERTIFICADOS ? CONSTANTES.TEXTO_UNO_CERTIFICADOS : CONSTANTES.TEXTO_UNO_CARTOLAS}}
+      </p>
+      <p class="success_cnt-text" *ngIf="showFormEmail">
+        {{desde === CONSTANTES.ES_CERTIFICADOS ? CONSTANTES.TEXTO_DOS_CERTIFICADOS : CONSTANTES.TEXTO_DOS_CARTOLAS}}
+        <span class="bold">{{email}}</span>
+      </p>
+    </section>
+
+    <previsualizador-pdf [pdfBase64]="pdfBytesArray" [heightPdf]="'32vh'" backgroundColor="#FFFFFF" (pdfRedered)="isRendered($event)"></previsualizador-pdf>
+
+    <section class="cnt_btn">
+      <button class="btn btn-descarga" type="submit" block (click)="descargarPdf();">
+        Descargar
+      </button>
+      <button class="btn btn-home" type="submit" block (click)="cancelar();">
+        Ir al Home
+      </button>
+    </section>
+  </section>
+</ion-content>

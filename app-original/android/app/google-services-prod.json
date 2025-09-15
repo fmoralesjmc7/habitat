@@ -1,0 +1,36 @@
+{
+  "project_info": {
+      "project_number": "165329050145",
+      "firebase_url": "https://apphabitat-notificacionespush.firebaseio.com",
+      "project_id": "apphabitat-notificacionespush",
+      "storage_bucket": "apphabitat-notificacionespush.appspot.com"
+  },
+  "client": [{
+      "client_info": {
+          "mobilesdk_app_id": "1:165329050145:android:1ddf5bac6741fc1a",
+          "android_client_info": {
+              "package_name": "com.app.p8414JG"
+          }
+      },
+      "oauth_client": [{
+          "client_id": "165329050145-bmni6g48555sbrlm3ql3rmv49dmo9d0p.apps.googleusercontent.com",
+          "client_type": 3
+      }],
+      "api_key": [{
+          "current_key": "AIzaSyBwXfmJdB7T00oalwyDwSpwfTdwqTWgzKg"
+      }],
+      "services": {
+          "analytics_service": {
+              "status": 1
+          },
+          "appinvite_service": {
+              "status": 1,
+              "other_platform_oauth_client": []
+          },
+          "ads_service": {
+              "status": 2
+          }
+      }
+  }],
+  "configuration_version": "1"
+}

@@ -1,0 +1,21 @@
+<ion-header class="header_app">
+    <ion-toolbar class="navbar">
+        <ion-buttons slot="start" class="nav-button button-left" (click)="backButton()">
+            <ion-icon class="btn-icon icon-back" name="icon-menu-hamb"></ion-icon>
+        </ion-buttons>
+        <figure class="logo">
+            <img class="logo-img" src="./assets/imgs/nuevo_logo_header.png" alt="logo-header">
+        </figure>
+    </ion-toolbar>
+</ion-header>
+
+
+<ion-content class="content">
+    <ion-list class="list">
+        <ion-item class="cnt_config" lines="none">
+            <ion-label class="cnt_config-text">Activar {{textoTipoBiometria}}</ion-label>
+            <ion-toggle mode="md" class="cnt_config-switch" [disabled]="estadoSwitch" [(ngModel)]="huellaEstaActiva"
+                        (ionChange)="switchOn()"></ion-toggle>
+        </ion-item>
+    </ion-list>
+</ion-content>

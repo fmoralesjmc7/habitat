@@ -1,0 +1,69 @@
+<app-header-centro-asesoria [headerElements]="headerElements" (clickLeftButton)="goTo('home')"></app-header-centro-asesoria>
+<ion-content no-bounce forceOverscroll="false" [class.simulator-result-background]="existResult">
+  <form [formGroup]="form" [hidden]="existResult || showLoading">
+    <ion-slides #slides pager="false" [options]="slideOpts">
+      <ion-slide>
+        <app-question-slide #slideMontoAhorrado [questionSlideText]="questionSlideTexts.amount" [currentSlide]="slideNumber" [totalSlides]="totalSlides"
+          [disableButton]="!isAmountQuestionValid" [formGroup]="form" (clickButton)="nextSlide()" ngDefaultControl>
+        </app-question-slide>
+      </ion-slide>
+      <ion-slide>
+        <app-question-slide [questionSlideText]="questionSlideTexts.pensionFund" [currentSlide]="slideNumber" [totalSlides]="totalSlides"
+          [disableButton]="!form.valid" [pickerOptions]="pickerOptions" [formGroup]="form" (clickButton)="doSimulation()" (pickerChange)="changePensionFund($event)">
+        </app-question-slide>
+      </ion-slide>
+    </ion-slides>
+  </form>
+
+  <app-loading [showLoading]="showLoading" [textLoading]="textLoading"></app-loading>
+
+  <div class="main-result-benchmark" *ngIf="simulationResult && existResult">
+    <div class="container-result" [ngClass]="{'show-difference': showDifference}">
+      <p class="drop-text">Monto de ahorro que tendrías, si<br> hubieras ahorrado en <strong>Habitat</strong><br>
+        {{ currentValues.period !== 15 ? (currentValues.period === 1 ? 'hace 12 meses' : 'hace ' + currentValues.period + ' años') : 'desde el inicio de los multifondos (año 2002)' }} </p>
+      <div class="amount">
+        <h1>{{ lastValues['habitat'] | chileanCurrency }}</h1>
+      </div>
+      <div class="chips">
+        <app-chip-filter [filters]="filters"></app-chip-filter>
+      </div>
+    </div>
+    <div class="container-detail-result" [ngClass]="{'show-difference': showDifference, 'show-spinner' : showSpinner}">
+      <div class="height-100" *ngIf="!showSpinner">
+        <h1 class="title-detail-result">Compara Habitat vs otra AFP</h1>
+        <div class="differences-between-afp">
+          <div class="amount-afp">
+            <ion-row>
+              <ion-col class="col-left">
+                <h1>{{ lastValues['habitat'] | chileanCurrency }}</h1>
+                <p>Habitat</p>
+              </ion-col>
+              <ion-col class="col-right">
+                <h1>{{ lastValues[afpCompare] | chileanCurrency }}</h1>
+                <p>{{ afpCompare }}</p>
+              </ion-col>
+            </ion-row>
+          </div>
+          <div class="difference-between">
+            <p>Diferencia entre Habitat y {{ afpCompare | titlecase }}</p>
+            <h1 [ngClass]="{'color-positive' : differenceValue.sign === '+', 'color-negative' : differenceValue.sign === '-' }">
+              {{differenceValue.sign }} {{ differenceValue.number | chileanCurrency }}
+            </h1>
+          </div>
+        </div>
+        <app-afp-bar-progress class="list-afp-bar-progress" [period]="controls.period.value"
+          [lastValues]="lastValues" [afpNames]="displayAfp" (clickAfp)="changeDifference($event)">
+        </app-afp-bar-progress>
+        <h6 class="legal-text" (click)="showModalInfo()" >Textos legales</h6>
+        <div class="container-button button--simulator">
+          <ion-button class="secondary-button" (click)="goToBenchmarkStart()"> Volver a comparar</ion-button>
+        </div>
+      </div>
+      <div *ngIf="showSpinner" class="spinner">
+        <ion-spinner name="bubbles"></ion-spinner>
+        <p>Cargando la información...</p>
+      </div>
+    </div>
+  </div>
+  <app-error *ngIf="!simulationResult && existResult" [buttons]="errorButtons" (clickErrorButton)="clickErrorButtons($event)"></app-error>
+</ion-content>

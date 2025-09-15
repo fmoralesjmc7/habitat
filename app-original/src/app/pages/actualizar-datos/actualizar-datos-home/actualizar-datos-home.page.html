@@ -1,0 +1,82 @@
+<app-header (clickBackButton)="volverAlHome()" ></app-header>
+
+<ion-content class="content_page">
+  <section class="encabezado">
+    <ion-grid>
+      <ion-row class="principales">
+        <ion-col size="8">
+          <p class="nombre">{{datosUsuario.nombres | formatoMayusculas}} <br> {{datosUsuario.apellidoPaterno | formatoMayusculas}} {{datosUsuario.apellidoMaterno | formatoMayusculas}}</p>
+
+          <ion-row>
+            <ion-col size="7">
+              <p class="secundarios rut"><span>Rut: {{datosUsuario.rut | number:'1.0-0':'es-CL'}}-{{ datosUsuario.dv}}</span></p>
+            </ion-col>
+            <ion-col>
+              <ion-icon (click)="mostrarModalDatos = !mostrarModalDatos" class="info icon-informacion"></ion-icon>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+        <ion-col>
+          <img alt="" src="./assets/icon/datos.svg">
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <p class="secundarios"><span>Sexo: </span>{{datosUsuario.sexo | formatoMayusculas}}</p>
+        </ion-col>
+        <ion-col>
+          <p *ngIf="datosUsuario.estadoCivil" class="secundarios"><span>Estado Civil: </span>{{datosUsuario.estadoCivil | formatoMayusculas}}</p>
+          <p *ngIf="!datosUsuario.estadoCivil" class="secundarios"><span>Estado Civil: </span>-</p>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </section>
+
+  <section class="botonera">
+    <p class="ultima-actualizacion">Última actualización: {{datosUsuario.fechaUltimaActualizacion | date: 'dd  \'de\' MMMM yyyy - hh:mm'}}</p>
+
+    <ion-card class="opciones-cambio">
+      <ion-grid>
+        <ion-row>
+          <ion-col class="opcion border-derecha  border-bottom" (click)="eventoMostrarFormulario('')">
+            <ion-icon class="icono icon-datos-contacto"></ion-icon>
+            <p>Datos de Contacto</p>
+          </ion-col>
+          <ion-col class="opcion border-bottom" (click)="eventoMostrarFormulario(CONSTANTES.OPCION_LABORALES)">
+            <ion-icon class="icono icon-datos-laborales"></ion-icon>
+            <p>Datos Laborales</p>
+          </ion-col>
+        </ion-row>
+        <ion-row *ngIf="activarSecundarios">
+          <ion-col class="opcion border-derecha">
+            <ion-icon class="icono icon-datos-sociedades"></ion-icon>
+            <p>Datos Sociedades</p>
+          </ion-col>
+          <ion-col class="opcion">
+            <ion-icon class="icono icon-datos-bancarios"></ion-icon>
+            <p>Cuenta Bancaria</p>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card>
+  </section>
+</ion-content>
+
+<section class="modal_informativo" *ngIf="mostrarModalDatos">
+  <article class="modal_cnt">
+    <ion-icon class="icon_close icon-cerrar" (click)="mostrarModalDatos = false"></ion-icon>
+    <ion-card class="modal">
+      <ion-card-header class="header">
+        <ion-icon class="header-icon icon-informacion"></ion-icon>
+      </ion-card-header>
+      <ion-card-content class="body">
+        <p class="body-text">
+          En caso de requerir la modificación en tu nombre registrado, comunícate con nuestro
+          <a class="link" (click)="llamarContactCenter()"> Contact Center.</a> o visita una de nuestras <a class="link"
+            (click)="irSucursales()">Sucursales.</a>
+        </p>
+        <button class="body-btn" (click)="mostrarModalDatos = false">Aceptar</button>
+      </ion-card-content>
+    </ion-card>
+  </article>
+</section>

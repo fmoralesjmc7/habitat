@@ -1,0 +1,33 @@
+<app-header></app-header>
+
+<ion-content class="content_page">
+	<article class="cnt_rrss">
+		<ion-title class="cnt_rrss-title">Valor Cuota</ion-title>
+      <p class="cnt_rrss-subtitle">Actualizado al {{ fechaActual }}</p>
+      <ion-list lines="none" class="list">
+        <ion-item class="list-item" *ngFor="let fondo of valoresCuota">
+            <div class="cnt_fondo">
+                <p class="cnt_fondo-text">Fondo</p>  
+                <div class="cnt_fondo-letra" 
+                [ngClass]="{'letter--red': fondo.fondo === 'A', 'letter--orange': fondo.fondo === 'B', 'letter--green': fondo.fondo === 'C', 'letter--cyan': fondo.fondo === 'D', 'letter--blue': fondo.fondo === 'E'}"> 
+                    <span class="value">
+                        {{ fondo.fondo }}
+                    </span>
+                </div>
+            </div>
+            <div class="valor"
+                        [class.valor--rojo]="fondo.fondo === 'A'"
+                        [class.valor--naranjo]="fondo.fondo === 'B'"
+                        [class.valor--verde]="fondo.fondo === 'C'"
+                        [class.valor--celeste]="fondo.fondo === 'D'"
+                        [class.valor--azul]="fondo.fondo === 'E'">
+                        <p *ngIf="fondo.valor - parseInt(fondo.valor) != 0; else loggedOut; " >
+                        {{ fondo.valor | formatoPesoChileno }} </p>
+                        <ng-template #loggedOut>{{ fondo.valor | formatoPesoChileno }},00  </ng-template>
+                    </div>
+        </ion-item>
+      </ion-list>
+      <button class="cnt_rrss-evolucion" (click)="verEvolucionvalorCuota();">Ver Evolución Valor Cuota</button>
+      <button class="cnt_rrss-btn" (click)="visitarRentabilidad();">Revisa la Rentabilidad de los Fondos</button>
+  </article>
+</ion-content>

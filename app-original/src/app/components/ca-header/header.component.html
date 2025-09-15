@@ -1,0 +1,17 @@
+<ion-header class="header_app">
+    <ion-toolbar class="navbar">                                                                              
+        <ion-buttons *ngIf="headerElements?.iconLeft != 'btn-icon funnel'" slot="start" class="nav-button button-left" (click)="clickButton('left')">
+            <ion-icon [ngClass]="headerElements?.iconLeft!"></ion-icon>
+        </ion-buttons>
+        <ion-buttons *ngIf="headerElements?.iconLeft == 'btn-icon funnel'" slot="start" class="nav-button button-left" (click)="clickButton('left')">
+            <ion-icon name="funnel" class="button-funnel"></ion-icon>
+        </ion-buttons>
+        <figure class="logo">
+            <img *ngIf="!headerElements.title" alt="" class="logo-img" src="./assets/imgs/nuevo_logo_header.png">
+            <h1 *ngIf="headerElements.title" class="titulo_header">{{ headerElements.title }}</h1>
+        </figure>
+        <ion-buttons *ngIf="headerElements?.iconRight" slot="primary" class="nav-button button-right" (click)="clickButton('right')">
+            <ion-icon [ngClass]="headerElements?.iconRight!"></ion-icon>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>

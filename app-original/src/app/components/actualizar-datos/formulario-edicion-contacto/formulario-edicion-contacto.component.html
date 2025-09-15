@@ -1,0 +1,321 @@
+<section class="content_page"  *ngIf="datosUsuario">
+
+  <ion-card class="datos-contacto" *ngIf="datosUsuario" [class.datos-sin-residencia]="datosUsuario?.opcionResidenciaChile === false">
+    <span class="datos-editar" (click)="cerrarEdicion()">
+      <ion-icon class="icon icon-cerrar"></ion-icon>
+    </span>   
+
+    <ion-grid class="datos-formulario edicion">
+      <ion-row>
+        <ion-col>
+          <p class="titulo">Datos de Contacto</p>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <span class="datos-obligatorios">*Datos obligatorios</span> 
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+            <p class="label primero">Teléfono Particular</p>
+            <ion-row>
+              <ion-col class="prefijo">
+                <span class="dato">+56</span>
+                
+                <ion-select class="borde-input padding-start" okText="ACEPTAR" cancelText="CANCELAR" [(ngModel)]="datosUsuario.telefonoParticular.codigo_area" [ngClass]="{'rojo': validadorCodigoAreaParticular,'normal': !validadorCodigoAreaParticular }">
+                  <ion-select-option *ngFor="let valor of listadoCodigosArea" [value]="valor.codigo">
+                    {{ valor.codigo}}
+                  </ion-select-option>
+                </ion-select>
+                
+                <ion-input
+                  class="borde-input separacion padding-start"
+                  [ngClass]="{'rojo': validadorTelefonoParticular,'normal': !validadorTelefonoParticular }"
+                  [(ngModel)]="datosUsuario.telefonoParticular.numero_telefono"
+                  type="tel"
+                  maxlength="8"
+                  (keyup)="datosUsuario.telefonoParticular.numero_telefono = formatoSoloNumero($any($event.target).value)"
+                  (keyup.enter)="datosUsuario.telefonoParticular.numero_telefono = formatoSoloNumero($any($event.target).value)"
+                  (ionBlur)="datosUsuario.telefonoParticular.numero_telefono = formatoSoloNumero($any($event.target).value)">
+                </ion-input>
+              </ion-col>
+            </ion-row>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+            <p class="label">Teléfono Comercial</p>
+            <ion-row>
+              <ion-col class="prefijo">
+                <span class="dato">+56</span>
+
+                <ion-select class="borde-input padding-start" okText="ACEPTAR" cancelText="CANCELAR" [(ngModel)]="datosUsuario.telefonoComercial.codigo_area" [ngClass]="{'rojo': validadorCodigoAreaComercial,'normal': !validadorCodigoAreaComercial }">
+                  <ion-select-option *ngFor="let valor of listadoCodigosArea" [value]="valor.codigo">
+                    {{ valor.codigo}}
+                  </ion-select-option>
+                </ion-select>
+
+                <ion-input 
+                  class="borde-input separacion padding-start"
+                  [ngClass]="{'rojo': validadorTelefonoComercial,'normal': !validadorTelefonoComercial }"
+                  [(ngModel)]="datosUsuario.telefonoComercial.numero_telefono"
+                  type="tel"
+                  maxlength="8"
+                  (keyup)="datosUsuario.telefonoComercial.numero_telefono = formatoSoloNumero($any($event.target).value)"
+                  (keyup.enter)="datosUsuario.telefonoComercial.numero_telefono = formatoSoloNumero($any($event.target).value)"
+                  (ionBlur)="datosUsuario.telefonoComercial.numero_telefono = formatoSoloNumero($any($event.target).value)">
+                </ion-input>
+              </ion-col>
+            </ion-row>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+            <p class="label">Celular<span>*</span></p>
+            <ion-row>
+              <ion-col class="prefijo">
+                <span class="dato">+56 9</span>
+                <ion-input 
+                  class="borde-input padding-start"
+                  [ngClass]="{'rojo': validadorCelular,'normal': !validadorCelular }"
+                  [(ngModel)]="datosUsuario.celularUsuario.numero_telefono"
+                  type="tel"
+                  maxlength="8"
+                  (keyup)="datosUsuario.celularUsuario.numero_telefono = formatoSoloNumero($any($event.target).value)"
+                  (keyup.enter)="datosUsuario.celularUsuario.numero_telefono = formatoSoloNumero($any($event.target).value)"
+                  (ionBlur)="datosUsuario.celularUsuario.numero_telefono = formatoSoloNumero($any($event.target).value)">
+                </ion-input>
+              </ion-col>
+            </ion-row>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+            <p class="label">Email Particular<span>*</span></p>
+            <ion-row>
+              <ion-col>
+                <ion-input class="borde-input"
+                  [ngClass]="{'rojo': validadorCorreoParticular,'normal': !validadorCorreoParticular }"
+                  [(ngModel)]="datosUsuario.correoParticular.correo"
+                  (ionBlur)="keyUpEmail(datosUsuario.correoParticular.correo, 'particular');"
+                  (keyup.enter)="keyUpEmail(datosUsuario.correoParticular.correo, 'particular');"
+                  [attr.maxlength]="50"
+                  type="email">
+                </ion-input>
+              </ion-col>
+            </ion-row>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+            <p class="label">Email Comercial</p>
+            <ion-row>
+              <ion-col>
+                <ion-input class="borde-input"
+                  [ngClass]="{'rojo': validadorCorreoComercial,'normal': !validadorCorreoComercial }"
+                  [(ngModel)]="datosUsuario.correoComercial.correo"
+                  (ionBlur)="keyUpEmail(datosUsuario.correoComercial.correo, 'comercial');"
+                  (keyup.enter)="keyUpEmail(datosUsuario.correoComercial.correo, 'comercial');"
+                  [attr.maxlength]="50" 
+                  type="email">
+                </ion-input>
+              </ion-col>
+            </ion-row>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+            <p class="suscripcion">Email al que desea suscribir para envío de Cartola Cuatrimestral</p>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col class="checkbox" size="6" (click)="confirmarSuscripcionCorreo(false)">
+          <ion-checkbox [(ngModel)]="datosUsuario.esSuscripcionCorreoParticular" [disabled]="false" mode="md"
+              class="checkbox-custom check_enabled"></ion-checkbox>
+          <span>Email Particular</span>
+        </ion-col>
+        <ion-col class="checkbox" size="6" (click)="confirmarSuscripcionCorreo(true)">
+          <ion-checkbox [(ngModel)]="datosUsuario.esSuscripcionCorreoComercial" [disabled]="false" mode="md"
+              class="checkbox-custom check_enabled"></ion-checkbox>
+          <span>Email Comercial</span>
+      </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <ion-grid class="datos-formulario edicion" *ngIf="datosUsuario">
+      <ion-row>
+        <ion-col>
+          <p class="titulo residencia">Datos de Residencia</p>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <span class="datos-obligatorios">*Datos obligatorios</span> 
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col class="contenedor-radio">
+          <ion-radio-group class="residencia" value="{{datosUsuario.opcionResidenciaChile}}">
+            <ion-row>
+              <ion-col size="1" (click)="datosUsuario.opcionResidenciaChile = true">
+                <ion-radio class="radio-custom radio_enabled" value="true" mode="md"></ion-radio>
+              </ion-col>
+      
+              <ion-col size="5" (click)="datosUsuario.opcionResidenciaChile = true">
+                <span>Chile</span>
+              </ion-col>
+      
+              <ion-col size="1" (click)="datosUsuario.opcionResidenciaChile = false">
+                <ion-radio class="radio-custom radio_enabled" value="false" mode="md"></ion-radio>
+              </ion-col>
+      
+              <ion-col size="5" (click)="datosUsuario.opcionResidenciaChile = false">
+                <span>No residente</span>
+              </ion-col>
+            </ion-row>
+          </ion-radio-group>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="informacion" *ngIf="!datosUsuario.opcionResidenciaChile">
+        <ion-col size="1">
+          <ion-icon class="icon icon-alerta"></ion-icon>
+        </ion-col>
+        <ion-col class="texto_container">
+          <span class="texto_info bold">Importante: </span>
+          <span class="texto_info">Tu cartola será enviada a tu email.</span>
+        </ion-col>
+      </ion-row>
+
+      <section *ngIf="datosUsuario.opcionResidenciaChile">
+        <ion-row>
+          <ion-col>
+              <p class="label">Nacionalidad<span>*</span></p>
+              <ion-row>
+                <ion-col>
+                  <ion-select class="borde-input" okText="ACEPTAR" [(ngModel)]="nacionalidadSeleccionada" cancelText="CANCELAR" placeholder="Selecciona País"
+                    [ngClass]="{'rojo': validadorNacionalidad,'normal': !validadorNacionalidad }">
+                    <ion-select-option *ngFor=" let nacion of listadoNacionalidad" [value]="nacion.id_nacionalidad">
+                      {{ nacion.nombre_nacionalidad }}
+                    </ion-select-option>
+                  </ion-select>
+                </ion-col>
+              </ion-row>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+              <p class="label">Región<span>*</span></p>
+              <ion-row>
+                <ion-col>
+                  <ion-select class="borde-input" okText="ACEPTAR" cancelText="CANCELAR" [(ngModel)]="direccionSeleccionada.id_region" placeholder="Selecciona Región"
+                    (ionChange)="cambioRegion(direccionSeleccionada.id_region)" [ngClass]="{'rojo': validadorRegion,'normal': !validadorRegion }">
+      
+                    <ion-select-option *ngFor="let region of listadoRegiones" [value]="region.id_region">
+                      {{ region.nombre_region }}
+                    </ion-select-option>
+                  </ion-select>
+                </ion-col>
+              </ion-row>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+              <p class="label">Ciudad<span>*</span></p>
+              <ion-row>
+                <ion-col>
+                  <ion-select class="borde-input" okText="ACEPTAR" cancelText="CANCELAR" [(ngModel)]="direccionSeleccionada.id_ciudad"
+                    placeholder="Selecciona Ciudad" (ionChange)="cambioCiudad(direccionSeleccionada.id_ciudad)"
+                    [ngClass]="{'rojo': validadorCiudad,'normal': !validadorCiudad }">
+                    <ion-select-option *ngFor="let ciudad of listadoCiudadesVisibles" [value]="ciudad.id_ciudad">
+                      {{ ciudad.nombre_ciudad}}
+                    </ion-select-option>
+                  </ion-select>
+                </ion-col>
+              </ion-row>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+              <p class="label">Comuna<span>*</span></p>
+              <ion-row>
+                <ion-col>
+                  <ion-select class="borde-input" okText="ACEPTAR" cancelText="CANCELAR" [(ngModel)]="direccionSeleccionada.id_comuna"
+                    placeholder="Selecciona Comuna" [ngClass]="{'rojo': validadorComuna,'normal': !validadorComuna }">
+                    <ion-select-option *ngFor="let comuna of listadoComunasVisibles" [value]="comuna.id_comuna">
+                      {{ comuna.nombre_comuna }}
+                    </ion-select-option>
+                  </ion-select>
+                </ion-col>
+              </ion-row>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+              <p class="label">Calle<span>*</span></p>
+              <ion-row>
+                <ion-col>
+                  <ion-input class="borde-input"
+                    [(ngModel)]="direccionSeleccionada.calle" 
+                    [attr.maxlength]="100"
+                    [ngClass]="{'rojo': validadorCalle,'normal': !validadorCalle }">
+                  </ion-input>
+                </ion-col>
+              </ion-row>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="5">
+              <p class="label">Número<span>*</span></p>
+              <ion-row>
+                <ion-col>
+                  <ion-input class="borde-input"
+                    [(ngModel)]="direccionSeleccionada.numero"
+                    [ngClass]="{'rojo': validadorNumero,'normal': !validadorNumero }"
+                    maxlength="10">
+                  </ion-input>
+                </ion-col>
+              </ion-row>
+          </ion-col>
+          <ion-col offset="1">
+              <p class="label">Depto.</p>
+              <ion-row>
+                <ion-col>
+                  <ion-input class="borde-input"
+                    [(ngModel)]="direccionSeleccionada.departamento"
+                    maxlength="6">
+                  </ion-input>
+                </ion-col>
+              </ion-row>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="5">
+              <p class="label">Block</p>
+              <ion-row>
+                <ion-col>
+                  <ion-input class="borde-input" [(ngModel)]="direccionSeleccionada.block"  maxlength="100">
+                  </ion-input>
+                </ion-col>
+              </ion-row>
+          </ion-col>
+          <ion-col offset="1">
+              <p class="label">Villa/Población</p>
+              <ion-row>
+                <ion-col>
+                  <ion-input class="borde-input" [(ngModel)]="direccionSeleccionada.villa" [attr.maxlength]="50"></ion-input>
+                </ion-col>
+              </ion-row>
+          </ion-col>
+        </ion-row>
+      </section>
+    </ion-grid>
+  </ion-card>
+  
+  <section class="botonera">
+    <button class="buttons-btn btn-guardar" (click)="guardarDatosPersonales()">Guardar Datos</button>
+    <button #btnCancelar class="buttons-btn" (click)="cerrarEdicion()">Cancelar</button>
+  </section>
+
+</section>

@@ -1,0 +1,424 @@
+@import '../../../../theme/mixins';
+
+:host {
+  .content_page {
+    &.content_page--succes {
+      .scroll-content {
+        overflow-y: scroll;
+      }
+    }
+
+    ion-item {
+      --ion-safe-area-left: 0;
+    }
+
+    .label-no-margin {
+      margin: 0;
+    }
+
+    .scroll-content {
+      padding: 40px 0 0;
+      overflow-y: hidden;
+    }
+
+    .section_cnt {
+      display: block;
+      margin: 0 auto;
+      width: 90%;
+      height: 100%;
+      padding-top: 40px;
+
+      .form {
+        height: 100%;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+
+        &-title {
+          text-transform: none;
+          width: 100%;
+          display: block;
+          padding: 0px;
+          margin: 0px;
+          font: 1.125rem var(--fonts-weight-bold);
+          text-align: center;
+        }
+
+        .form_cnt {
+          height: 100%;
+          width: 100%;
+          box-sizing: unset;
+          margin: 20px 0 0 0;
+          overflow:scroll;
+
+          .type {
+            padding: 0;
+            margin: 0;
+            margin-bottom: 15px;
+            min-height: fit-content;
+
+            .item-inner {
+              padding: 0;
+            }
+
+            &-select {
+              @include select();
+              .item-cover {
+                padding: 0;
+              }
+            }
+
+            .grid-certificado {
+              padding: 0px;
+            }
+
+            .chip-certificado {
+              background: var(--colors-light) !important;
+              border: 1px solid var(--colors-celeste);
+              font: 1rem var(--fonts-weight-regular);
+              margin-left: 0px;
+              margin-right: 0px;
+              border-bottom-right-radius: 40px;
+              border-top-right-radius: 40px;
+              border-bottom-left-radius: 5px;
+              border-top-left-radius: 5px;
+              min-width: 100%;
+              min-height: 3rem;
+
+              .icono_izquierda {
+                font-size: 28px;
+                padding-left: 5px;
+              }
+
+              .flecha_certificado {
+                font-size: 20px;
+                margin-left: auto;
+                margin-right: 0;
+              }
+            }
+          }
+
+          //type
+          .form_var {
+            margin: 2.0rem 0 0 0;
+
+            .btn_option {
+              margin: 0 0 2.0rem 0;
+              padding: 0;
+              min-height: auto;
+
+              .item-inner {
+                padding: 0;
+
+                .label {
+                  margin: 0;
+                  display: flex;
+                }
+              }
+
+              &-item {
+                width: 50%;
+                padding: .625rem 0;
+                font: 1rem var(--fonts-weight-regular);
+                color: var(--colors-gris-suave);
+                background: var(--colors-light);
+
+                &:first-of-type {
+                  border-radius: 4px 0 0 4px;
+                }
+
+                &:last-of-type {
+                  border-radius: 0 4px 4px 0;
+                  border-left: 2px solid var(--colors-celeste);
+                }
+
+                &.btn_option-item--active {
+                  background: var(--colors-celeste);
+                  color: var(--colors-blanco);
+                  font: 1rem var(--fonts-weight-medium);
+                }
+              }
+            }
+
+            .options {
+              padding: 0;
+              margin: 0 0 2.0rem;
+
+              .item-inner {
+                padding: 0;
+              }
+
+              &-label {
+                font-size: 1rem;
+                color: var(--colors-gris-oscuro);
+                margin: 0 0 .625rem;
+
+                .icon {
+                  font-size: .75rem;
+                }
+              }
+
+              &-select {
+                @include select();
+              }
+            }
+
+            //options
+            .date_cnt {
+              padding: 0;
+              width: 100%;
+              display: flex;
+              justify-content: space-between;
+
+              .item-inner {
+                padding: 0;
+              }
+
+              .date_item {
+                padding: 0;
+                margin: 0;
+                width: 100%;
+
+                &-right {
+                  margin-left: auto;
+                  margin-right: 0;
+                  padding-left: 0.5rem;
+                }
+
+                &-left {
+                  padding-right: 0.5rem;
+                }
+
+                .no_padding_col {
+                  padding: 0;
+                }
+
+                &-label {
+                  font-size: 1rem;
+                  color: var(--colors-gris-oscuro);
+                  margin: 0 0 .625rem;
+
+                  .icon {
+                    font-size: .75rem;
+                  }
+                }
+
+                &-select {
+                  margin-left: 0;
+                  @extend .type-select;
+
+                  .text-select {
+                    margin: 0;
+                    outline: none;
+                  }
+                }
+
+              }
+            }
+          }
+
+          //form_var
+        }
+
+
+
+        //form_cnt
+        .cnt_button {
+          width: 100%;
+          margin: 2.5rem 0 1rem;
+          padding: 0;
+          min-height: 80px;
+          display: inline-block;
+          vertical-align: top;
+          align-items: flex-end;
+
+          &-btn {
+            @include btn-general();
+            height: 3.6rem;
+            margin: 0;
+          }
+        }
+      }
+
+      //form
+    }
+    .alert-title.sc-ion-alert-ios {
+      font-size: 1rem !important;
+    }
+
+    .alert-title.sc-ion-alert-md {
+      font-size: 1rem !important;
+    }
+
+    .alert-head {
+      text-align: center;
+    }
+
+    //success
+  }
+
+  .botonera {
+    margin: 0px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    width: 100%;
+    padding-bottom: 20px;
+    padding-top: 20px;
+    background-color: var(--colors-blanco);
+  }
+
+  .borde_scroll{
+    position: absolute;
+    bottom: 0px;
+    height: 3px;
+    width: 100%;
+    border: 0;
+    margin: 0;
+    opacity: 0.5;
+    background: linear-gradient(to bottom, var(--colors-light), var(--colors-gris-medio));
+  }
+
+  .btn_volver {
+    @include btn-general();
+    color: var(--colors-azul-oscuro);
+    background-color: var(--colors-blanco);
+    border: 1px solid var(--colors-azul-oscuro);
+    margin: 0px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 90%;
+    align-self: flex-end;
+  }
+
+  //content-page
+
+
+  ion-alert.alert-ios,
+  ion-alert.alert-md {
+    .alert-wrapper {
+      width: 80%;
+      border-radius: 4px;
+      max-width: auto;
+
+      .alert-head {
+        color: var(--colors-gris-oscuro);
+        text-align: center;
+
+        .alert-title {
+          font-size: 1rem;
+        }
+
+        .alert-head {
+          text-align: center;
+        }
+      }
+
+      div[ng-reflect-ng-switch="radio"] {
+        overflow-y: scroll;
+
+        .alert-radio-group {
+          max-height: 200px;
+
+          .alert-tappable {
+            .button-inner {
+              .alert-radio-label {
+                color: var(--colors-gris-oscuro);
+                font-size: .875rem;
+                text-overflow: unset;
+                white-space: unset;
+              }
+            }
+          }
+        }
+      }
+
+      .alert-button-group {
+        padding: 0;
+        width: 100%;
+
+        .alert-button {
+          padding: 0;
+          margin: 0;
+          height: fit-content;
+
+          .button-inner {
+            padding: 12px 0;
+          }
+
+          &-ios {
+            &:first-of-type {
+              margin: 0;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .alert-md {
+    .alert-wrapper {
+      .alert-button-group {
+        .alert-button {
+          &:last-of-type {
+            padding: 0 26px;
+          }
+        }
+      }
+    }
+  }
+
+  //edit --> alert select native ionic ios version
+}
+
+//ios md
+
+@media (max-height: 680px) {
+  :host {
+    .alert-title {
+      font-size: 1rem;
+    }
+
+    .alert-head {
+      text-align: center;
+    }
+
+    page-certificado {
+      .content_page {
+        &.content_page--elegir_fecha_mov {
+          .scroll-content {
+            overflow-y: scroll;
+          }
+
+          .section_cnt {
+            height: auto;
+
+            .form {
+              .form_cnt {
+                &.form_cnt--elegir_fecha {
+                  max-height: calc(100% - 114px);
+                }
+              }
+            }
+          }
+        }
+
+        .success {
+          height: auto;
+        }
+
+        //success
+      }
+
+      //content-page
+    }
+
+    //page-certificado
+  }
+
+}
+
+
+
+
+

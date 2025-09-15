@@ -1,0 +1,25 @@
+<app-header></app-header>
+
+<ion-content class="content_page">
+    <ion-grid class="content_grid">
+        <ion-row>
+            <p class="texto_pequeno">
+                {{notificacion.fechaEnvio | date: 'dd MMM yyyy'}}
+            </p>
+        </ion-row>
+        <ion-row>
+            <h2 class="title">
+                {{notificacion.titulo}}
+            </h2>
+        </ion-row>
+        <ion-row>
+            <p class="texto_pequeno" *ngIf="notificacion.link">
+                {{notificacion.mensaje}} -
+                <a class="link" (click)="abrirLink(notificacion.link)"><u>Ver Más</u></a>
+            </p>
+            <p class="texto_pequeno" *ngIf="!notificacion.link">
+                {{notificacion.mensaje}}
+            </p>
+        </ion-row>
+    </ion-grid>
+</ion-content>

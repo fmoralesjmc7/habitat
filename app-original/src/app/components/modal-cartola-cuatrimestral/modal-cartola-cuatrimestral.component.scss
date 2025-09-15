@@ -1,0 +1,169 @@
+@import '../../../theme/mixins';
+
+.modal_informativo {
+  @include modal_gral();
+
+  .modal_cnt {
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+    border-radius: 4px;
+    margin-left: 30px;
+    margin-right: 30px;
+
+    .boton_modal {
+      background: var(--colors-celeste) !important;
+      color: var(--colors-blanco);
+    }
+
+    .icon_close {
+      color: var(--colors-celeste);
+      position: absolute;
+      top: 0;
+      left: 88%;
+      z-index: 10;
+      padding: .625rem;
+      font-size: .875rem;
+    }
+
+    .modal {
+      width: 100%;
+      padding: 0px;
+
+      .header {
+        margin: 20px auto 14px auto;
+        padding: 0 15px;
+      }
+
+      .image_col{
+        text-align: center;
+      }
+
+      .body_step2{
+        max-height: 25rem !important;
+      }
+      .body {
+        max-height: 30rem;
+        overflow-y: scroll;
+        margin-bottom: 15px;
+        padding: 0px;
+
+        .no_padding{
+          padding: 0px;
+        }
+        .fila_oscura{
+          background-color: var(--colors-gris-oscuro);
+        }
+
+        .padding_col{
+          padding-top: 10px;
+          padding-left: 8px;
+          padding-right: 8px;
+          padding-bottom: 10px;
+        }
+        .texto_claro{
+          color: var(--colors-gris-semi-claro) !important;
+        }
+
+        .fila_clara{
+          background-color: var(--colors-gris-claro-fondo);
+        }
+
+        .fila_blanca{
+          border:1px solid var(--colors-gris-semi-claro);
+        }
+
+        .texto_celdas{
+          font: 0.6rem var(--fonts-weight-medium);
+        }
+
+        .alineacion_izquierda{
+          text-align: left;
+          padding-top: 5px;
+          padding-bottom: 5px;
+        }
+
+        .titulo_intermedio{
+          padding-left: 20px;
+          padding-right: 20px;
+          padding-top: 10px;
+          padding-bottom: 10px;
+        }
+
+        .row_informativos{
+          margin-right: 5px;
+          margin-left: 5px;
+        }
+
+        .link {
+          padding-top: 0;
+          color: var(--colors-celeste);
+          font: 1rem var(--fonts-weight-medium);
+          justify-content: center;
+        }
+
+        &-title {
+          font: 0.75rem var(--fonts-weight-bold);
+          margin-bottom: 0px;
+        }
+
+        &-text {
+          text-align: left;
+          width: 100%;
+          font: 1rem var(--fonts-weight-regular);
+          margin: auto auto 20px auto;
+
+          .texto_celeste {
+            color: var(--colors-celeste);
+            font: 1rem var(--fonts-weight-medium);
+          }
+
+          .medium {
+            font: 1rem var(--fonts-weight-medium);
+          }
+
+          .input_modal {
+            background: var(--colors-light);
+          }
+          &:last-of-type {
+            margin: 0 auto 40px auto;
+          }
+        }
+
+        &-icon {
+          background: var(--colors-celeste);
+          color: var(--colors-blanco);
+          border-radius: 50%;
+          font-size: 10px;
+          width: 14px;
+          height: 14px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          font-weight: bold;
+          margin: 0 20px 0 0;
+          min-width: 14px;
+          min-height: 14px;
+        }
+      }
+
+      .ion-card-content {
+        margin-top: 0px;
+      }
+
+      .btn-aceptar-apv {
+        @include btn-general();
+        margin-top: 50px;
+      }
+    }
+  }
+}
+
+/**
+Para que no se muestre el cuadrado que se presenta a la izquierda
+de un parrafo en modals
+ */
+::-webkit-scrollbar {
+  width: 0px;  /* remove scrollbar space */
+  background: transparent;  /* optional: just make scrollbar invisible */
+}

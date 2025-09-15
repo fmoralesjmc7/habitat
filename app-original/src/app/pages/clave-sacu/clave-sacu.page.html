@@ -1,0 +1,44 @@
+<app-header (clickBackButton)="volverAlHome()" [class.disable_header]="infoClaveSegIsOpen"></app-header>
+
+<ion-content class="content_page">
+  <section class="container_block"  [class.container_block--active]="btnAlign == true">
+    <section class="container">
+      <h2 class="container-title">
+        {{ title }}
+      </h2>
+      <div class="container-text" [class.text--scroll_active]="btnAlign == true">
+        {{ text }}
+        <br>
+        <span class="comment">
+                    {{ COMMENT }}
+          <ion-icon class="icon icon-informacion" (click)="openHelp()"></ion-icon>
+        </span>
+      </div>
+      <div class="question">
+        <ion-grid class="no_paddin_grid">
+          <ion-row>
+            <ion-input class="question-input" (keyup)="detectaBotonIr($event.keyCode)" (ionChange)="detectaClaveSACU()" [(ngModel)]="clave" [attr.minlength]="6" [attr.maxlength]="10" type="password"
+                       name="title" placeholder="Clave Alfanumérica" (ionBlur)="this.keyboardOff()" (ionFocus)="this.keyboardOn()" >
+            </ion-input>
+          </ion-row>
+          <ion-row>
+            <ion-label class="question-label">
+              {{ QUESTION_LABEL }}
+            </ion-label>
+          </ion-row>
+          <ion-row class="center_row">
+              <a class="question-forget" (click)="abrirPaginaSACU();">{{ QUESTION_FORGET }}</a>
+          </ion-row>
+        </ion-grid>
+      </div>
+      <section class="button-section" [class.button-section--active]="btnAlign == true">
+        <button class="btn_next" type="submit" block (mousedown)="validarClavePrevired()" [disabled]="clavePreviredBloqueada || ingresoClaveSACU" > {{ BTN_NEXT }}</button>
+      </section>
+    </section>
+  </section>
+</ion-content>
+
+<ayuda-contextual *ngIf="infoClaveSegIsOpen"
+                  [isOpen]="infoClaveSegIsOpen"
+                  (bgClick)="infoClaveSegIsOpen = !infoClaveSegIsOpen"
+                  [text]="INFO_TXT_CLAVE_SEG"></ayuda-contextual>

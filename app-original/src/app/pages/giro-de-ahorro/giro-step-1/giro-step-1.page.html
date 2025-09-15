@@ -1,0 +1,539 @@
+<app-header></app-header>
+<ion-content class="content_page">
+    <section class="container">
+        <app-step-items [active]="1"></app-step-items>
+        <h2 class ="container-title">Giro de Ahorro</h2>
+        <p class="container-text" *ngIf="mostraTextoInformativoInicio">
+            A continuación podrás realizar tu Giro de Ahorro en Línea en forma fácil, rápida y segura de tu Cuenta 2 o APV. <span class="medium">Por favor, completa los siguientes datos.</span>
+        </p>
+
+        <section class="selector_cuentas" [ngClass]="{'selector_cuentas--scroll': idTipoProducto != undefined}" *ngIf="!mostrarDetalleGiro">
+            <h3 class="selector_cuentas-subtitulo">
+                Selecciona Cuenta para Girar
+                <ion-icon class="icon icon-informacion" (click)="modalDetalleSlideGiro = true"></ion-icon>
+            </h3>
+            <article class="box_selector">
+                <div class="box_selector-item" [ngClass]="{'box_selector-item--activo': idTipoProducto == CONSTANTES.ID_PRODUCTO_CUENTA_2}" (click)="seleccionarGiro(CONSTANTES.NOMBRE_PRODUCTO_CUENTA_2)">
+                    Cuenta 2
+                </div>
+                <div class="box_selector-separador"></div>
+                <div class="box_selector-item" [ngClass]="{'box_selector-item--activo': idTipoProducto == CONSTANTES.ID_PRODUCTO_APV}" (click)="seleccionarGiro(CONSTANTES.NOMBRE_PRODUCTO_APV)">
+                    APV
+                </div>
+            </article>
+        </section>
+
+        <section class="regimenes" *ngIf="mostrarListadoRegimenes && !mostrarDetalleGiro">
+            <a class="link" (click)="mostrarModalInfoRegimenes()">Información acerca de los regímenes</a>
+            <section class="regimen">
+                <article class="regimen_item" [ngClass]="{'editado': reg.confirmado}" *ngFor="let reg of listadoRegimenes" (click)="eventoMostrarDetalleGiro(reg)">
+                    <span class="regimen_item-title" [ngClass]="{'disabled': reg.estado24GirosCOVID}">{{ reg.nombreRegimen | formatoMayusculas}}</span>
+                    <ion-icon class="regimen_item-icon icon-plus" *ngIf="!reg.confirmado && !reg.estado24GirosCOVID"></ion-icon>
+                    <ion-icon class="regimen_item-icon_edit icon-editar" *ngIf="reg.confirmado && !reg.estado24GirosCOVID"></ion-icon>
+                </article>
+            </section>
+        </section>
+    </section>
+    <section class="botonera" *ngIf="mostrarListadoRegimenes">
+        <button class="btn_continuar" [disabled]="validarBotonContinuar()" (click)="modalValidacionCuentas = true">Continuar</button>
+        <button class="btn_volver" (click)="eventoCancelar()">Cancelar</button>
+    </section>
+</ion-content>
+
+<!--Modal validación de cuenta bipersonales o digitales-->
+<section class="modal_informativo" *ngIf="modalValidacionCuentas">
+    <article class="modal_cnt">
+        <ion-icon class="icon_close icon-cerrar" (click)="modalValidacionCuentas = false; continuarStep2()"></ion-icon>
+        <ion-card class="modal">
+            <ion-card-header class="header">
+                <ion-icon class="header-icon icon-informacion"></ion-icon>
+            </ion-card-header>
+            <ion-card-content class="body">
+                <h3 class="body-title">
+                    Evita el rechazo de tu solicitud
+                </h3>
+                <p class="body-text">
+                    Recuerda que la cuenta debe ser nacional, unipersonal y estar a nombre del titular que realiza el giro de ahorro. 
+                    Por lo tanto, no podrá ser una cuenta bipersonal, ni tampoco una cuenta digital que no haya sido abierta presencialmente.
+                </p>
+                <p class="body-text">
+                    En el caso de que, por alg&uacute;n motivo, no podamos depositar el monto girado en la cuenta indicada, AFP Habitat emitir&aacute; un vale vista a tu nombre en Banco Santander con el monto girado y nos estaremos comunicando contigo para indicarte cuando est&eacute; disponible para retiro y c&oacute;mo cobrarlo.
+                </p>
+                <button class="btn-aceptar-apv" (click)="modalValidacionCuentas = false; continuarStep2()">Aceptar</button>
+            </ion-card-content>
+        </ion-card>
+    </article>
+</section>
+
+<section class="modal_detalle_regimen" *ngIf="mostrarDetalleGiro"  >
+    <article class="barra_superior">
+        <ion-icon class="icon-cerrar icon_close" (click)="eventoCerrarDetalleGiro()"></ion-icon>
+    </article>
+    <ion-content class="contenedor_scroll">
+        <section class="detalle">
+            <h2 class="title">{{tituloModalDetalleGiro}}</h2>
+            <ion-card class="detalle-titulo_regimen">
+                <span class="title">{{ regimenSeleccionado.nombreRegimen | formatoMayusculas}}</span>
+                <div class="valor">
+                    <p class="valor-total">Saldo Total:
+                        <span class="saldo">{{ regimenSeleccionado.saldoTotal | formatoPesoChileno }}</span>
+                    </p>
+                </div>
+            </ion-card>
+            <ion-card class="detalle-cuenta">
+                <ion-card-header class="title">Detalle de la Cuenta</ion-card-header>
+                <section class="listado_fondos">
+                    <section class="fondo" *ngFor="let fondo of regimenSeleccionado.listadoFondos; let i = index">
+                        <ion-grid>
+                            <ion-row>
+                                <ion-col class="col_titulo">Fondo:</ion-col>
+                                <ion-col>
+                                    <div float-right class="tipoFondo" [ngClass]="{'letter--red': fondo.nombreFondo  === 'A', 'letter--orange': fondo.nombreFondo  === 'B', 'letter--green': fondo.nombreFondo === 'C', 'letter--cyan': fondo.nombreFondo  === 'D', 'letter--blue': fondo.nombreFondo  === 'E'}">
+                                        <span class="value">
+                                            {{ fondo.nombreFondo }}
+                                        </span>
+                                    </div>
+                                </ion-col>
+                            </ion-row>
+
+                            <ion-row *ngIf="!fondo.mostrarDetalleGiroFondo">
+                                <ion-col class="columna_titulo">
+                                    <span class="rojo regular">Saldo:</span>
+                                </ion-col>
+                                <ion-col text-right class="columna_valor">
+                                    <span class="rojo regular">{{ fondo.saldoActual | formatoPesoChileno }}</span>
+                                </ion-col>
+                            </ion-row>
+
+                            <ng-container *ngIf="fondo.mostrarDetalleGiroFondo">
+                                <ion-row>
+                                    <ion-col class="columna_titulo">
+                                        <span class="medium">Saldo Actual:</span>
+                                    </ion-col>
+                                    <ion-col text-right class="columna_valor">
+                                        <span class="medium">{{ fondo.saldoActual | formatoPesoChileno }}</span>
+                                    </ion-col>
+                                </ion-row>
+                                <ion-row>
+                                    <ion-col class="columna_titulo">
+                                        <span class="regular">Cuota:</span>
+                                    </ion-col>
+                                    <ion-col text-right class="columna_valor">
+                                        <span class="regular">{{ fondo.cuotasActual | number:'1.1-2':'es-CL'}}</span>
+                                    </ion-col>
+                                </ion-row>
+
+                                <ion-row class="row_separador">
+                                    <div class="row_separador-separador"></div>
+                                </ion-row>
+
+                                <ion-row>
+                                    <ion-col class="col_titulo">
+                                        <span class="regular">Impuestos:</span>
+                                    </ion-col>
+                                    <ion-col text-right class="columna_valor">
+                                        <span class="regular">{{ fondo.impuestos | formatoPesoChileno }}</span>
+                                    </ion-col>
+                                </ion-row>
+                                <ion-row>
+                                    <ion-col class="col_titulo">
+                                        <span class="regular">Comisión:</span>
+                                    </ion-col>
+                                    <ion-col text-right class="columna_valor">
+                                        <span class="regular">{{ fondo.comision | formatoPesoChileno }}</span>
+                                    </ion-col>
+                                </ion-row>
+                                <ion-row>
+                                    <ion-col class="col_titulo">
+                                        <span class="regular">Monto Bruto:</span>
+                                    </ion-col>
+                                    <ion-col text-right class="columna_valor">
+                                        <span class="regular">{{ fondo.montoBruto | formatoPesoChileno}}</span>
+                                    </ion-col>
+                                </ion-row>
+                                <ion-row>
+                                    <ion-col class="col_titulo">
+                                        <span class="rojo regular">Monto Líquido:</span>
+                                    </ion-col>
+                                    <ion-col text-right class="columna_valor">
+                                        <span text-right class="rojo regular">{{ fondo.montoLiquido | formatoPesoChileno  }}</span>
+                                    </ion-col>
+                                </ion-row>
+
+                                <ion-row class="row_separador">
+                                    <div class="row_separador-separador"></div>
+                                </ion-row>
+
+                                <ion-row>
+                                    <ion-col class="columna_titulo">
+                                        <span class="medium">Saldo Después de Girar:</span>
+                                    </ion-col>
+                                    <ion-col text-right class="columna_valor">
+                                        <span class="medium">{{ fondo.saldoPostGiro | formatoPesoChileno }}</span>
+                                    </ion-col>
+                                </ion-row>
+                                <ion-row>
+                                    <ion-col class="columna_titulo">
+                                        <span class="regular">Cuota:</span>
+                                    </ion-col>
+                                    <ion-col text-right class="columna_valor">
+                                        <span class="regular">{{ fondo.cuotasPostGiro | number:'1.1-2':'es-CL' }}</span>
+                                    </ion-col>
+                                </ion-row>
+                            </ng-container>
+
+                            <ion-row *ngIf="!fondo.mostrarDetalleGiroFondo">
+                                <span class="fila_cuanto_girar">¿Cuánto quieres Girar?</span>
+                            </ion-row>
+
+                            <ion-row *ngIf="!fondo.mostrarDetalleGiroFondo">
+                                <ion-col class="columna_monto">
+                                    <ion-input
+                                    (ionInput)="formatMontoGirar(fondo,$any($event.target).value)"
+                                    class="columna_monto-input" 
+                                    [(ngModel)]="fondo.montoGirar" 
+                                    [attr.minlength]="4" 
+                                    [attr.maxlength]="12" 
+                                    type="tel"
+                                    (ionBlur)="validaMontoMinMax(fondo)" 
+                                    placeholder="$"
+                                    (keyup.enter)="validarEventoCalcular(fondo)">
+                                    </ion-input>
+                                </ion-col>
+                                <ion-col text-right class="columna_calcular">
+                                    <button class="boton_calcular" (click)="calcularComisionGiro(fondo)" [disabled]="validarEstadoBotonCalcular(fondo)">Calcular</button>
+                                </ion-col>
+                            </ion-row>
+                        </ion-grid>
+
+                        <section class="botonera_detalle_giro" *ngIf="fondo.mostrarDetalleGiroFondo">
+                            <button class="btn_cancelar" (click)="cancelarGiro(fondo)">Cancelar</button>
+                            <button class="btn_aceptar" [disabled]="fondo.botonConfirmadoDesactivado" (click)="confirmarGiro(fondo)">Confirmar</button>
+                        </section>
+                        <div *ngIf="i == 0 && regimenSeleccionado.listadoFondos.length != 1" class="separador_giro_seccion"></div>
+                    </section>
+                </section>
+            </ion-card>
+            <button #btnRegimen class="detalle-btn_aceptar" (click)="aceptarGiroRegimen()" [disabled]="validarEstadoBotonAceptar()" *ngIf="regimenSeleccionado.listadoFondos !== undefined && regimenSeleccionado.listadoFondos.length > 1">Aceptar</button>
+        </section>
+    </ion-content>
+</section>
+
+<section class="modal_informativo" *ngIf="modalSelectedCtaDos"  >
+    <article class="modal_cnt">
+        <ion-icon class="icon_close icon-cerrar" (click)="modalSelectedCtaDos = false"></ion-icon>
+        <ion-card class="modal">
+            <ion-card-header class="header">
+                <ion-icon class="header-icon icon-informacion"></ion-icon>
+            </ion-card-header>
+            <ion-card-content class="body">
+                <h3 class="body-title">
+                    Giro Cuenta 2
+                </h3>
+                <p class="body-text">
+                    Retira el saldo del régimen tributario y fondo que desees con un
+                    <span class="medium"> tope máximo de $100.000.000 por transacción.</span>
+                </p>
+                <p class="body-text">
+                    <span class="medium">Si retiras hasta el 90% del saldo el giro se realizará en Pesos, </span> mientras que si retiras un monto mayor, la transacción se realizará en Cuotas.
+                </p>
+                <button class="body-btn" (click)="ocultarModal(CONSTANTES.CODIGO_PRODUCTO_CUENTA_2)">Aceptar</button>
+            </ion-card-content>
+        </ion-card>
+    </article>
+</section>
+
+<section class="modal_informativo" *ngIf="modalSelectedAPV"  >
+    <article class="modal_cnt">
+        <ion-icon class="icon_close icon-cerrar" (click)="modalSelectedAPV = false"></ion-icon>
+        <ion-card class="modal">
+            <ion-card-header class="header">
+                <ion-icon class="header-icon icon-informacion"></ion-icon>
+            </ion-card-header>
+            <ion-card-content class="body">
+                <h3 class="body-title">
+                    Giro APV
+                </h3>
+                <p class="body-text">
+                    Retira el saldo del régimen tributario y fondo que desees con un
+                    <span class="medium"> tope máximo de $100.000.000 por transacción.</span>
+                </p>
+                <button class="btn-aceptar-apv" (click)="ocultarModal(CONSTANTES.CODIGO_PRODUCTO_CUENTA_APV)">Aceptar</button>
+            </ion-card-content>
+        </ion-card>
+    </article>
+</section>
+
+<section class="modal_slide" *ngIf="modalDetalleSlideGiro"  >
+    <ion-slides class="cnt_slides" pager="true" effect="slide" speed="300" pager="true" spaceBetween="30">
+        <ion-slide class="modal_cnt" *ngFor="let slide of slides">
+            <ion-card class="modal">
+                <ion-icon class="icon_close icon-cerrar" (click)="modalDetalleSlideGiro = false"></ion-icon>
+                <ion-card-header class="header">
+                    <ion-icon class="header-icon icon-informacion"></ion-icon>
+                    <h2 class="header-title">{{ slide.titulo }}</h2>
+                </ion-card-header>
+                <ion-card-content class="body">
+                    <div class="separador-slide"></div>
+                    <p class="body-info">
+                        {{ slide.parrafo }}
+                    </p>
+                    <ion-grid class="lista_items">
+                        <ion-row class="item">
+                            <ion-col class="row_img">
+                                <ion-icon class="item-icon icon-exito"></ion-icon>
+                            </ion-col>
+                            <ion-col class="row_texto">
+                                <p class="item-texto">{{ slide.textoUno }}</p>
+                            </ion-col>
+                        </ion-row>
+
+                        <ion-row class="item">
+                            <ion-col class="row_img">
+                                <ion-icon class="item-icon icon-exito"></ion-icon>
+                            </ion-col>
+                            <ion-col class="row_texto">
+                                <p class="item-texto">
+                                    Los giros estarán disponibles en tu cuenta bancaria 5 días hábiles posterior a tu solicitud.
+                                </p>
+                            </ion-col>
+                        </ion-row>
+
+                        <ion-row class="item">
+                            <ion-col class="row_img">
+                                <ion-icon class="item-icon icon-exito"></ion-icon>
+                            </ion-col>
+                            <ion-col class="row_texto">
+                                <p class="item-texto">
+                                        Infórmate sobre las condiciones del régimen tributario en el que tienes tu ahorro
+                                        <a class="link" (click)="abrirLinkGiro(slide)"> click aquí</a>.
+                                </p>
+                            </ion-col>
+                        </ion-row>
+                    </ion-grid>
+                </ion-card-content>
+            </ion-card>
+        </ion-slide>
+    </ion-slides>
+</section>
+
+<section class="modal_informativo" *ngIf="modalValidacionSaldoDiscordante"  >
+    <article class="modal_cnt">
+        <ion-icon class="icon-cerrar icon_close" (click)="modalValidacionSaldoDiscordante = false"></ion-icon>
+        <ion-card class="modal">
+            <ion-card-header class="header">
+                <ion-icon class="header-icon icon-informacion"></ion-icon>
+            </ion-card-header>
+            <ion-card-content class="body">
+                <h3 class="body-title">
+                    Saldos Discordantes
+                </h3>
+                <p class="body-text">
+                    No puedes realizar el giro en esta cuenta, debido a datos discordantes en tu saldo.
+                </p>
+                <p class="body-text">
+                    Para más información, comunícate con nuestro
+                    <a class="link" (click)="llamarContactCenter()">Contact Center.</a>
+                </p>
+                <button class="body-btn" (click)="modalValidacionSaldoDiscordante = false">Aceptar</button>
+            </ion-card-content>
+        </ion-card>
+    </article>
+</section>
+
+<section class="modal_informativo" *ngIf="modalValidacion24Giros"  >
+    <article class="modal_cnt">
+        <ion-card class="modal">
+            <ion-card-header class="header">
+                <ion-icon class="header-icon icon-informacion"></ion-icon>
+            </ion-card-header>
+            <ion-card-content class="body">
+                <h3 class="body-title">
+                    Importante
+                </h3>
+                <p class="body-text">
+                    No puedes realizar el giro en esta cuenta, debido a que superaste los 24 giros permitidos en este año calendario.
+                </p>
+                <p class="body-text">
+                </p>
+                <button class="body-btn" (click)="irAlInicio()">Aceptar</button>
+            </ion-card-content>
+        </ion-card>
+    </article>
+</section>
+
+<section class="modal_informativo" *ngIf="modalValidacionSinSaldo"  >
+    <article class="modal_cnt">
+        <ion-card class="modal ">
+            <ion-card-header class="header ">
+                <ion-icon class="header-icon icon-informacion "></ion-icon>
+            </ion-card-header>
+            <ion-card-content class="body ">
+                <h3 class="body-title ">
+                    Cuenta sin Saldo
+                </h3>
+                <p class="body-text ">
+                    No tienes monto disponible para realizar un giro desde esta cuenta.
+                </p>
+                <p class="body-text ">
+                    Para más información, comunícate con nuestro <a class="link " (click)="llamarContactCenter() ">Contact
+                        Center.</a>
+                </p>
+                <button class="body-btn" (click)="irAlInicio()">Aceptar</button>
+            </ion-card-content>
+        </ion-card>
+    </article>
+</section>
+
+<section class="modal_informativo" *ngIf="modalValidacionSaldoCDFCAV"  >
+    <article class="modal_cnt">
+        <ion-card class="modal ">
+            <ion-card-header class="header ">
+                <ion-icon class="header-icon icon-informacion "></ion-icon>
+            </ion-card-header>
+            <ion-card-content class="body ">
+                <h3 class="body-title ">
+                    {{modalValidacionSaldoCDFCAVMensajeTitulo}}
+                </h3>
+                <p class="body-text ">
+                   {{modalValidacionSaldoCDFCAVMensaje}}
+                </p>
+                <p class="body-text ">
+                    Para más información, comunícate con nuestro <a class="link " (click)="llamarContactCenter() ">Contact
+                        Center.</a>
+                </p>
+                <button class="body-btn" (click)="irAlInicio()">Aceptar</button>
+            </ion-card-content>
+        </ion-card>
+    </article>
+</section>
+
+<section class="modal_informativo" *ngIf="modalValidacionSaldoCDFAPV"  >
+    <article class="modal_cnt">
+        <ion-card class="modal ">
+            <ion-card-header class="header ">
+                <ion-icon class="header-icon icon-informacion "></ion-icon>
+            </ion-card-header>
+            <ion-card-content class="body ">
+                <h3 class="body-title ">
+                    {{modalValidacionSaldoCDFAPVMensajeTitulo}}
+                </h3>
+                <p class="body-text ">
+                    {{modalValidacionSaldoCDFAPVMensaje}}
+                </p>
+                <p class="body-text ">
+                    Para más información, comunícate con nuestro <a class="link " (click)="llamarContactCenter() ">Contact
+                        Center.</a>
+                </p>
+                <button class="body-btn" (click)="irAlInicio()">Aceptar</button>
+            </ion-card-content>
+        </ion-card>
+    </article>
+</section>
+
+<section class="modal_slide" *ngIf="modalDetalleRegimenGiroAPV"  >
+    <ion-slides class="cnt_slides" pager="true" effect="slide" speed="300" pager="true" spaceBetween="30">
+        <ion-slide class="modal_cnt" *ngFor="let slideAPV of slidesRegimenesAPV">
+            <ion-card class="modal">
+                <ion-icon class="icon_close icon-cerrar" (click)="modalDetalleRegimenGiroAPV = false"></ion-icon>
+                <ion-card-header class="header">
+                    <ion-icon class="header-icon icon-informacion"></ion-icon>
+                    <h2 class="header-title">{{ slideAPV.titulo }}</h2>
+                </ion-card-header>
+                <ion-card-content class="body">
+                    <p class="body-info">
+                        {{ slideAPV.textoTitulo }}
+                    </p>
+                    <p class="body-sub-title">
+                        {{ slideAPV.subtitulo1 }}
+                    </p>
+                    <ion-grid class="lista_items" *ngIf="slideAPV.informativo1">
+                        <ion-row class="item">
+                            <ion-col class="row_img">
+                                <ion-icon class="item-icon icon-exito"></ion-icon>
+                            </ion-col>
+                            <ion-col class="row_texto">
+                                <p class="item-texto">{{ slideAPV.informativo1 }}</p>
+                            </ion-col>
+                        </ion-row>
+                    </ion-grid>
+                    <p class="body-info-regimen">
+                        {{ slideAPV.texto1 }}
+                    </p>
+                    <p class="body-sub-title">
+                        {{ slideAPV.subtitulo2 }}
+                    </p>
+                    <ion-grid class="lista_items" *ngIf="slideAPV.informativo2">
+                        <ion-row class="item">
+                            <ion-col class="row_img">
+                                <ion-icon class="item-icon icon-exito"></ion-icon>
+                            </ion-col>
+                            <ion-col class="row_texto">
+                                <p class="item-texto">{{ slideAPV.informativo2 }}</p>
+                            </ion-col>
+                        </ion-row>
+                    </ion-grid>
+                    <p class="body-info-regimen">
+                        {{ slideAPV.texto2 }}
+                    </p>
+                </ion-card-content>
+            </ion-card>
+        </ion-slide>
+    </ion-slides>
+</section>
+
+<section class="modal_slide" *ngIf="modalDetalleRegimenGiroCuenta2"  >
+    <ion-slides class="cnt_slides" pager="true" effect="slide" speed="300" pager="true" spaceBetween="30">
+        <ion-slide class="modal_cnt" *ngFor="let slideCuenta2 of slidesRegimenesCuenta2">
+            <ion-card class="modal">
+                <ion-icon class="icon_close icon-cerrar" (click)="modalDetalleRegimenGiroCuenta2 = false"></ion-icon>
+                <ion-card-header class="header">
+                    <ion-icon class="header-icon icon-informacion"></ion-icon>
+                    <h2 class="header-title">{{ slideCuenta2.titulo }}</h2>
+                </ion-card-header>
+                <ion-card-content class="body">
+                    <p class="body-sub-title">
+                        {{ slideCuenta2.subtitulo1 }}
+                    </p>
+
+                    <p class="body-info-regimen">
+                        {{ slideCuenta2.texto1 }}
+                    </p>
+                    
+                    <ion-grid class="lista_items" *ngIf="slideCuenta2.listadoInformativos1">
+                        <ion-row class="item" *ngFor="let item of slideCuenta2.listadoInformativos1">
+                            <ion-col class="row_img">
+                                <ion-icon class="item-icon icon-exito"></ion-icon>
+                            </ion-col>
+                            <ion-col class="row_texto">
+                                <p class="item-texto">{{ item.titulo }}</p>
+                            </ion-col>
+                        </ion-row>
+                    </ion-grid>
+                  
+                    <p class="body-sub-title">
+                        {{ slideCuenta2.subtitulo2 }}
+                    </p>
+
+                    <ion-grid class="lista_items" *ngIf="slideCuenta2.listadoInformativos2">
+                        <ion-row class="item" *ngFor="let item of slideCuenta2.listadoInformativos2">
+                            <ion-col class="row_img">
+                                <ion-icon class="item-icon icon-exito"></ion-icon>
+                            </ion-col>
+                            <ion-col class="row_texto">
+                                <p class="item-texto">{{ item.titulo }}</p>
+                            </ion-col>
+                        </ion-row>
+                    </ion-grid>
+                    
+                    <p class="body-info-regimen">
+                        {{ slideCuenta2.texto2 }}
+                    </p>
+                    <p class="body-info-regimen">
+                        {{ slideCuenta2.texto3 }}
+                    </p>
+                </ion-card-content>
+            </ion-card>
+        </ion-slide>
+    </ion-slides>
+</section>

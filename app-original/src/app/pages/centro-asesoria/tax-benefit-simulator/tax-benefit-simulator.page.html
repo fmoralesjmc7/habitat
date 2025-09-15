@@ -1,0 +1,167 @@
+<app-header-centro-asesoria [headerElements]="headerElements" (clickLeftButton)="goBack()"></app-header-centro-asesoria>
+<ion-content no-bounce forceOverscroll="false" [class.simulator-result-background]="existResult">
+  <form [formGroup]="form" [hidden]="existResult || showLoading">
+    <ion-slides #slides [options]="slideOpts">
+      <ion-slide>
+        <app-question-slide [questionSlideText]="questionSlideTexts.liquidIncome"
+          [currentSlide]="slideNumber" [totalSlides]="totalSlides"
+          [disableButton]="!isAmountQuestionValid || liquidIncomeError" [formGroup]="form"
+          [errorCondition]="liquidIncomeError" (clickButton)="nextSlide()"
+          textError="Tu renta líquida no puede ser menor a {{ configParameters.liquidIncome | chileanCurrency }}"
+          ngDefaultControl>
+        </app-question-slide>
+      </ion-slide>
+      <ion-slide>
+        <app-question-slide [questionSlideText]="questionSlideTexts.apvAmount"
+          [currentSlide]="slideNumber" [totalSlides]="totalSlides" [disableButton]="!form.valid" [formGroup]="form"
+          (clickButton)="doSimulation()" [errorCondition]="apvAmountError"
+          textError="El monto ahorrado no puede ser mayor a {{ controls.liquidIncome.value | chileanCurrency }}"
+          ngDefaultControl>
+        </app-question-slide>
+      </ion-slide>
+    </ion-slides>
+  </form>
+
+  <app-loading [showLoading]="showLoading" [textLoading]="textLoading"></app-loading>
+
+  <div *ngIf="simulationResult && existResult"> 
+    <div class="container-background-result main-container-tax-benefits">
+      <div class="container-result">
+        <p class="drop-text">Según tu ahorro e ingreso,<br>los beneficios de APV A y APV B <br> son los siguientes:</p>
+        <div class="container-benefits">
+          <div class="button-benefit apv-a" (click)="changeRegime('A')" [ngClass]="{'disable': regimeSelected === 'B'}">
+            <ion-ripple-effect></ion-ripple-effect>
+            <div class="box-info-benefit">
+              <p class="title-benefit">Régimen A</p>
+              <p class="description-benefit">El Estado te aportará anualmente hasta un 15% de tu ahorro en este APV</p>
+              <p class="amount-benefit">{{ simulationResult.aRegimeApv.stateSavings! | chileanCurrency }}</p>
+            </div>
+          </div>
+          <div class="button-benefit apv-b" (click)="changeRegime('B')" [ngClass]="{'disable': regimeSelected === 'A'}">
+            <ion-ripple-effect></ion-ripple-effect>
+            <div class="box-info-benefit">
+              <p class="title-benefit">Régimen B</p>
+              <p class="description-benefit">Obtendrás un <br>beneficio tributario <br> anual de:</p>
+              <p class="amount-benefit">{{ simulationResult.bRegimeApv.taxBenefit! | chileanCurrency }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="container-detail-result">
+        <h1 class="title-detail-result">Detalle del beneficio que obtienes ahorrando en APV Régimen {{ regimeSelected }}</h1>
+        <div *ngIf="regimeSelected === 'A'">
+          <div class="step-detail">
+            <div class="draw-stepper">
+              <div class="circle">
+                <div class="center-circle"></div>
+              </div>
+              <div class="line"></div>
+            </div>
+            <div class="info-stepper">
+              <p>Tu ahorro mensual:</p>
+              <div class="pill-amount">{{ simulationResult.aRegimeApv.realDeposit | chileanCurrency }}</div>
+            </div>
+          </div>
+          <div class="step-detail">
+            <div class="draw-stepper">
+              <div class="circle">
+                <div class="center-circle"></div>
+              </div>
+              <div class="line"></div>
+            </div>
+            <div class="info-stepper">
+              <p>Bonificación fiscal mensual:</p>
+              <div class="pill-amount">{{ simulationResult.aRegimeApv.monthlyStateSavings! | chileanCurrency }}</div>
+            </div>
+          </div>
+          <div class="step-detail">
+            <div class="draw-stepper">
+              <div class="circle">
+                <div class="center-circle"></div>
+              </div>
+            </div>
+            <div class="info-stepper">
+              <p class="title-pill-benefit">Bonificación fiscal anual:</p>
+              <div class="pill-benefit">
+                <div class="pill-amount-benefit">{{ simulationResult.aRegimeApv.monthlyStateSavings! * 12 | chileanCurrency }}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="regimeSelected === 'B'">
+          <div class="step-detail">
+            <div class="draw-stepper">
+              <div class="circle">
+                <div class="center-circle"></div>
+              </div>
+              <div class="line"></div>
+            </div>
+            <div class="info-stepper">
+              <p>Tu ahorro mensual:</p>
+              <div class="pill-amount">{{ simulationResult.bRegimeApv.incomeDecrease! | chileanCurrency }}</div>
+            </div>
+          </div>
+          <div class="step-detail">
+            <div class="draw-stepper">
+              <div class="circle">
+                <div class="center-circle"></div>
+              </div>
+              <div class="line"></div>
+            </div>
+            <div class="info-stepper">
+              <p>Ahorro mensual en tu APV:</p>
+              <div class="pill-amount">{{ simulationResult.bRegimeApv.realDeposit! | chileanCurrency }}</div>
+            </div>
+          </div>
+          <div class="step-detail">
+            <div class="draw-stepper">
+              <div class="circle">
+                <div class="center-circle"></div>
+              </div>
+              <div class="line"></div>
+            </div>
+            <div class="info-stepper">
+              <p>Beneficio tributario mensual:</p>
+              <div class="pill-benefit">
+                <div class="pill-amount">{{ simulationResult.bRegimeApv.monthlyTaxBenefit! | chileanCurrency }}</div>
+              </div>
+            </div>
+          </div>
+          <div class="step-detail">
+            <div class="draw-stepper">
+              <div class="circle">
+                <div class="center-circle"></div>
+              </div>
+            </div>
+            <div class="info-stepper">
+              <p class="title-pill-benefit">Beneficio tributario anual:</p>
+              <div class="pill-benefit">
+                <div class="pill-amount-benefit">{{ simulationResult.bRegimeApv.anualTaxBenefit! | chileanCurrency }}</div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="text-disclaimer">
+          <p>
+            {{ regimeSelected === 'A' ? firstDisclaimerApvA : firstDisclaimerApvB }}
+          </p>
+        </div>          
+
+        <div class="container-illu illus-result-apv"></div>
+        <div class="text-disclaimer">
+          <p>
+            {{ regimeSelected === 'A' ? secondDisclaimerApvA : secondDisclaimerApvB}}
+          </p>
+        </div>
+        
+        <h6 class="legal-text" *ngIf="regimeSelected === 'B'" (click)="showModalLegal()">Textos legales</h6>
+      </div>
+      <div class="container-button">
+        <ion-button class="secondary-button" (click)="simulateAgain()">Volver a simular</ion-button>
+      </div>
+    </div>
+  </div>
+  <app-error *ngIf="!simulationResult && existResult" [buttons]="errorButtons" (clickErrorButton)="clickErrorButtons($event)"></app-error>
+</ion-content>

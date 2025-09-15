@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+  <access origin="*" />
+  
+  <feature name="Khenshin">
+    <param name="android-package" value="com.browser2app.KhenshinPlugin"/>
+  </feature>
+
+  <feature name="AES256">
+    <param name="android-package" value="com.ideas2it.aes256.AES256"/>
+  </feature>
+
+  <feature name="AppAvailability">
+    <param name="android-package" value="com.ohh2ahh.appavailability.AppAvailability"/>
+  </feature>
+
+  <feature name="Fingerprint">
+    <param name="android-package" value="de.niklasmerz.cordova.biometric.Fingerprint"/>
+  </feature>
+
+  <feature name="IRoot">
+    <param name="android-package" value="de.cyberkatze.iroot.IRoot"/>
+    <param name="onload" value="true"/>
+  </feature>
+
+  <feature name="Market">
+    <param name="android-package" value="com.xmartlabs.cordova.market.Market"/>
+  </feature>
+
+  <feature name="MCCordovaPlugin">
+    <param name="android-package" value="com.salesforce.marketingcloud.cordova.MCCordovaPlugin"/>
+  </feature>
+
+  
+  <preference name="com.salesforce.marketingcloud.app_id" value="11169033-397f-462b-897c-032df1a876a5" />
+  <preference name="com.salesforce.marketingcloud.access_token" value="zjWHJaNZdebzpzHwEtH33HxE" />
+  <preference name="com.salesforce.marketingcloud.tenant_specific_endpoint" value="https://mchzs9cvzfbjdb5hb0fcgqn5tth0.device.marketingcloudapis.com/" />
+  <preference name="com.salesforce.marketingcloud.analytics" value="true" />
+  <preference name="salesforce.marketingcloud.delay_registration_until_contact_key_is_set" value="true" />
+  <preference name="com.salesforce.marketingcloud.notification_small_icon" value="ic_launcher_foreground" />
+</widget>

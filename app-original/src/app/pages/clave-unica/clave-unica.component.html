@@ -1,0 +1,32 @@
+<app-header (clickBackButton)="volverAlHome()" [showMenuHamb]="true"></app-header>
+
+<ion-content class="contenido">
+  <section>
+    <p class="texto">
+      Antes de comenzar con el cambio de tus datos personales, 
+      debes ingresar tu <strong>Clave Única,</strong> entregada por el registro Civil.
+       Si no tienes clave única, solicítala en <span (click)="abrirClaveUnica()">{{urlClaveUnica}}</span>
+    </p>
+    <ion-button class="boton" color="primary-button" (click)="desplegarLoginClaveUnica()">
+      <ion-icon src="./assets/icon/claveunica.svg" slot="start"></ion-icon>
+      Clave Única
+    </ion-button>
+  </section>
+</ion-content>  
+
+<section class="modal_informativo" *ngIf="modalError">
+  <article class="modal_cnt">
+    <ion-icon class="icon_close icon-cerrar" (click)="modalError = false"></ion-icon>
+    <ion-card class="modal alerta">
+      <ion-card-header class="header">
+        <ion-icon class="header-icon icon-informacion"></ion-icon>
+      </ion-card-header>
+      <ion-card-content class="body">
+        <p class="body-text">
+          No fue posible validar tu Clave Única.<br> Inténtalo nuevamente.
+        </p>
+      </ion-card-content>
+    </ion-card>
+  </article>
+</section>
+

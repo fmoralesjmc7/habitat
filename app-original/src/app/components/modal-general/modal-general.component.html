@@ -1,0 +1,33 @@
+<section class="modal_informativo">
+    <article class="modal_cnt">
+        <ion-icon class="icon_close icon-cerrar" (click)="cerrarModal(null)"></ion-icon>
+        <ion-card class="modal">
+            <ion-card-header class="header">
+                <ion-row>
+                    <ion-col size="12" class="image_col">
+                        <ion-icon class="header-icon icon-informacion"></ion-icon>
+                    </ion-col>
+                    <ion-col size="12">
+                        <h3 class="body-title">
+                            {{tituloModalInformativo}}
+                        </h3>
+                    </ion-col>
+                </ion-row>
+            </ion-card-header>
+            <ion-card-content class="body" [ngClass]="{'body_step2': tipoDeModal === CONSTANTES.MODAL_STEP2}">
+                <p class="body-text">
+                    {{texto1ModalInformativo}}
+                </p>
+                <p class="body-text">
+                    {{texto2ModalInformativo}}
+                </p>
+                <p class="body-text" *ngIf="tipoDeModal === CONSTANTES.MODAL_EMPLEADOR">
+                    <ion-input class="input_modal" placeholder="Rut empleador" [(ngModel)]="rutEmpleador" (ionBlur)="validarRut('blur'); limiteDeCaracteres($any($event.target).value, CONSTANTES.MAXIMO_CARACTERES_RUT); onKeyUp($event)" (ionChange)="validarRut('change')" (ionInput)="limiteDeCaracteres($any($event.target).value, CONSTANTES.MAXIMO_CARACTERES_RUT); onKeyUp($event)" (keyup.enter)="enterTeclado()" (keyup)="onKeyUp($event)"></ion-input>
+                </p>
+                <button class="body-btn boton_modal" *ngIf="tipoDeModal === CONSTANTES.MODAL_INFORMATIVO_STEP1" (click)="abrirPagina(idTipoProducto)">{{textoBoton}}</button>
+
+                <button class="body-btn" *ngIf="tipoDeModal === CONSTANTES.MODAL_EMPLEADOR" (click)="cerrarModal(rutEmpleador)" [disabled]="!validarBotonAceptar()">{{textoBoton}}</button>
+            </ion-card-content>
+        </ion-card>
+    </article>
+</section>

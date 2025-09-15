@@ -1,0 +1,72 @@
+@import '../../../../theme/mixins';
+
+:host {
+  font: 1rem var(--fonts-weight-regular);
+  
+  .detalle-cuenta {
+    &-titulo {
+      font: 1.5rem var(--fonts-weight-medium);
+      text-align: center;
+      margin-bottom: 0;
+      color: var(--colors-gris-oscuro);
+    }
+
+    &-saldo {
+      font: 2rem var(--fonts-weight-medium);
+      text-align: center;
+      color: var(--colors-azul-oscuro);
+      margin: 0 0 30px 0;
+    }
+
+    .detalle-producto {
+      border-radius: 0.839rem;
+      width: 80%;
+      margin: 0 auto;
+      box-shadow: 0px 0px 1.118rem rgba(0, 0, 0, 0.2);
+      margin-bottom: 1.625rem;
+
+      ion-grid {
+        padding: 0;
+      }
+
+      p {
+        margin: 0;
+      }
+      
+      .detalle-contenido {
+        border-bottom: 1px solid var(--color-gris-barra);
+        padding: 1rem;
+
+        .detalle-saldo {
+          font: 1rem  var(--fonts-weight-bold);
+          color: var(--colors-azul-oscuro);
+        }
+      }
+
+      .producto {
+        display: flex;
+        align-items: center;
+
+        section {
+          width: 100%;
+        }
+
+        .nombre-producto {
+          font: 1rem  var(--fonts-weight-bold);
+        }
+      }
+    }
+  }
+
+  .detalle-total {
+    border-top: 1px solid var(--color-gris-barra);
+    padding: .5rem;
+        background: var(--color-gris-background);
+    p {
+      text-align: center;
+      width: 100%;
+      font-family: var(--fonts-weight-medium);
+      font-size: 1rem;
+    }
+  }
+}

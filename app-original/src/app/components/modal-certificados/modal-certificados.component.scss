@@ -1,0 +1,99 @@
+@import "../../../theme/mixins";
+
+.modal-certificados {
+  @include modal_gral();
+  align-items: flex-start;
+
+  .modal_cnt {
+    max-height: 80vh;
+    border-radius: 8px;
+    margin: 8rem 24px auto 24px; 
+    margin-top: 8rem;
+    padding: 1rem;
+    width: 100%;
+    max-width: none;
+
+    .boton-modal {
+      font-size: 1rem !important;
+      padding: 1rem 0!important;
+      border-radius: 2rem !important;
+
+      &.primario {
+        color: var(--colors-blanco);
+        margin-bottom: 1rem;
+      }
+
+      &.secundario {
+        background: white !important;
+        border: 1px solid var(--colors-celeste);
+        color: var(--colors-celeste)!important;
+      }
+    }
+    .icon_close {
+      color: black;
+      position: absolute;
+      top: 0;
+      left: 88%;
+      z-index: 10;
+      padding: 0.625rem;
+      font-size: 0.875rem;
+    }
+
+    .modal {
+      width: 100%;
+      padding: 0;
+
+      .header {
+        margin: 20px auto 14px auto;
+        padding: 0 15px;
+      }
+
+      .image_col {
+        text-align: center;
+      }
+
+      .body {
+        max-height: 30rem;
+        overflow-y: scroll;
+        margin-bottom: 15px;
+        padding: 0 15px;
+
+        &-title {
+          font: 1.5rem var(--fonts-weight-bold);
+          margin-bottom: 0px;
+        }
+
+        &-text {
+          width: 100%;
+          font: 1rem var(--fonts-weight-regular);
+          margin: auto auto 20px auto;
+
+          &:last-of-type {
+            margin: 0 auto 40px auto;
+          }
+        }
+      }
+
+      .ion-card-content {
+        margin-top: 0px;
+      }
+    }
+  }
+}
+
+/**
+Para que no se muestre el cuadrado que se presenta a la izquierda
+de un parrafo en modals de planes de ahorro
+ */
+::-webkit-scrollbar {
+  width: 0px; /* remove scrollbar space */
+  background: transparent; /* optional: just make scrollbar invisible */
+}
+
+.icono {
+  background-color: var(--colors-celeste);
+  font-size: 1.8rem;
+  color: white;
+  padding: 0.5rem;
+  border-radius: 100%;
+}

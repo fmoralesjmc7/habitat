@@ -1,0 +1,582 @@
+// App Styles
+// ----------------------------------------------------------------------------
+// Put style rules here that you want to apply to the entire application. These 
+// styles are for the entire app and not just one component. Additionally, this 
+// file can hold Sass mixins, functions, and placeholder classes to be imported 
+// and used throughout the application.
+@import '../theme/icons';
+@import '../theme/mixins';
+
+html {
+  font-size: 16px; //1rem valor por defecto
+
+  &.resize {
+    font-size: 1.6vh;
+    .solid-line{
+      margin-right: 5rem;
+    }
+  }
+
+  // Estilos para iphone 8 e inferior
+  @media (max-height: 667px) { 
+    &.resize {
+      font-size: 1.47vh;
+    }
+  }
+
+  .alert-tappable.alert-radio {
+    height: auto;
+    contain: content;
+  }
+
+  .alert-radio-label.sc-ion-alert-md,
+  .alert-radio-label.sc-ion-alert-ios {
+      white-space: normal;
+  }
+}
+
+ion-menu {
+  --ion-background-color: var(--colors-blanco);
+}
+:focus {
+  outline: -webkit-focus-ring-color auto 0px;
+}
+
+hr.solid-line {
+  margin: 0px;
+  margin-left: 0.2rem;
+  margin-right: 4.3rem;
+  border-top: 1px solid var(--color-gris-lines);
+}
+
+.ios {
+  :focus {
+    outline: none;
+  }
+  
+  /* Portrait, estilos para menú iphone menor a 8 */
+  @media only screen 
+    and (max-device-width: 375px)
+    and (-webkit-min-device-pixel-ratio: 2)
+    and (orientation: portrait) { 
+    .menu-btn_out {
+      padding-top: 55px !important;
+    }
+
+    .cnt_menu {
+      padding-top: 15px !important;
+    }
+  }
+
+  .etiqueta_version {
+    margin-bottom: 1rem;
+  }
+
+  .margen-teclado-login {
+    margin-bottom: 3.25rem !important;
+  }
+}
+
+.ios,
+.md {
+  ion-header {
+    &::after {
+      display: none;
+    }
+
+  }
+
+
+
+// Lineas celestes entre los STEPS de GIROS, DEPOSITO DIRECTO y CDF
+page-giro-step-2, app-cambio-fondo-step-2, app-planes-step-dos, app-actualizar-datos-sms{
+ .steps-line:nth-child(2) {
+   border-bottom: 3px solid !important;
+   border-color: var(--colors-celeste) !important;
+   }
+}
+page-giro-step-3, page-khipu-error, page-khipu-success, app-cambio-fondo-step-3, app-planes-step-tres, app-actualizar-datos-exito{
+ .steps-line{
+   border-bottom: 3px solid !important;
+   border-color: var(--colors-celeste) !important;
+ }
+}
+// Fin lineas celestes entre STEPS de GIROS, DEPOSITO DIRECTO y CDF
+
+
+  .header_app {
+    width: 100%;
+    --background: var(--colors-rojo-habitat);
+    height: calc(var(--cordova-md-statusbar-padding) + 55px);
+
+    .toolbar {
+      height: calc(var(--cordova-md-statusbar-padding) + 55px);
+      --padding: 0 5% 10px;
+      --padding-top: var(--cordova-md-statusbar-padding);
+    }
+
+    &::after {
+      display: none;
+    }
+
+    .toolbar-content {
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      flex: none;
+      width: 80%;
+    }
+
+    .toolbar-background {
+      --background: var(--colors-rojo-habitat);
+      --border: 0;
+    }
+
+    .toolbar-title {
+      --color: var(--colors-blanco);
+    }
+
+    .navbar {
+      --background: var(--colors-rojo-habitat);
+      --border: 0;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+
+      .nav-button {
+        zoom: 1.15;
+        width: 1.5rem;
+        background: transparent;
+        color: #FFFFFF;
+        margin: 0;
+        min-width: auto;
+        height: auto;
+        min-height: 22px;
+        position: relative;
+        bottom: 0;
+
+        &.nav-titulo {
+          zoom: 1.5 !important;
+        }
+
+        .dot {
+          position: absolute;
+          top: 0rem;
+          right: -1px;
+          padding: 4px 4px;
+          border-radius: 50%;
+          background: var(--colors-amarillo);
+          color: white;
+        }
+      }
+
+      .custom-size-mail {
+        zoom: 0;
+      }
+
+      .button-left{
+        left: 0;
+      }
+
+      .button-right{
+        right: 0;
+      }
+
+      .button-funnel{
+        width: 25px;
+        height: 25px;
+      }
+
+      &.navbar--solo_menu {
+        justify-content: flex-end;
+
+        .back-button {
+          visibility: hidden
+        }
+      }
+
+      &.navbar--solo_back {
+        justify-content: flex-start;
+
+        .btn {
+          visibility: hidden
+        }
+      }
+
+      &.navbar--solo_logo {
+        justify-content: center;
+
+        .back-button, .btn {
+          visibility: hidden
+        }
+      }
+
+      .back-button {
+        width: 10%;
+        --padding: 0;
+        margin: 0;
+        min-width: auto;
+        height: auto;
+        min-height: 22px;
+
+        .button-inner {
+          --color: var(--colors-blanco);
+          display: flex;
+          justify-content: flex-start;
+          align-items: flex-end;
+          height: auto;
+
+          .back-button-icon {
+            font: 1.125rem;
+            --padding: 0;
+            margin: 0;
+
+            &::before {
+              font-family: "icomoon", sans-serif;
+              content: '\e902';
+            }
+          }
+        }
+      }
+
+      .btn {
+        //width: 10%; el boton desaparece con esta propiedad
+        --background: transparent;
+        --color: var(--colors-blanco);
+        --padding: 0;
+        margin: 0;
+        min-width: auto;
+        height: auto;
+        min-height: 22px;
+        font: 0.9rem;
+
+        .button-inner {
+          display: flex;
+          justify-content: flex-end;
+
+          .btn-icon {
+            --padding: 0;
+            font: 1.125rem;
+          }
+        }
+      }
+
+      .logo {
+        position: initial;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 16px 0 0;
+
+        &-img {
+          width: 144px;
+          position: relative;
+          margin: 0 auto;
+        }
+      }
+
+      .toolbar-background {
+        --background: transparent;
+        --background-repeat: no-repeat;
+        --background-size: cover;
+        --border-bottom-style: solid;
+        height: 80%;
+        margin-left: auto;
+        margin-right: auto;
+        --border: none;
+      }
+
+      .toolbar-title {
+        --color: var(--colors-blanco);
+        text-align: center;
+      }
+
+      .icono_izquierdo{
+        width: 2rem !important;
+      }
+    }
+
+    // ion-navbar
+  }
+
+  // ion-header
+
+  .select-icon {
+    .select-icon-inner {
+      --color: transparent;
+      top: 0;
+    }
+  }
+
+  //cambio de icono en select
+
+  .select-placeholder {
+    --color: var(--colors-gris-suave);
+  }
+
+  .sc-ion-loading-md-h {
+    --background: transparent;
+  }
+
+  .loading-wrapper {
+    box-shadow: none;
+    --background: transparent;
+  }
+
+  ion-loading {
+    ion-spinner {
+      width: 100px;
+      height: 100px;
+      --spinner-color: var(--colors-rojo-habitat);
+    }
+  }
+
+  .item-block {
+    max-height: fit-content;
+    min-height: fit-content;
+    justify-content: flex-start;
+    align-items: flex-start;
+    --padding: 0;
+
+    .item-inner {
+      --padding: 0;
+      --border: none;
+    }
+  }
+
+  //item-block
+  .content_app {
+    --background: var(--colors-blanco);
+
+
+    .inner-scroll{
+      background-color: var(--colors-blanco);
+    }
+
+    .header_menu {
+      padding: 2.3rem 0;
+      background-color: var(--color-gris-header-name);
+      border-bottom: 1px solid var(--colors-gris-suave);
+      &-title {
+        text-align: initial;
+        --color: var(--color-header-tittle);
+        font-size: 1.2rem;
+        padding-inline: 0px;
+        font-weight: bold;
+      }
+
+      &-text{
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        -webkit-transform: translate(-50%, -50%);
+      }
+
+      &-icon {
+        margin: auto auto auto 10px;
+        font: 1.5rem;
+      }
+
+      .iconh {
+        color: var(--colors-gris-oscuro);
+        margin: 0 1rem;
+        font-size: 1.125rem;
+        padding-right: 1.7rem;
+      }
+    }
+
+    .menu {
+      padding-top: 100px;
+      background: var(--colors-blanco);
+      
+      .cnt_menu {
+        margin: 1rem 0;
+        width: 100%;
+        height: 100%;
+        max-height: calc(100% - 32px);
+        background: var(--colors-blanco);
+
+        &-label {
+          padding-right: 1.3rem;
+          font-size: 2vh;
+        }
+
+        &-item {
+          width: 100%;
+          background: var(--colors-blanco);
+          border: none;
+          font: 1.125rem var(--fonts-weight-regular);
+          color: var(--color-gris-text-icon);
+          align-items: center;
+          display: flex;
+          justify-content: right;
+          padding: 0.8rem 1.2rem;
+          .item-inner {
+            --background-image: none;
+          }
+
+          .icon {
+            margin: 0 10px 0 0;
+            color: var(--color-gris-text-icon);
+            font-size: 3vh;
+          }
+
+          .label {
+            margin: 0;
+            font: 1.2rem;
+            padding: 10px 0 10px 2px;
+            
+          }
+        }
+      }
+
+      &-btn_out {
+        
+        background: var(---colors-blanco);
+        color: var(--colors-gris-oscuro);
+        border-bottom: .8em;
+        font: 1.125rem var(--fonts-weight-regular);
+        padding: 1rem 0px 0;
+        float: right;
+
+        .icon {
+          margin: 0 10px 0 0;
+        }
+
+        .label {
+          padding-right: 1.3rem;
+        }
+      }
+    }
+  }
+
+  .swiper-pagination-bullet {
+    height: 8px;
+    width: 8px;
+    background: var(--colors-gris-oscuro);
+    opacity: 0.5;
+  }
+  app-cambio-fondo-step-1{
+    .swiper-pagination{
+      margin-bottom: 40px !important;
+    }
+  }
+  page-giro-step-1{
+    .swiper-pagination{
+      margin-bottom: 10px !important;
+    }
+  }
+
+  app-planes-step-uno{
+    .swiper-pagination{
+      bottom: 30px !important;
+    }
+  }
+
+  .swiper-pagination-bullet-active {
+    background: var(--colors-gris-oscuro);
+    opacity: 1;
+  }
+
+  app-home-cliente{
+    .swiper-pagination-bullet-active {
+      background: var(--colors-rojo-habitat);
+    }
+  }
+
+  .alert-radio-label {
+    --color: var(--colors-gris-oscuro);
+    font: .875rem;
+    text-overflow: unset;
+    white-space: unset;
+  }
+
+  .alert-md, .alert-ios {
+    .alert-tappable {
+      min-height: auto;
+    }
+  }
+
+  //ayuda-contextual
+  .context_help_bg {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(76,76,74,0.7);
+    z-index: 2;
+    &.context_help_bg--show {
+      display: flex;
+    }
+    .context_help {
+      display: flex;
+      flex-flow: column;
+      align-items: center;
+      background: var(--colors-blanco);
+      border-radius: 4px;
+      width: 90%;
+      padding: 24px 28px;
+      &-icon {
+        color: var(--colors-rojo-habitat);
+        font: 1.875rem var(--fonts-weight-regular);
+        margin: 0 0 15px;
+      }
+      &-text {
+        margin: 0;
+        font: 1rem;
+        text-align: center;
+        color: var(--colors-gris-oscuro);
+      }
+    }
+  }
+
+}
+
+.ios .navbar{
+  padding-right: 2%;
+  padding-bottom: 10px;
+  padding-left: 4%;
+  padding-top: 15px;
+}
+.md .navbar{
+  padding-right: 6%;
+  padding-bottom: 0.5rem;
+  padding-left:6%;
+  padding-top: 0.4rem;
+}
+
+.md .logo{
+  margin-bottom:0.1rem !important;
+}
+
+.ios .button-right{
+  padding-left: 0;
+}
+
+.md .button-right{
+  padding-left: 0.4rem;
+}
+
+@media (min-height: 735px) {
+  html {
+    font-size: 18px; //1rem
+  }
+}
+
+@media (max-height: 620px) {
+  html {
+    font-size: 14px; //1rem
+  }
+}
+
+.text-capitalize {
+  text-transform: capitalize;
+}

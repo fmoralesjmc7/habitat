@@ -1,0 +1,249 @@
+// Colores
+:root {
+    --font-path: '../assets/fonts';
+    --colors-primary: #488AFF;
+    --colors-azul-oscuro: #003057;
+    --colors-blanco: #FFFFFF;
+    --colors-celeste: #6BA4B8;
+    --colors-celeste-opacity30: #6BA4B830;
+    --colors-azul-e: #2660AB;
+    --colors-rojo-habitat: #B4123B;
+    --colors-rojo-habitat-opacity30: #B4123B30;
+    --colors-rojo-oscuro: #BF0D3E;
+    --colors-negro: #000000;
+    --colors-verde: #5CAE3A;
+    --colors-naranjo: #EB6A36;
+    --colors-amarillo: #FCA800;
+    --colors-twitter: #1DA1F2;
+    --colors-linkedin: #0077B5;
+    --colors-facebook: #4267B2;
+    --colors-youtube: #FF0000;
+    --colors-gris-oscuro: #4C4C4A;
+    --colors-gris-suave: #909090;
+    --colors-gris-medio: #8B8B8B;
+    --colors-gris-placholder: #707070;
+    --colors-gris-line: #BDBDBD;
+    --colors-gris-titulo:#424242;
+    --colors-light:#F3F3F3;
+    --colors-gris-semi-claro:#D8D8D8;
+    --colors-gris-disable: #8E8E8E;
+    --colors-gris-claro:#979797;
+    --colors-gris-claro-fondo:#EDEDED;
+    --colors-gris-background: #f5f3f4ff;
+    --colors-celeste-link: #0085B2;
+    --colors-celeste-link-chevron: #0087b6;
+    --colors-azul-perfil: #253D71;
+    --color-gris-actualizacion: #808080;
+    --color-celeste-info-fuente: #488398;
+    --color-celeste-info-borde: #488398;
+    --color-celeste-info-fondo: #C4E4EF;
+    --color-linea-gris: #AAAAAA;
+    --color-gris-header-name: #EAEAEA;
+    --color-gris-lines: #AAAAAA;
+    --color-gris-text-icon: #AAAAAA;
+    --color-header-tittle: #4C4C4A;
+    --color-gris-disabled: #BFBFBF;
+    --color-azul-clave-unica: #2D457E;
+    --color-celeste-button: #6BA3B7;
+    --color-gris-borde: #E1E1E1;
+    --color-azul-checked: #007AFF;
+    --color-background-accordeon: #F0F6F8;
+
+    // Detalle de cuentas
+    --color-gris-barra: #D6D6D6;
+    --color-gris-background: #F5F5F5;
+
+    // Barra informativa
+    --colors-gris-claro-fondo-home: #D9D9D9;
+    --colors-boton-amarillo: #EDA83B;
+
+    // Barra informativa prudential
+    --colors-gris-azul-fondo-home: #003057;
+    --colors-boton-celeste-p: #6BA3B7;
+
+    //Liquidación de pensiones
+    --color-rojo-no-disponible: #B4123B;
+    --color-gris-label: #999999;
+
+    --app-direction: ltr;
+    // Se elimina comportamiento ionic por defecto que muestra una linea inferior con color ( ej.verde ) al dar foco a un input.
+    --text-input-ios-show-focus-highlight: false;
+    --text-input-md-show-focus-highlight: false;
+    // App iOS Variables
+    // --------------------------------------------------
+    // iOS only Sass variables can go here
+    --loading-ios-spinner-color: var(--colors-rojo-oscuro);
+    --loading-ios-background: none;
+    --loading-ios-box-shadow: none;
+    // App Material Design Variables
+    // --------------------------------------------------
+    // Material Design only Sass variables can go here
+    --loading-md-spinner-color: var($colors-rojo-oscuro);
+    --loading-md-background: none;
+    --loading-md-box-shadow: none;
+    --loading-md-padding-top: 0;
+    --ionicons-font-path: "../assets/fonts";
+    --z-index-overlay: 20;
+
+}
+
+
+// Iconos
+@import "icons";
+
+// Fonts
+@font-face {
+    font-family: 'roboto-regular';
+    src: url('../assets/fonts/roboto/roboto-regular.woff') format('woff'), url('../assets/fonts/roboto/roboto-regular.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'roboto-light';
+    src: url('../assets/fonts/roboto/roboto-light.woff') format('woff'), url('../assets/fonts/roboto/roboto-light.woff2') format('woff2');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'roboto-medium';
+    src: url('../assets/fonts/roboto/roboto-medium.woff') format('woff'), url('../assets/fonts/roboto/roboto-medium.woff2') format('woff2');
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'roboto-bold';
+    src: url('../assets/fonts/roboto/roboto-bold.woff') format('woff'), url('../assets/fonts/roboto/roboto-bold.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+}
+
+:root,
+:root[mode=md],
+:root[mode=ios] {
+    --fonts-roboto: 'roboto-regular';
+    --fonts-weight-regular: 'roboto-regular';
+    --fonts-weight-light: 'roboto-light';
+    --fonts-weight-medium: 'roboto-medium';
+    --fonts-weight-bold: 'roboto-bold';
+    --ion-font-family: 'roboto-regular';
+    --ion-font-family-light: 'roboto-light';
+    --ion-font-family-medium: 'roboto-medium';
+    --ion-font-family-bold: 'roboto-bold';
+}
+
+/*
+Colores centro de asesoria 
+*/
+/** Ionic CSS Variables **/
+:root {
+    --ion-color-primary: #b3143c;
+    --ion-color-primary-rgb: 179,20,60;
+    --ion-color-primary-contrast: #ffffff;
+    --ion-color-primary-contrast-rgb: 255,255,255;
+    --ion-color-primary-shade: #9e1235;
+    --ion-color-primary-tint: #bb2c50;
+    --ion-color-primary-medium: #84345A;
+  
+    --ion-color-secondary: #474847;
+    --ion-color-secondary-rgb: 71,72,71;
+    --ion-color-secondary-contrast: #ffffff;
+    --ion-color-secondary-contrast-rgb: 255,255,255;
+    --ion-color-secondary-shade: #3e3f3e;
+    --ion-color-secondary-tint: #595a59;
+  
+    --ion-color-tertiary: #196690;
+    --ion-color-tertiary-rgb: 25,102,144;
+    --ion-color-tertiary-contrast: #ffffff;
+    --ion-color-tertiary-contrast-rgb: 255,255,255;
+    --ion-color-tertiary-shade: #165a7f;
+    --ion-color-tertiary-tint: #30759b;
+  
+    --ion-color-success: #029e83;
+    --ion-color-success-rgb: 2,158,131;
+    --ion-color-success-contrast: #ffffff;
+    --ion-color-success-contrast-rgb: 255,255,255;
+    --ion-color-success-shade: #028b73;
+    --ion-color-success-tint: #1ba88f;
+  
+    --ion-color-warning: #eab544;
+    --ion-color-warning-rgb: 234,181,68;
+    --ion-color-warning-contrast: #000000;
+    --ion-color-warning-contrast-rgb: 0,0,0;
+    --ion-color-warning-shade: #ce9f3c;
+    --ion-color-warning-tint: #ecbc57;
+  
+    --ion-color-danger: #D1103A;
+    --ion-color-danger-rgb: 209,16,58;
+    --ion-color-danger-contrast: #ffffff;
+    --ion-color-danger-contrast-rgb: 255,255,255;
+    --ion-color-danger-shade: #b80e33;
+    --ion-color-danger-tint: #d6284e;
+  
+    --ion-color-dark: #4D4F51;
+    --ion-color-dark-rgb: 77,79,81;
+    --ion-color-dark-contrast: #ffffff;
+    --ion-color-dark-contrast-rgb: 255,255,255;
+    --ion-color-dark-shade: #444647;
+    --ion-color-dark-tint: #f1f1f1;
+  
+    --ion-color-medium: #9B9B9B;
+    --ion-color-medium-rgb: 155,155,155;
+    --ion-color-medium-contrast: #444647;
+    --ion-color-medium-contrast-rgb: 0,0,0;
+    --ion-color-medium-shade: #888888;
+    --ion-color-medium-tint: #a5a5a5;
+  
+    --ion-color-light: #F0F0F5;
+    --ion-color-light-rgb: 240,240,245;
+    --ion-color-light-contrast: #444647;
+    --ion-color-light-contrast-rgb: 0,0,0;
+    --ion-color-light-shade: #d3d3d8;
+    --ion-color-light-tint: #f2f2f6;
+  
+    // Others colors
+  
+    --ion-color-background-home-tool: #f3f3f3;
+    --ion-color-background-home-article: #fafafa;
+    --ion-color-gold: #c48737;
+    --ion-color-tabs: #828383;
+  
+    --ion-color-amount-positive: #53cc58;
+    --ion-color-amount-negative: #d1103a;
+  
+    --ion-color-habitat: #b3143c;
+    --ion-color-cuprum: #ffa509;
+    --ion-color-planvital: #d0021b;
+    --ion-color-capital: #03acca;
+    --ion-color-provida: #0061a0;
+    --ion-color-modelo: #77b800;
+    --ion-color-afp: #595a59;
+  
+    --ion-color-fund-a: #b52a29;
+    --ion-color-fund-b: #eb6915;
+    --ion-color-fund-c: #5cae3b;
+    --ion-color-fund-d: #2e8ecd;
+    --ion-color-fund-e: #2660aa;
+  
+    --ion-color-background-benefits-rgba: rgba(255,255,255, .12);
+  }
+
+/** Height Variables **/
+:root[mode="ios"] {
+  --height: calc(100vh - var(--height-header) - var(--ion-safe-area-top));
+  --height-support: calc(568px - var(--ion-safe-area-top));
+  --padding-top-onboarding: calc(var(--ion-safe-area-top) + 10px);
+}
+
+:root {
+  --height-header: 56px;
+  --height-tabs: 60px;
+  --height-support: 568px;
+  --ion-safe-area-top: 30px;
+  --height: calc(100vh - var(--height-header));
+  --height-onboarding: 100vh;
+  --padding-top-onboarding: 20px;
+  --overflow: hidden;
+}

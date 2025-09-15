@@ -1,0 +1,89 @@
+@import '../../../theme/mixins';
+
+:host {
+  .content_page {
+    .item-inner {
+      border-bottom: 0px !important;
+    }
+
+    .scroll-content {
+      padding: 40px 0 0;
+      overflow-y: hidden;
+    }
+
+    .cnt_rrss {
+      width: 90%;
+      padding-top: 2.5em;
+      margin: 0 auto;
+
+      &-title {
+        @include title();
+        position: relative;
+        font: 1.35rem var(--fonts-weight-medium);
+        
+        padding-left: 0px;
+        padding-right: 0px;
+        
+      }
+
+      &-subtitle {
+        font: .875rem var(--fonts-weight-medium);
+        --color: var(--colors-gris-titulo);
+        margin: 1.25rem 0 0;
+        text-align: center;
+      }
+
+      .list {
+        --height: 100vh;
+        --max-height: calc(100vh - 302px);
+        margin: 2.25rem 0 2.25rem;
+
+        &-item {
+          --border-radius: 4px;
+          --background: var(--colors-light);
+          align-items: center;
+          margin: 0 0 1.25rem;
+          
+          &:last-of-type {
+            margin: 0;
+          }
+
+          .item-inner {
+            .input-wrapper {
+              .label {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin: 0;
+                --padding: .625rem;
+              }
+            }
+          }
+          .value
+						{
+              color: var(--colors-celeste);
+              font: 1.15rem var(--fonts-weight-medium);
+              margin-left: auto;
+              margin-right: 0;
+						}
+
+          a, .link {
+            color: var(--colors-gris-oscuro);
+            font: 1.15rem var(--fonts-weight-medium);
+            
+          }
+          
+
+        }
+
+        //list-link
+      }
+
+      &-btn {
+        @include btn-general();
+        margin: 0 0 0;
+      }
+    }
+  }
+}
+

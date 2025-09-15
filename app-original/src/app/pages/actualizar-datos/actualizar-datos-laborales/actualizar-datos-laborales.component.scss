@@ -1,0 +1,80 @@
+@import "../../../../theme/mixins";
+
+:host {
+  .content_page {
+
+    .titulo {
+        font: 1.5rem var(--fonts-weight-medium);
+        margin: 0;
+        margin-bottom: 1.25rem;
+        color: var(--colors-gris-oscuro);
+
+        &.residencia {
+            margin-top: 1.875rem;
+        }
+    }
+    
+    .datos {
+        &-editar {
+            float: right;
+            .icon {
+                font-size: 0.75rem;
+                background-color: var(--colors-celeste-opacity30);
+                color: var(--colors-celeste);
+                padding: 0.5rem;
+                border-radius: 50%;
+                border: 1px solid var(--colors-celeste-opacity30);
+            }
+        }
+
+        &-contacto {
+            padding: 1.25rem;
+            padding-bottom: 2.5rem;
+            margin: 1.625rem;
+            margin-bottom: 0;
+        }
+
+        &-formulario {
+            .label {
+                font: 0.875rem var(--fonts-weight-medium);
+                color: var(--color-gris-disabled);
+                margin-top: 1.875rem;
+                margin-bottom: 0.313rem;
+
+                &.primero {
+                    margin-top: 0;
+                }
+
+                span {
+                    color: var(--colors-rojo-habitat);
+                }
+            }
+
+            .dato {
+                font: 1rem var(--fonts-weight-medium);
+                color: var(--colors-gris-oscuro);
+                margin: 0;
+            }
+        }
+    }
+  }
+
+  .botonera {
+    padding: 1.875rem;
+    .buttons-btn {
+        @include btn-general();
+        border-radius: 50px;
+        font-size: 1.125rem;
+        margin-bottom: 0.938rem;
+        background-color: var(--colors-blanco);
+        color: var(--color-celeste-button);
+        border: solid;
+        border-color:var(--color-celeste-button);
+        padding: 1.094rem 0;
+    }
+  }
+
+  ion-grid, ion-col {
+    padding: 0;
+  }
+}

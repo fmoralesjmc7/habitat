@@ -1,0 +1,68 @@
+<app-header></app-header>
+
+<ion-content class="content_page" forceOverscroll=false>
+    <section class="section_cnt">
+        <div class=form>
+            <h2 class="form-title">
+                {{CONSTANTES.TITULO_MODULO}}
+            </h2>
+            <ion-content class="form_cnt" overflow-scroll="true" *ngIf="tieneNotificaciones">
+
+                <ion-refresher slot="fixed" (ionRefresh)="cargaSiguientePagina($event)">
+                    <ion-refresher-content refreshingSpinner="circles"></ion-refresher-content>
+                </ion-refresher>
+
+                <article class="type">
+                    <ion-grid class="grid-notif">
+                        <ion-row class="notif_row" *ngFor="let notificacion of notificaciones"
+                                (click)="verDetalle(notificacion)" [ngClass]="{'notif_row_leido': notificacion.leido}">
+                            <ion-col size="2" class="col_izquierdo" *ngIf="notificacion.fechaEnvio">
+                                <p class="texto_izquierdo">
+                                    {{notificacion.fechaEnvio.getTime() == hoy.getTime() ? 'hoy' : notificacion.fechaEnvio | date: 'dd MMM'}}
+                                </p>
+                            </ion-col>
+                            <ion-col size="10" class="col_derecha" *ngIf="notificacion.fechaEnvio">
+                                <p class="texto_derecho">
+                                    {{notificacion.mensaje}}
+                                </p>
+                            </ion-col>
+                        </ion-row>
+                        <ion-row class="texto_row" *ngIf="notificaciones.length > 0">
+                            <p class="final_scroll">Últimas 20 notificaciones</p>
+                        </ion-row>
+                    </ion-grid>
+                </article>
+            </ion-content>
+
+            <section class="form_cnt" *ngIf="!tieneNotificaciones">
+                <article class="type">
+                    <ion-grid class="sin_notificacion">
+                        <ion-row class="icono_row">
+                            <ion-col size="12">
+                                <div class="cnt_icon">
+                                    <ion-icon class="icon-no-notification"></ion-icon>
+                                </div>
+                            </ion-col>
+                        </ion-row>
+
+                        <ion-row>
+                            <ion-col size="12">
+                                <h2 class="form-title">
+                                    {{CONSTANTES.SIN_NOTIFICACIONES}}
+                                </h2>
+                            </ion-col>
+                        </ion-row>
+
+                        <ion-row class="boton_row">
+                            <ion-col size="12">
+                                <article class="botonera">
+                                    <button class="btn_volver" (click)="volverAlHome()">{{CONSTANTES.TEXTO_BOTON_VOLVER}}</button>
+                                </article>
+                            </ion-col>
+                        </ion-row>
+                    </ion-grid>
+                </article>
+            </section>
+        </div>
+    </section>
+</ion-content>

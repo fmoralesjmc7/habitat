@@ -1,0 +1,102 @@
+@import '../../../../theme/mixins';
+
+:host {
+  display: block;
+  font: 1rem var(--fonts-weight-regular);
+
+  .scroll-content {
+    padding-top: 0 !important;
+  }
+
+  .content {
+    .cnt_acceso {
+      display: flex;
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      flex-direction: column;
+      padding: 2.5rem;
+      padding-bottom: 4rem;
+
+      p, h2 {
+        margin: 0;
+      }
+
+      &-img {
+        background: url("../../../../assets/imgs/background-habitat-biometria-v2.png") no-repeat;
+        background-position-x: center;
+        background-size: cover;
+        background-position-y: -3.438rem;
+        background-color: var(--colors-gris-background);
+      }
+
+      .print {
+        margin-top: auto;
+        text-align: center;
+        color: var(--colors-gris-oscuro);
+        line-height: 0;
+        
+        .cnt_print {
+          &-icon {
+            .icon-face, .icon-finger {
+              width: 4.375rem;
+            }
+
+            .icon-biometric {
+              width: 7.688rem;
+            }
+          }
+
+          &-title {
+            font: 1.688rem var(--fonts-weight-bold);
+            margin-top: 2.5rem;
+          }
+
+          &-text {
+            font: 1.406rem var(--fonts-weight-light);
+            margin: 2rem 0 4rem;
+            padding: 0 0.813rem 0 0.813rem;
+          }
+        }
+      }
+
+      .buttons {
+        .buttons-btn {
+          @include btn-general();
+          width: 100%;
+          border-radius: 50px;
+          font-size: 1.7188rem;
+          margin-bottom: 0.938rem;
+          
+          &:last-child {
+            background-color: var(--colors-azul-oscuro);
+          }
+        }
+      }
+    }
+  }
+
+  // content
+  .modal_huella_error {
+    @include modal_gral();
+
+    .modal_cnt {
+      .modal {
+        .body {
+          &-title {
+            text-align: left;
+          }
+
+          &-btn {
+            width: 100%;
+            text-align: right;
+            color: var(--colors-primary);
+            background: none;
+            padding: 0;
+            font: 1rem var(--fonts-weight-medium);
+          }
+        }
+      }
+    }
+  }
+}

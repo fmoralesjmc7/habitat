@@ -1,0 +1,137 @@
+<section class="certificados" >
+  <p class="certificados-titulo">Tus Certificados y Cartolas</p>
+  <ion-accordion-group>
+    <ion-accordion value="1" *ngIf="generales.length > 0" class="custom-accordion">
+      <ion-item slot="header">
+        <div class="icon-container">
+          <img src="assets/icon/certificados/cert_generales.png" alt="Certificado Saldo">
+        </div>
+        <ion-label class="title_accordion">Certificados Generales</ion-label>
+      </ion-item>
+      <div slot="content">
+        <ion-grid class="grid_expandible" *ngFor="let tipoCertificado of generales; let last = last">
+          <ion-row class="separacion" (click)="seleccionarCertificado(tipoCertificado)">
+            <ion-col size="4" class="texto_regular tipo-col">
+              <strong>{{tipoCertificado.tipo}}</strong>
+            </ion-col>
+            <ion-col size="7" class="texto_regular descripcion-col">
+              {{tipoCertificado.descripcionAcordion}}
+            </ion-col>
+            <ion-col size="1" class="texto_regular">
+              <ion-icon class="icono_derecha" name="chevron-forward-outline"></ion-icon>
+            </ion-col>
+          </ion-row>
+          <hr *ngIf="!last">
+        </ion-grid>
+      </div>
+    </ion-accordion>
+
+    <div *ngIf="generales.length > 0" style="height: 20px;"></div>
+
+    <ion-accordion value="2" *ngIf="saldos.length > 0" class="custom-accordion">
+      <ion-item slot="header">
+        <div class="icon-container">
+          <img src="assets/icon/certificados/cert_saldo.png" alt="Certificado Saldo">
+        </div>
+        <ion-label class="title_accordion">Certificados Saldos y <br>movimientos</ion-label>
+      </ion-item>
+      <div slot="content">
+        <ion-grid class="grid_expandible" *ngFor="let tipoCertificado of saldos; let last = last">
+          <ion-row class="separacion" (click)="seleccionarCertificado(tipoCertificado)">
+            <ion-col size="4" class="texto_regular tipo-col">
+              <strong>{{tipoCertificado.tipo}}</strong>
+            </ion-col>
+            <ion-col size="7" class="texto_regular descripcion-col">
+              {{tipoCertificado.descripcionAcordion}}
+            </ion-col>
+            <ion-col size="1" class="texto_regular">
+              <ion-icon class="icono_derecha" name="chevron-forward-outline"></ion-icon>
+            </ion-col>
+          </ion-row>
+          <hr *ngIf="!last">
+        </ion-grid>
+      </div>
+    </ion-accordion>
+
+    <div *ngIf="saldos.length > 0" style="height: 20px;"></div>
+
+    <ion-accordion value="3" *ngIf="cotizaciones.length > 0" class="custom-accordion">
+      <ion-item slot="header">
+        <div class="icon-container">
+          <img src="assets/icon/certificados/cert_cotizaciones.png" alt="Certificado Cotizaciones">
+        </div>
+        <ion-label class="title_accordion">Certificados Cotizaciones</ion-label>
+      </ion-item>
+      <div slot="content">
+        <ion-grid class="grid_expandible" *ngFor="let tipoCertificado of cotizaciones; let last = last">
+          <ion-row class="separacion" (click)="seleccionarCertificado(tipoCertificado)">
+            <ion-col size="4" class="texto_regular tipo-col">
+              <strong>{{tipoCertificado.tipo}}</strong>
+            </ion-col>
+            <ion-col size="7" class="texto_regular descripcion-col">
+              {{tipoCertificado.descripcionAcordion}}
+            </ion-col>
+            <ion-col size="1" class="texto_regular">
+              <ion-icon class="icono_derecha" name="chevron-forward-outline"></ion-icon>
+            </ion-col>
+          </ion-row>
+          <hr *ngIf="!last">
+        </ion-grid>
+      </div>
+    </ion-accordion>
+
+    <div *ngIf="cotizaciones.length > 0" style="height: 20px;"></div>
+
+    <ion-accordion value="4" *ngIf="pensionados.length > 0 && esPensionado" class="custom-accordion">
+      <ion-item slot="header">
+        <div class="icon-container">
+          <img src="assets/icon/certificados/cert_pension.png" alt="Certificado Cotizaciones">
+        </div>
+        <ion-label class="title_accordion">Certificados de Pensión</ion-label>
+      </ion-item>
+      <div slot="content">
+        <ion-grid class="grid_expandible" *ngFor="let tipoCertificado of pensionados; let last = last">
+          <ion-row class="separacion" (click)="seleccionarCertificado(tipoCertificado)">
+            <ion-col size="4" class="texto_regular tipo-col">
+              <strong>{{tipoCertificado.tipo}}</strong>
+            </ion-col>
+            <ion-col size="7" class="texto_regular descripcion-col">
+              {{tipoCertificado.descripcionAcordion}}
+            </ion-col>
+            <ion-col size="1" class="texto_regular">
+              <ion-icon class="icono_derecha" name="chevron-forward-outline"></ion-icon>
+            </ion-col>
+          </ion-row>
+          <hr *ngIf="!last">
+        </ion-grid>
+      </div>
+    </ion-accordion>
+
+    <div *ngIf="pensionados.length > 0 && esPensionado" style="height: 20px;"></div>
+
+    <ion-accordion value="5" *ngIf="cartolas.length > 0" class="custom-accordion">
+      <ion-item slot="header">
+        <div class="icon-container">
+          <img src="assets/icon/certificados/cert_cartola.png" alt="Certificado Cotizaciones">
+        </div>
+        <ion-label class="title_accordion">Tus Cartolas y Estado Cuenta Mensual</ion-label>
+      </ion-item>
+      <div slot="content">
+        <ion-grid class="grid_expandible" *ngFor="let tipoCertificado of cartolas; let last = last">
+          <ion-row class="separacion" (click)="seleccionarCertificado(tipoCertificado)">
+            <ion-col size="4" class="texto_regular tipo-col">
+              <strong>{{tipoCertificado.tipo}}</strong>
+            </ion-col>
+            <ion-col size="7" class="texto_regular descripcion-col">
+              {{tipoCertificado.descripcionAcordion}}
+            </ion-col>
+            <ion-col size="1" class="texto_regular">
+              <ion-icon class="icono_derecha" name="chevron-forward-outline"></ion-icon>
+            </ion-col>
+          </ion-row>
+          <hr *ngIf="!last">
+        </ion-grid>
+      </div>
+    </ion-accordion>
+  </ion-accordion-group>
+</section>

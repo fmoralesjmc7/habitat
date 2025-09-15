@@ -1,0 +1,77 @@
+<ion-header class="header_app">
+  <ion-toolbar class="navbar">
+
+      <figure class="logo">
+          <img alt="" class="logo-img" src="./assets/imgs/nuevo_logo_header.png">
+      </figure>
+      <ion-buttons slot="primary" class="nav-button button-right" (click)="toggleMenu()">
+          <ion-icon class="btn-icon icon-menu-hamb" name="icon-menu-hamb"></ion-icon>
+      </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content class="home_page">
+  <section class="home_content">
+     <ion-card class="home_content-card" >
+       <form [formGroup]="form" (ngSubmit)="simulacionLigth()">
+          <ion-grid>
+              <ion-row>
+                <ion-col size="12" class="text-item">
+                  <ul class="text">
+                    <li class="text-title"> ¿Sabes con cuánto te </li>
+                    <li class="text-title"> vas a pensionar?</li>
+                  </ul>  
+                  <ul class="text-anios">
+                    <li class="text-anios-item"> Tengo <span class="age">{{ edad }}</span> años</li>
+                    <li class="text-anios-item"><ion-range class="age_selector-range" min="18" max="99" step="1" formControlName="age" [(ngModel)]="edad" (ionChange)="cambioRangoEdad()">
+                    </ion-range></li>
+                  </ul>    
+                  <ul class="text" >
+                    <li class=gender_selector>
+                      <article class="gender_selector-item" [class.gender_selector-item--active]="sexo === 'F'" (click)="cambioSexo('F')">
+                        Soy Mujer
+                      </article>
+                      <div class="gender_selector-separator"></div>
+                      <article class="gender_selector-item" [class.gender_selector-item--active]="sexo === 'M'" (click)="cambioSexo('M')">
+                        Soy Hombre
+                      </article>
+                    </li>
+                  </ul>    
+                  <ul class="cnt_input">
+                      <div class="money_input" *ngIf="showRemuneracionBruta">
+                          <ion-label stacked class="money_input-title">
+                            Remuneración Mensual Bruta
+                            <ion-icon name="icon-informacion" class="icon icon-informacion" (click)="infoRemIsOpen = true"></ion-icon>
+                          </ion-label>
+                          <ion-input (focus)="focusElement()" (ionBlur)="blurElementRenta('remuneracion')" class="money_input-input" formControlName="salary"
+                           [(ngModel)]="renta" maxlength="23" type="tel" (keypress)="validaSoloNumeros($event)" (keyup.enter)="cambioFoco()" (ionChange)="renta = format(renta)">
+                          </ion-input>
+                        </div>
+                        <div class="money_input" *ngIf="showSaldoDisponible">
+                          <ion-label stacked class="money_input-title" >
+                            Saldo Disponible
+                            <ion-icon name="icon-informacion" class="icon icon-informacion" (click)="infoSaldoIsOpen = true"></ion-icon>
+                          </ion-label>
+                          <ion-input (focus)="focusElement()" (ionBlur)="blurElementSaldo()" class="money_input-input" formControlName="balance"
+                          [(ngModel)]="saldo" maxlength="23" type="tel" (keypress)="validaSoloNumeros($event)" (keyup.enter)="enviarForm()" (ionChange)="saldo = format(saldo)">
+                         </ion-input>
+                        </div>
+                  </ul>
+                  <button type="submit" class="cnt_rrss-btn" [disabled]="form.invalid || !validForm()" >Calcular</button>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+       </form>
+    </ion-card>
+  </section>
+</ion-content>
+
+<ayuda-contextual  *ngIf="infoRemIsOpen" 
+                   (bgClick)="infoRemIsOpen = false" 
+                   [isOpen]="infoRemIsOpen" 
+                   [text]="infoRem"></ayuda-contextual>
+<ayuda-contextual  *ngIf="infoSaldoIsOpen" 
+                   (bgClick)="infoSaldoIsOpen = false" 
+                   [isOpen]="infoSaldoIsOpen" 
+                   [text]="infoSaldo"></ayuda-contextual>

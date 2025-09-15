@@ -1,0 +1,127 @@
+<app-header></app-header>
+
+<ion-content class="content_page">
+    <section class="section_cnt">
+        <div class=form>
+            <h2 class="form-title">
+                {{CONSTANTES_LIQUIDACION.TITLE}}
+            </h2>
+
+            <section class="form_cnt">
+                <h3 class="titulo_certificado titulo_certificado-dos">¿Qué es?</h3>
+                <div class="card">
+                    <ul>
+                        <li class="texto_certificado">{{CONSTANTES_LIQUIDACION.QUE_ES.P1}}</li>
+                        <li class="texto_certificado">{{CONSTANTES_LIQUIDACION.QUE_ES.P2}}</li>
+                        <li class="texto_certificado">{{CONSTANTES_LIQUIDACION.QUE_ES.P3}}</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section class="form_cnt" *ngIf="!mostrarNoDisponible24">
+                <h3 class="titulo_certificado titulo_certificado-dos">Elegir Período</h3>
+                <p class="texto_periodo">{{CONSTANTES_LIQUIDACION.PERIODO}}</p>
+
+                <ion-select [placeholder]="'Elegir Período'" [interfaceOptions]="tipoPerOptions"
+                    [(ngModel)]="tipoPeriodo" (ionChange)="cambioTipoPeriodo()" name="tipoPeriodo"
+                    class="options-select" okText="ACEPTAR" cancelText="CANCELAR">
+                    <ion-select-option *ngFor="let tipoPeriodo of listaTipoPeriodo" [value]="tipoPeriodo">
+                        {{tipoPeriodo.tipo}}</ion-select-option>
+                </ion-select>
+            </section>
+
+            <section class="form_cnt" *ngIf="showFormDate && !mostrarNoDisponible24">
+                <ion-grid lines="none" class="date_item">
+                    <ion-row class="text-row">
+                        <ion-col size="6">
+                            <ion-label class="date_item-label" stacked>Fecha Inicio</ion-label>
+                        </ion-col>
+                        <ion-col size="6">
+                            <ion-label class="date_item-label" stacked>Fecha Término</ion-label>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col size="6" class="no_padding_col">
+                            <article class="date_item-left">
+                                <ion-list>
+                                    <ion-item class="btn-modal" id="open-modal-desde">
+                                        <ion-label class="label-datetime"
+                                            [ngClass]="{'label-datetime--active' : labelDesde !== 'mm/yyyy'}">
+                                            {{labelDesde}}
+                                        </ion-label>
+                                    </ion-item>
+
+                                    <ion-modal trigger="open-modal-desde">
+                                        <ng-template>
+                                            <ion-content>
+                                                <ion-datetime locale="es-CL" presentation="month-year"
+                                                    class="date_item-select" [min]="fechaInicioHabitat"
+                                                    [max]="fechaMaximaActual" (ionChange)="calcularFechaHasta()"
+                                                    [(ngModel)]="fechaDesde" showDefaultButtons="true"
+                                                    cancelText="CANCELAR" doneText="ACEPTAR">
+                                                </ion-datetime>
+                                            </ion-content>
+                                        </ng-template>
+                                    </ion-modal>
+                                </ion-list>
+                            </article>
+                        </ion-col>
+
+                        <ion-col size="6" class="no_padding_col">
+                            <article class="date_item-right">
+                                <ion-list>
+                                    <ion-item class="btn-modal" [disabled]="habilitaFechaHasta" id="open-modal-hasta">
+                                        <ion-label class="label-datetime"
+                                            [ngClass]="{'label-datetime--active' : labelHasta !== 'mm/yyyy'}">
+                                            {{labelHasta}}
+                                        </ion-label>
+                                    </ion-item>
+
+                                    <ion-modal trigger="open-modal-hasta">
+                                        <ng-template>
+                                            <ion-content>
+                                                <ion-datetime locale="es-CL" presentation="month-year"
+                                                    class="date_item-select" [min]="fechaMinimaCalculada"
+                                                    [max]="fechaMaximaCalculada" (ionChange)="seleccionFechaHasta()"
+                                                    [(ngModel)]="fechaHasta" [disabled]="habilitaFechaHasta"
+                                                    showDefaultButtons="true" cancelText="CANCELAR" doneText="ACEPTAR">
+                                                </ion-datetime>
+                                            </ion-content>
+                                        </ng-template>
+                                    </ion-modal>
+                                </ion-list>
+                            </article>
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
+            </section>
+
+            <section class="form_cnt" *ngIf="liquidacionesDisponibles !== 0 && !flagCargaInicio">
+                <ion-list>
+                    <ion-item>
+                        <ion-label class="texto_periodo">Liquidaciones disponibles</ion-label>
+                        <ion-badge class="badge-custom">{{liquidacionesDisponibles}}</ion-badge>
+                    </ion-item>
+                </ion-list>
+            </section>
+
+            <section class="form_cnt" *ngIf="mostrarNoDisponible">
+                <p class="texto_periodo texto_no_disponible" [innerHTML]="CONSTANTES_LIQUIDACION.NO_DISPONIBLE_PERIODO"></p>
+            </section>
+
+            <section class="form_cnt" *ngIf="mostrarNoDisponible24">
+                <p class="texto_periodo texto_no_disponible" [innerHTML]="CONSTANTES_LIQUIDACION.NO_DISPONIBLE_24"></p>
+            </section>
+
+            <section class="form_cnt" *ngIf="mostrarNoDisponible || mostrarNoDisponible24">
+                <p class="texto_periodo" [innerHTML]="CONSTANTES_LIQUIDACION.CONTACTO" (click)="llamarContactCenter()"></p>
+            </section>
+
+            <section class="botonera">
+                <button *ngIf="!mostrarNoDisponible24" class="buttons-btn btn-guardar" (click)="solicitarLiquidacion()"
+                    [disabled]="liquidacionesDisponibles===0 || flagCargaInicio">Solicitar</button>
+                <button class="buttons-btn" (click)="cancelar()">Cancelar</button>
+            </section>
+        </div>
+    </section>
+</ion-content>

@@ -1,0 +1,14 @@
+<ion-list class="steps">
+
+  <div class="cnt_print active first" [class.active]="active == 1 || active == 2 || active == 3">
+    1
+  </div>
+  <div class="steps-line"></div>
+  <div class="cnt_print" [class.active]="active == 2 || active == 3">
+    2
+  </div>
+  <div class="steps-line"></div>
+  <div class="cnt_print last" [class.active]="active == 3">
+    3
+  </div>
+</ion-list>

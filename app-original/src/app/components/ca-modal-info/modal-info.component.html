@@ -1,0 +1,6 @@
+<app-header-centro-asesoria [headerElements]="headerElements" (clickRightButton)="closeModal()"></app-header-centro-asesoria>
+<div class="body">
+  <div *ngFor="let paragraph of body">
+    <p>{{ paragraph }}</p>
+  </div>
+</div>

@@ -1,0 +1,36 @@
+<app-header [titulo]="producto.nombreProducto"></app-header>
+
+<ion-content class="home_page">
+  <section class="detalle-cuenta">
+
+    <h1 class="detalle-cuenta-titulo">Total ahorrado {{producto.nombreProducto}}</h1>
+    <p class="detalle-cuenta-saldo">{{ producto.totalMonto | chileanCurrency }}</p>
+
+    <ion-card class="detalle-producto">
+      <ion-grid class="detalle-grilla">
+
+        <ion-row class="detalle-contenido" *ngFor="let cuenta of producto.detalle">
+          <ion-col size="7" class="producto">
+            <section>
+              <p class="nombre-producto">{{cuenta.tituloCuenta}}</p>              
+            </section>
+          </ion-col>
+          <ion-col size="5">
+            <ion-row>
+              <ion-col size="12">
+                <section class="detalle-saldo">
+                  <p>Saldo:</p>
+                  <p>{{ cuenta.valorCuenta | chileanCurrency }}</p>
+                </section>
+              </ion-col>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+
+        <ion-row class="detalle-total">
+          <p> Saldo Total {{producto.nombreProducto}}: {{ producto.totalMonto | formatoPesoChileno }}</p>
+        </ion-row>
+      </ion-grid>
+    </ion-card>
+  </section>
+</ion-content>

@@ -1,0 +1,22 @@
+<app-header [showBackButton]="false"></app-header>
+
+<ion-content class="content_page">
+  <section class="container">
+    <app-step-items [active]="3"></app-step-items>
+    <article class="container-icon">
+      <ion-icon class="icon-error-generico" ></ion-icon>
+    </article>
+    <h2 class="container-title">
+      ¡Lo sentimos!
+    </h2>
+    <p class="container-title">
+      Ha ocurrido un error durante el proceso de pago y el depósito no será materializado.
+    </p>
+    <p class="container-text">
+        ¡No te preocupes! Inténtalo nuevamente.
+    </p>
+    <article class="cnt_button">
+      <button class="cnt_button-back" (click)="volverAlHome()">Ir al Home</button>
+    </article>
+  </section>
+</ion-content>

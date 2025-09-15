@@ -1,0 +1,14 @@
+<ion-row class="gender-option">
+  <ion-col (click)="onClickGender('F')">
+    <ion-button class="link-button" shape="round" mode="md">
+      <p [ngClass]="{ 'icon-female-inactive' : !selectGenderFemale, 'icon-female-active' : selectGenderFemale }"></p>
+    </ion-button>
+    <p [ngClass]="{ 'text-inactive' : !selectGenderFemale, 'text-active' : selectGenderFemale }">Femenino</p>
+  </ion-col>
+  <ion-col (click)="onClickGender('M')">
+    <ion-button class="link-button" shape="round" mode="md">
+      <p [ngClass]="{ 'icon-male-inactive' : !selectGenderMale, 'icon-male-active': selectGenderMale }"></p>
+    </ion-button>
+    <p [ngClass]="{ 'text-inactive' : !selectGenderMale, 'text-active' : selectGenderMale }">Masculino</p>
+  </ion-col>
+</ion-row>

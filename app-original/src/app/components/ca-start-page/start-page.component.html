@@ -1,0 +1,11 @@
+<div class="content-start-page">
+  <div class="container-image {{ startPageData.classIllustration }}"></div>
+  <div class="container-text">
+    <h1 class="title-start">{{ startPageData.title }}</h1>
+    <p>{{ startPageData.textDrop }}</p>
+  </div>
+  <div class="container-button">
+    <ion-button class="primary-button" (click)="emitPrimaryButton()">{{ startPageData.textPrimaryButton }}</ion-button>
+    <ion-button *ngIf="startPageData.textSecondaryButton" class="secondary-button" (click)="emitSecondaryButton()">{{ startPageData.textSecondaryButton }}</ion-button>
+  </div>
+</div>

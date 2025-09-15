@@ -1,0 +1,106 @@
+@import '../../../../theme/mixins';
+
+:host {
+  font-family: var(--fonts-roboto);
+  font-weight: var(--fonts-weight-regular);
+  
+  .detalle-cuenta {
+    &-titulo {
+      font: 1.5rem var(--fonts-weight-medium);
+      text-align: center;
+      margin-bottom: 0;
+      color: var(--colors-gris-oscuro);
+    }
+
+    &-saldo {
+      font: 2rem var(--fonts-weight-medium);
+      text-align: center;
+      color: var(--colors-rojo-habitat);
+      margin: 0 0 30px 0;
+    }
+
+    .detalle-regimenes {
+      border-radius: 0.839rem;
+      width: 80%;
+      margin: 0 auto;
+      box-shadow: 0px 0px 1.118rem rgba(0, 0, 0, 0.2);
+      margin-bottom: 1.625rem; 
+
+      ion-grid {
+        padding: 0;
+      }
+
+      .detalle-titulo {
+        padding: 0.938rem;
+        padding-bottom: 0.375rem;
+        p {
+          text-align: center;
+          width: 100%;
+          font-family: var(--fonts-weight-bold);
+          font-size: 1rem;
+        }
+      }
+      
+      .detalle-contenido {
+        border-top: 1px solid var(--color-gris-barra);
+        padding: 0.938rem;
+        padding-top: 0.375rem;
+      }
+
+      p {
+        margin: 0;
+      }
+      
+      .saldo-fondo {
+        font: 1.125rem var(--fonts-weight-medium);
+        color: var(--colors-rojo-habitat);
+      }
+
+      .saldo-info {
+        font: 1rem  var(--fonts-weight-regular);
+      }
+
+      .saldo-derecha {
+        text-align: right;
+      }
+
+      .fondo {
+        display: flex;
+        align-items: center;
+
+        section {
+          width: 100%;
+        }
+
+        .info-fondo {
+          font: 0.625rem  var(--fonts-weight-bold);
+          color: var( --colors-negro);
+          margin-bottom: 5px;
+          text-align: center;
+        }
+  
+        .letra-fondo {
+          @include tipoFondo();
+          height: 1.938rem;
+          width: 1.938rem;
+          margin: 0 auto;
+        }
+      }
+
+      .detalle-total {
+        border-top: 1px solid var(--color-gris-barra);
+        padding: 0.938rem;
+        padding-right: 1.563rem;
+        padding-top: 0.375rem;
+            background: var(--color-gris-background);
+        p {
+          text-align: right;
+          width: 100%;
+          font-family: var(--fonts-weight-medium);
+          font-size: 1rem;
+        }
+      }
+
+    }
+  }
+}

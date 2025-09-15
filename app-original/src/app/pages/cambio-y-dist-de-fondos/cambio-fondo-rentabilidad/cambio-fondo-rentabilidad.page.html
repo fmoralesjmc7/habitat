@@ -1,0 +1,80 @@
+<app-header></app-header>
+
+<ion-content class="content">
+  <section class="profitability">
+    <h2 class="profitability-title">
+      {{ nombreCliente }}, antes de continuar debes considerar:
+    </h2>
+    <p class="profitability-subtitle">
+      En los últimos 12 meses has realizado <span class="profitability-subtitle-bold">{{ rentabilidad.informacionRentabilidad.rentabilidadAfiliado.rentabilidadAfiliado }}
+      cambios de tipo de Fondo en tu cuenta obligatoria,</span> habiendo obtenido una rentabilidad real anualizada de
+      {{ rentabilidad.informacionRentabilidad.rentabilidadAfiliado.rentabilidadCCICO | number:'1.2-2' }}% en dicho periodo. <span class="profitability-subtitle-bold">Si hubieras mantenido
+      tus ahorros en un mismo Tipo de Fondo,</span> habrías obtenido la rentabilidad real anualizada que a continuación se presenta
+      para los periodos indicados:
+    </p>
+    <section class="cnt_table">
+      <article class="header">
+        <span class="header-text">Fondo</span>
+        <span class="header-text-margin">Rentabilidad últimos 12 meses <p class="header-subtext">({{ rentabilidad.informacionRentabilidad.fechaInicioRentabilidad | date:'dd/MM/yyyy' }} - {{ rentabilidad.informacionRentabilidad.fechaFinalRentabilidad | date:'dd/MM/yyyy' }})</p></span>
+      </article>
+      <article class="table">
+        <ul class="column" *ngFor="let fondo of rentabilidad.informacionRentabilidad.rentabilidadFondos">
+          <li class="column-items">
+            <div class="bill" [ngClass]="{'letter--red': fondo.tipoFondo === 'A', 'letter--orange': fondo.tipoFondo === 'B', 'letter--green': fondo.tipoFondo === 'C', 'letter--cyan': fondo.tipoFondo === 'D', 'letter--blue': fondo.tipoFondo === 'E'}">
+                            <span class="value">
+                                {{ fondo.tipoFondo }}
+                            </span>
+            </div>
+          </li>
+          <li class="column-items">
+            {{ fondo.rentabilidadUltimos12Meses }}%
+          </li>
+        </ul>
+      </article>
+    </section> <!-- cnt_table -->
+
+    <section class="cnt_table">
+      <article class="header">
+        <span class="header-text">Fondo</span>
+        <span class="header-text-margin-dos">Rentabilidad Multifondos <p class="header-subtext">(Sep. 2002 - {{ rentabilidad.informacionRentabilidad.fechaFinalRentabilidadHistorica | date:'dd/MM/yyyy' }})</p> </span>
+      </article>
+      <article class="table">
+        <ul class="column" *ngFor="let fondo of rentabilidad.informacionRentabilidad.rentabilidadFondos">
+          <li class="column-items">
+            <div class="bill" [ngClass]="{'letter--red': fondo.tipoFondo === 'A', 'letter--orange': fondo.tipoFondo === 'B', 'letter--green': fondo.tipoFondo === 'C', 'letter--cyan': fondo.tipoFondo === 'D', 'letter--blue': fondo.tipoFondo === 'E'}">
+                        <span class="value">
+                            {{ fondo.tipoFondo }}
+                        </span>
+            </div>
+          </li>
+          <li class="column-items">{{ fondo.rentabilidadHistorica }}%</li>
+        </ul>
+      </article>
+    </section>
+    <section class="information" *ngIf="truncarTexto == true">
+      <p class="information-text">
+        {{ textInformativo | slice:0:115 }}...
+      </p>
+      <button class="information-btn" (click)="moreMethod()">
+        Leer Más
+      </button>
+    </section>
+    <section class="information" *ngIf="truncarTexto == false">
+      <p class="information-text">
+        {{ textInformativo }}
+      </p>
+      <button class="information-btn" (click)="lessMethod()">
+        Leer Menos
+      </button>
+    </section>
+
+    <p class="profitability-subtitle-bold">
+      La rentabilidad es variable, por lo que nada garantiza que las rentabilidades pasadas
+      se repitan en el futuro. Infórmese sobe la rentabilidad de su Fondo de Pensiones, las
+      comisiones y la calidad de servicio de las AFP.
+    </p>
+    <button class="profitability-button" (click)="dismiss(true)">Continuar</button>
+    <button class="profitability-button profitability-button--blue" (click)="dismiss(false)">Cancelar</button>
+  </section> <!-- profitability -->
+</ion-content> <!-- content -->
+

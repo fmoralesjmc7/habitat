@@ -1,0 +1,51 @@
+
+<section class="empleadores" *ngIf="this.datosUsuario.datosEmpleador.length > 0 ">
+  <p class="empleadores-titulo">Mi empleador</p>
+
+  <ion-accordion-group>
+    <ion-accordion value="{{i}}" *ngFor="let empleador of datosUsuario.datosEmpleador; let i = index">
+      <ion-item slot="header">
+        <ion-label>{{empleador.razon_social | formatoMayusculas}}</ion-label>
+      </ion-item>
+      <div class="ion-padding" slot="content">
+        <ion-grid class="grid_expandible">
+          <ion-row>
+            <ion-col class="texto_titulo">
+              Nombre o razón social
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col class="texto_regular">
+              {{empleador.razon_social | formatoMayusculas}}
+            </ion-col>
+          </ion-row>
+          
+          <ion-row>
+            <ion-col class="texto_titulo">
+              RUT
+            </ion-col>
+          </ion-row>
+          
+          <ion-row>
+            <ion-col class="texto_regular">
+              {{empleador.rut | number:'1.0-0':'es-CL'}}-{{ empleador.dv}}
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col class="texto_titulo">
+              Fecha última cotización
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col class="texto_regular ultimo-texto">
+              {{ empleador.ultima_cotizacion }}
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </div>
+    </ion-accordion>
+  </ion-accordion-group>
+</section>

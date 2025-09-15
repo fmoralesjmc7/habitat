@@ -1,0 +1,20 @@
+<app-header [showBackButton]="true" titulo="Tus Datos" [showMenuHamb]="true" (clickBackButton)="volverAlHome()"></app-header>
+<ion-content class="content_page">
+  <section class="container">
+    <section class="box_exito">
+      <div class=box_exito-fondoVerde>
+        <ion-icon class="box_exito-fondoVerde-icon icon-exito"></ion-icon>
+      </div>
+      <h2 class="box_exito-title">
+        ¡Tus datos han sido actualizados con éxito!
+      </h2>
+      <span class="box_exito-text" *ngIf="validadorEnvioCorreo">
+        Hemos enviado el comprobante correspondiente al email registrado.
+      </span>
+
+      <section class="box_exito-botonera">
+        <button class="btn_volver" (click)="volverAlHome()">Ir al Home</button>
+      </section>
+    </section>
+  </section>
+</ion-content>

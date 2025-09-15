@@ -1,0 +1,33 @@
+<app-header [showBackButton]="false"></app-header>
+
+<ion-content>
+  <section class="success">
+    <section class="success_cnt">
+      <header class="success_cnt-header">
+        <div class="cnt_icon">
+          <ion-icon class="icon-exito"></ion-icon>
+        </div>
+      </header>
+      <h1 class="success_cnt-title">
+        {{ CONSTANTES.TITULO_EXITO_LIQUIDACIONES }}
+      </h1>
+      <p class="success_cnt-text" >
+        {{ CONSTANTES.TEXTO_UNO_LIQUIDACIONES }}
+        <span class="bold">{{ CONSTANTES.TEXTO_UNO_PART2_LIQUIDACIONES}}</span>
+        <span class="bold">{{ totalLiquidaciones }}</span>
+        <span class="bold" *ngIf="totalLiquidaciones === 1">{{ CONSTANTES.TEXTO_UNO_PART3_UNA_LIQUIDACION}}</span>
+        <span class="bold" *ngIf="totalLiquidaciones !== 1">{{ CONSTANTES.TEXTO_UNO_PART3_LIQUIDACIONES}}</span>
+      </p>
+      <p class="success_cnt-text" *ngIf="showFormEmail">
+        {{ CONSTANTES.TEXTO_DOS_LIQUIDACIONES }}
+        <span class="bold">{{email}}</span>
+      </p>
+    </section>
+
+    <section class="botonera">
+      <button class="buttons-btn btn-guardar" (click)="descargarPdfBase64()">Descargar</button>
+      <button class="buttons-btn" (click)="volverHome()"> Volver al Home</button>
+    </section>
+
+  </section>
+</ion-content>

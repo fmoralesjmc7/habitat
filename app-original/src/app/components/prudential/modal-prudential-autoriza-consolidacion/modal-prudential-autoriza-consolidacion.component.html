@@ -1,0 +1,27 @@
+<section class="modal_prudential">
+    <article class="modal_cnt">
+        <ion-icon class="icon-cerrar icon_close" (click)="onCerrarModal()"></ion-icon>
+        <ion-card class="modal">
+            <ion-card-header class="header">
+                ¡Est&aacute;s a un paso de visualizar en tu Sucursal Virtual y Habitat APP tus ahorros de AFP Habitat junto a los de Prudential AGF destinados a tu futura pensi&oacute;n!
+            </ion-card-header>
+            <ion-card-content class="body">
+                <p class="body-text">
+                    Al autorizar la consolidaci&oacute;n est&aacute;s permitiendo que Prudential AGF comparta informaci&oacute;n de tus inversiones de fondos mutuos
+                    serie APV y/o Dep&oacute;sitos Convenidos con AFP Habitat
+                </p>
+                <p class="body-text-small">
+                    *Esta consolidaci&oacute;n solo considera una visualizaci&oacute;n de los ahorros, desde la Sucursal Virtual de AFP Habitat y en tu 
+                    Habitat APP no podr&aacute;s gestionar tus inversiones de Prudential AGF.
+                </p>
+                <h2 class="body-titulo rojo-habitat">
+                    ¿Deseas continuar con la autorizaci&oacute;n?
+                </h2>
+                <div class="botonera-prudential">
+                    <button class="body-btn btn-autorizar" (click)="guardarConsolidacion()">Autorizar</button>
+                    <button class="body-btn btn-cancelar" (click)="onCerrarModal()">Cancelar</button>
+                </div>
+            </ion-card-content>
+        </ion-card>
+    </article>
+</section>

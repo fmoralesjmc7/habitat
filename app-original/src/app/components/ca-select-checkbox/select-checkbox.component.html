@@ -1,0 +1,7 @@
+<ion-list>
+  <h1>{{ data.title }}</h1>
+  <ion-item *ngFor="let element of options">
+    <ion-label class="name-afp" [ngClass]="{'color-selected': element.checked}">{{ data.prefix }} {{ element.name}}</ion-label>
+    <ion-checkbox (ionChange)="emitChange()" slot="end" [(ngModel)]="element.checked" mode="md" [disabled]="element.name === 'habitat' || (isCheckboxDisabled && !element.checked) "></ion-checkbox>
+  </ion-item>
+</ion-list>

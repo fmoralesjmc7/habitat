@@ -1,0 +1,7 @@
+{
+  "name": "Habitat App",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

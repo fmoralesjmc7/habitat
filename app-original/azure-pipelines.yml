@@ -1,0 +1,64 @@
+# Starter pipeline
+
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- master
+
+variables:
+  vmImageName: 'macOS-11'
+  projectName: 'Estandar-Mobile-ionic'
+
+stages:
+  - stage: Build
+    displayName: Build Ionic
+    jobs:
+      # build Ionic
+      - job: Build_Ionic
+        displayName: Build IONIC
+        pool:
+          vmImage: $(vmImageName)
+        steps:
+          - script: npm install -g @ionic/cli
+            displayName: 'Install Ionic CLI'
+          - script: npm install -g @angular/cli
+            displayName: 'Install Angular CLI'
+          - task: Npm@1
+            inputs:
+              workingDir: '$(Build.SourcesDirectory)'
+              command: install
+            displayName: 'NPM Install'
+          - powershell: |
+              sh update-props.sh $(Build.SourceBranchName)
+              ionic build -c uat
+              ionic cap sync --no-build
+            workingDirectory: $(Build.SourcesDirectory)
+            displayName: 'Build Ionic'
+      # Validate Code
+          - powershell: |
+              sh validateCode.sh $(TOKEN_SONAR)
+          - task: InstallAppleProvisioningProfile@1
+            inputs:
+              provisioningProfileLocation: 'secureFiles'
+              provProfileSecureFile: 'TINETIONICBASE.mobileprovision'
+          - task: DownloadSecureFile@1
+            name: P12Certificate
+            displayName: 'Download P12 Secure Certificate'
+            inputs:
+              secureFile: 'Distribution.p12'
+          - task: InstallAppleCertificate@2
+            inputs:
+              certSecureFile: 'Distribution.p12'
+              certPwd: $(cert-pwd)
+            displayName: 'Installation of P12 Certificate'
+          - powershell: |
+              ionic cap build ios --no-open
+              npx cap sync
+              cd ios
+              xcodebuild archive -workspace App/App.xcworkspace -scheme App -sdk iphoneos -configuration Release -archivePath build/App.xcarchive
+              xcodebuild -exportArchive -archivePath build/App.xcarchive -exportOptionsPlist App/ExportOptions.plist -exportPath "build"
+              xcrun altool --upload-app -f build/App.ipa -u luis.basso@tinet.cl -p $(ios-pwd)
+            workingDirectory: $(Build.SourcesDirectory)
+            displayName: 'Build IOS Project'

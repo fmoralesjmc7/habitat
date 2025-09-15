@@ -1,0 +1,8 @@
+<section class="context_help_bg" [class.context_help_bg--show]="isOpen" (click)="bgWasClicked()" ion-fixed>
+  <section class="context_help" (click)="click()">
+    <figure class="cnt_logo">
+      <img alt="" class="cnt_logo-img" src="./assets/imgs/khipu_logo.png"  >
+    </figure>
+    <p class="context_help-text">{{ text }}</p>
+  </section>
+</section>

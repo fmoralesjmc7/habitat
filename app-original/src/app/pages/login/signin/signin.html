@@ -1,0 +1,268 @@
+<section class="content" #contentLogin (click)="ocultaTeclado()">
+  
+  <section class="imagen" #imgLogo></section>
+
+  <!--Formulario login-->
+  <section *ngIf="!esCliente" class="login" #login>
+    <form class="form" [formGroup]="form">
+      <div class="formulario">
+          <section class="imagen-logo" #imgLogo>
+            <figure>
+              <img class="img" alt="Logo" src="assets/imgs/Logo.svg">
+            </figure>
+          </section>
+            <div class="data">
+                <ion-label class="data-label">RUT</ion-label>
+                <input solo-rut class="data-input" [attr.maxlength]="9" type="text" formControlName="rutInput" [(ngModel)]="rutInput"
+                       (blur)="validarRut()" (focus)="cleanRut()" placeholder="Ingresa tu RUT sin puntos ni guión" autocomplete="off" autocorrect="off"/>
+
+                <div *ngIf="mostrarValidacionRut" class="checkmark">
+                  <ion-icon name='checkmark-outline' *ngIf="!errorRut"></ion-icon>
+                  <ion-icon class="error" name='close-circle-outline' *ngIf="errorRut"></ion-icon>
+                </div>
+            </div>
+
+            <div class="data">
+                <ion-label class="data-label">Clave</ion-label>
+                <input solo-numeros type="tel" class="data-input" [attr.maxlength]="6" formControlName="clave" [(ngModel)]="clave"
+                       placeholder="Ingresa tu clave de 6 dígitos" (focus)="focusElement()" (blur)="blurElement()" (keyup)="detectaClave()"
+                       (keyup.enter)="iniciarSesion()" autocomplete="off" autocorrect="off" pattern="([0-9]{4,6})"
+                       [ngClass]="tipoInput"
+                       />
+                <button  item-end  class="btn_eye_icon"  (click)="togglePasswordMode()">
+                  <ion-icon class="icon" [name]="(tipoInput === 'text')?'eye-outline':'eye-off-outline'"></ion-icon>
+                </button>
+            </div>
+            
+            <button class="form-btn" (mousedown)="iniciarSesion()" [disabled]="form.invalid">Ingresar</button>    
+            
+            <section class="opciones-secundarias">
+              <div class="form-forget" (click)="recuperarClave()">¿Olvidaste tu clave?</div>
+            
+              <div class="content-invited">
+                <a class="cnt_invitado" (click)="cambiarPagina('HomeInvitadoPage')">
+                  <ion-icon class="icon" name="person-circle-outline"></ion-icon>
+                  Ingresar como Invitado
+                </a>
+              </div>
+
+              <section class="whatsapp-banner">
+                <div class="banner-text">
+                  <p class="banner-title">Elige seguridad para tu futuro</p>
+                  <p class="banner-subtitle">Cámbiate a AFP Habitat</p>
+                </div>
+                <button class="btn-whatsapp" (click)="abrirWhatsApp()">
+                  <ion-icon name="logo-whatsapp"></ion-icon>
+                  ¡Hablemos hoy!
+                </button>
+              </section>
+
+              <div class="etiqueta_version">
+                Versión {{ versionNumber }} {{glosaAmbiente}} <span class="etiqueta_version" *ngIf="glosaAmbiente !== ''">Build:{{build}}</span>
+              </div>
+            </section>
+        </div>
+    </form>
+  </section>
+
+  <!--Formulario enrolado sin huella-->
+  <section *ngIf="esCliente && !huellaActiva && !loginHibrido" class="login" #login>
+    <form class="form" [formGroup]="form">
+      <div class="formulario">
+          <section class="imagen-logo" #imgLogo>
+            <figure>
+              <img class="img" alt="Logo" src="assets/imgs/Logo.svg">
+            </figure>
+          </section>
+            <div class="data data--welcome">
+                <span class="etiquetaNombre" text-capitalize>¡Hola {{nombre | formatoMayusculas }}!</span>
+            </div>
+            <div class="data">
+                <ion-label class="data-label">Clave</ion-label>
+                <input solo-numeros type="tel" class="data-input" [attr.maxlength]="6" formControlName="clave" [(ngModel)]="clave"
+                       placeholder="Ingresa tu clave de 6 dígitos" (focus)="focusElement()" (blur)="blurElement()" (keyup)="detectaClave()"
+                       (keyup.enter)="iniciarSesion()" autocomplete="off" autocorrect="off" pattern="([0-9]{4,6})"
+                       [ngClass]="tipoInput"
+                       />
+                <button  item-end  class="btn_eye_icon"  (click)="togglePasswordMode()">
+                  <ion-icon class="icon" [name]="(tipoInput === 'text')?'eye-outline':'eye-off-outline'"></ion-icon>
+                </button>
+            </div>
+
+            <button class="form-btn" (mousedown)="iniciarSesion()"[disabled]="!ingresoClave">Ingresar </button>
+
+            <section class="opciones-secundarias">
+              <div class="form-forget" (click)="recuperarClave()">¿Olvidaste tu clave?</div>
+            
+              <div class="content-invited content-invited--other">
+                <a class="cnt_invitado" (click)="ingresarOtroUsuario()">
+                  <ion-icon class="icon" name="person-circle-outline"></ion-icon>
+                  Ingresar con otro usuario
+                </a>
+              </div>
+
+              <section class="whatsapp-banner">
+                <div class="banner-text">
+                  <p class="banner-title">Elige seguridad para tu futuro</p>
+                  <p class="banner-subtitle">Cámbiate a AFP Habitat</p>
+                </div>
+                <button class="btn-whatsapp" (click)="abrirWhatsApp()">
+                  <ion-icon name="logo-whatsapp"></ion-icon>
+                  ¡Hablemos hoy!
+                </button>
+              </section>
+
+              <div class="etiqueta_version">
+                Versión {{ versionNumber }} {{glosaAmbiente}} <span class="etiqueta_version" *ngIf="glosaAmbiente !== ''">Build:{{build}}</span>
+              </div>
+            </section>
+        </div>
+    </form>
+  </section>
+
+  <!--Formulario enrolado con huella-->
+  <section *ngIf="esCliente && huellaActiva" class="login" #login>
+    <form class="form" [formGroup]="form">
+      <div class="formulario">
+          <section class="imagen-logo" #imgLogo>
+            <figure>
+              <img class="img" alt="Logo" src="assets/imgs/Logo.svg">
+            </figure>
+          </section>
+            <div class="data data--welcome data--huella">
+                <span class="etiquetaNombre" text-capitalize>¡Hola {{nombre | formatoMayusculas }}!</span>
+            </div>
+
+            <button class="form-btn" (mousedown)="iniciarSesion()" [disabled]="!ingresoClave">Ingresar</button>    
+              
+            <section class="opciones-secundarias">            
+              <div class="content-invited content-invited--other content-invited--huella">
+                <a class="cnt_invitado" (click)="ingresarOtroUsuario()">
+                  <ion-icon class="icon" name="person-circle-outline"></ion-icon>
+                  Ingresar con otro usuario
+                </a>
+              </div>
+
+              <section class="whatsapp-banner">
+                <div class="banner-text">
+                  <p class="banner-title">Elige seguridad para tu futuro</p>
+                  <p class="banner-subtitle">Cámbiate a AFP Habitat</p>
+                </div>
+                <button class="btn-whatsapp" (click)="abrirWhatsApp()">
+                  <ion-icon name="logo-whatsapp"></ion-icon>
+                  ¡Hablemos hoy!
+                </button>
+              </section>
+              <div class="etiqueta_version">
+                Versión {{ versionNumber }} {{glosaAmbiente}} <span class="etiqueta_version" *ngIf="glosaAmbiente !== ''">Build:{{build}}</span>
+              </div>
+            </section>
+        </div>
+    </form>
+  </section>
+  
+  <!--Formulario hibrido-->
+  <section *ngIf="esCliente && !huellaActiva && loginHibrido" class="login" #login>
+    <form class="form data--huella" [formGroup]="form">
+      <div class="formulario">
+          <section class="imagen-logo" #imgLogo>
+            <figure>
+              <img class="img" alt="Logo" src="assets/imgs/Logo.svg">
+            </figure>
+          </section>
+            <div class="data data--welcome data--huella">
+                <span class="etiquetaNombre" text-capitalize>¡Hola {{nombre | formatoMayusculas }}!</span>
+            </div>
+  
+            <div class="data">
+                <ion-label class="data-label">Clave</ion-label>
+                <input solo-numeros type="tel" class="data-input" [attr.maxlength]="6" formControlName="clave" [(ngModel)]="clave"
+                       placeholder="Ingresa tu clave de 6 dígitos" (focus)="focusElement()" (blur)="blurElement()" (keyup)="detectaClave()"
+                       (keyup.enter)="iniciarSesion()" autocomplete="off" autocorrect="off" pattern="([0-9]{4,6})"
+                       [ngClass]="tipoInput"
+                       />
+                <button  item-end  class="btn_eye_icon"  (click)="togglePasswordMode()">
+                  <ion-icon class="icon" [name]="(tipoInput === 'text')?'eye-outline':'eye-off-outline'"></ion-icon>
+                </button>
+            </div>
+            
+            <button class="form-btn" [ngClass]="{'margen-teclado-login': margenTecladoLogin === true}" 
+              (mousedown)="iniciarSesion()"[disabled]="!ingresoClave">Ingresar</button>
+
+            <section class="huella-hibrida">
+              <button class="login-btn_huella" [ngClass]="{'huella': tipoBiometria !== 'face'}" (click)="mostrarModalHuella('si', false)">
+                <ion-icon *ngIf="tipoBiometria !== 'face'" class="icon" name="finger-print-outline"></ion-icon>
+                <img *ngIf="tipoBiometria === 'face'" class="icon" alt="face" src="assets/imgs/face-id-logo.svg">
+              </button>
+            </section>
+              
+            <section class="opciones-secundarias">
+              <div class="form-forget login-hibrido" (click)="recuperarClave()">¿Olvidaste tu clave?</div>
+            
+              <div class="content-invited content-invited--other content-invited--huella">
+                <a class="cnt_invitado" (click)="ingresarOtroUsuario()">
+                  <ion-icon class="icon" name="person-circle-outline"></ion-icon>
+                  Ingresar con otro usuario
+                </a>
+              </div>
+
+              <section class="whatsapp-banner">
+                <div class="banner-text">
+                  <p class="banner-title">Elige seguridad para tu futuro</p>
+                  <p class="banner-subtitle">Cámbiate a AFP Habitat</p>
+                </div>
+                <button class="btn-whatsapp" (click)="abrirWhatsApp()">
+                  <ion-icon name="logo-whatsapp"></ion-icon>
+                  ¡Hablemos hoy!
+                </button>
+              </section>
+
+              <div class="etiqueta_version">
+                Versión {{ versionNumber }} {{glosaAmbiente}} <span class="etiqueta_version" *ngIf="glosaAmbiente !== ''">Build:{{build}}</span>
+              </div>
+            </section>
+        </div>
+    </form>
+  </section>
+</section>
+
+
+<section class="modal_actualizar" *ngIf="actualizarApp">
+    <article class="modal_cnt">
+        <ion-card class="modal">
+            <ion-card-header class="header">
+              <ion-icon class="header-icon icon-habitat"></ion-icon>
+            </ion-card-header>
+            <ion-card-content class="body">
+              <h3 class="body-title">
+                {{ tituloUpgrade }}
+              </h3>
+              <p class="body-text">
+                {{ mensajeUpgrade }}
+              </p>
+              <button class="body-btn" (click)="abrirPaginaStore()">Actualizar</button>
+            </ion-card-content>
+        </ion-card>
+    </article>
+</section>
+
+<section class="modal_huella_error" *ngIf="modalHuellaAppError">
+	<article class="modal_cnt">
+		<ion-card class="modal">
+			<ion-card-content class="body">
+				<h3 class="body-title">
+					Autentificación Fallida
+				</h3>
+				<div class="info">
+                    <div class="content-icon">
+                        <ion-icon class="icon-cerrar"></ion-icon>
+                    </div>
+					<p class="info-text">
+						No podemos reconocer tu huella. Por favor inténtalo más tarde.
+					</p>
+				</div>
+				<button class="body-btn_modal" (click)="cambiarLoginHibrido()">ACEPTAR</button>
+			</ion-card-content>
+		</ion-card>
+	</article>
+</section>

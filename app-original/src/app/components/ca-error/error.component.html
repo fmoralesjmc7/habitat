@@ -1,0 +1,9 @@
+<div class="main-container">
+  <div class="container-image illus-error"></div>
+  <p class="view-message">Lo sentimos, tenemos problemas para <br>completar tu solicitud. </p>
+  <p class="view-message">¿Qué deseas hacer?</p>
+  <div class="container-button">
+    <ion-button *ngIf="buttons.firstButton" class="primary-button" (click)="clickButton('first')">{{ buttons.firstButton}}</ion-button>
+    <ion-button *ngIf="buttons.secondButton" class="secondary-button" (click)="clickButton('second')">{{ buttons.secondButton}}</ion-button>
+  </div>
+</div>

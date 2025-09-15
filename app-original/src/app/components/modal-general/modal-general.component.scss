@@ -1,0 +1,119 @@
+@import '../../../theme/mixins';
+
+.modal_informativo {
+  @include modal_gral();
+
+  .modal_cnt {
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+
+    .boton_modal {
+      background: var(--colors-celeste) !important;
+      color: var(--colors-blanco);
+    }
+
+    .icon_close {
+      color: var(--colors-celeste);
+      position: absolute;
+      top: 0;
+      left: 88%;
+      z-index: 10;
+      padding: .625rem;
+      font-size: .875rem;
+    }
+
+    .modal {
+      width: 100%;
+      padding: 20px 10px;
+
+      .header {
+        margin: 20px auto 14px auto;
+        padding: 0 15px;
+      }
+
+      .image_col{
+        text-align: center;
+      }
+
+      .body_step2{
+        max-height: 25rem !important;
+      }
+      .body {
+        max-height: 30rem;
+        overflow-y: scroll;
+        margin-bottom: 15px;
+        padding: 0 15px;
+
+        .link {
+          padding-top: 0;
+          color: var(--colors-celeste);
+          font: 1rem var(--fonts-weight-medium);
+          justify-content: center;
+        }
+
+        &-title {
+          font: 1.125rem var(--fonts-weight-bold);
+          margin-bottom: 0px;
+        }
+
+        &-text {
+          text-align: left;
+          width: 100%;
+          font: 1rem var(--fonts-weight-regular);
+          margin: auto auto 20px auto;
+
+          .texto_celeste {
+            color: var(--colors-celeste);
+            font: 1rem var(--fonts-weight-medium);
+          }
+
+          .medium {
+            font: 1rem var(--fonts-weight-medium);
+          }
+
+          .input_modal {
+            background: var(--colors-light);
+          }
+          &:last-of-type {
+            margin: 0 auto 40px auto;
+          }
+        }
+
+        &-icon {
+          background: var(--colors-celeste);
+          color: var(--colors-blanco);
+          border-radius: 50%;
+          font-size: 10px;
+          width: 14px;
+          height: 14px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          font-weight: bold;
+          margin: 0 20px 0 0;
+          min-width: 14px;
+          min-height: 14px;
+        }
+      }
+
+      .ion-card-content {
+        margin-top: 0px;
+      }
+
+      .btn-aceptar-apv {
+        @include btn-general();
+        margin-top: 50px;
+      }
+    }
+  }
+}
+
+/**
+Para que no se muestre el cuadrado que se presenta a la izquierda
+de un parrafo en modals de planes de ahorro
+ */
+::-webkit-scrollbar {
+  width: 0px;  /* remove scrollbar space */
+  background: transparent;  /* optional: just make scrollbar invisible */
+}

@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "320930713148",
+    "firebase_url": "https://apphabitat-qa-2019.firebaseio.com",
+    "project_id": "apphabitat-qa-2019",
+    "storage_bucket": "apphabitat-qa-2019.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:320930713148:android:ff3d8c52c0ea831f",
+        "android_client_info": {
+          "package_name": "com.app.p8414JG.qa"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "320930713148-7sqjrj3fakmv6fncf3k610j2gkhao6dt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBcXnd0vc6aee9BSQojgkqFdMkjtrs4e5s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "320930713148-7sqjrj3fakmv6fncf3k610j2gkhao6dt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

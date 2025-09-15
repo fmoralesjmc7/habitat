@@ -1,0 +1,24 @@
+<app-header-centro-asesoria [headerElements]="headerElements" (clickLeftButton)="goTo('home')"></app-header-centro-asesoria>
+<ion-content>
+  <div class="detail-article zoom-{{ zoomValues[zoomIndex] }}">
+    <h1 class="title-article-{{ typeArticle }}">{{ article.title }}</h1>
+    <p [innerHTML]="article.subtitle"></p>
+    <div class="text-option">
+      <p class="date-article">{{ getDate(article.publishDate) | date : "longDate" }} &bull; {{ article.readingTime }} min de lectura</p>
+      <div class="option-zoom" (click)="zoomChange()">
+        <p class="first-letter" >A</p>
+        <p class="second-letter">A</p>
+      </div>
+    </div>
+    <div class="container-image">
+      <img *ngIf="article.mainImageUrl" [src]="article.mainImageUrl" alt="">
+    </div>
+    <div *ngFor="let paragraph of article.paragraphs">
+      <h1 class="title-paragraph-{{ typeArticle }}">{{ paragraph.subtitle }}</h1>
+      <p [innerHTML]="paragraph.text"></p>
+      <div *ngIf="paragraph.imageUrl" class="container-image image-article">
+        <img [src]="paragraph.imageUrl" alt="">
+      </div>
+    </div>
+  </div>
+</ion-content>

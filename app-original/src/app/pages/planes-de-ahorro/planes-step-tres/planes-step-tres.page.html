@@ -1,0 +1,29 @@
+<app-header [showBackButton]="false"></app-header>
+
+<ion-content class="content_page">
+    <section class="container">
+        <app-step-items [active]="3"></app-step-items>
+
+        <section class="content">
+            <div class="content-icon">
+                <ion-icon class="icon-exito"></ion-icon>
+            </div>
+            <h2 class="content-title">
+                {{ cuentaSeleccionada === CONSTANTES.ID_PRODUCTO_CUENTA_2 ? CONSTANTES.TITULO_CUENTA2 : CONSTANTES.TITULO_APV}}
+            </h2>
+
+            <p class="content-text">
+				<span>
+                    {{ cuentaSeleccionada === CONSTANTES.ID_PRODUCTO_CUENTA_2 ? CONSTANTES.TEXTO_CUENTA2 : CONSTANTES.TEXTO_APV}}
+				</span>
+            </p>
+            <p class="content-text" *ngIf="email">
+                {{ CONSTANTES.TEXTO_EMAIL}} <span class="email">{{ email }}</span>
+            </p>
+        </section>
+        <section class="cnt_button">
+            <button class="cnt_button-download" (click)="descargarPdf()">Descargar</button>
+            <button class="cnt_button-back" (click)="volverAlHome()">Ir al Home</button>
+        </section>
+    </section><!-- container -->
+</ion-content>

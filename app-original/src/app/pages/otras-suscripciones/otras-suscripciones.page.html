@@ -1,0 +1,32 @@
+<app-header [titulo]="tituloHeader"></app-header>
+<ion-content class="content_page">
+  <article class="cnt_rrss">
+    <page-desuscripcion-prudential
+      *ngIf="mostrarDesuscripcionPrudential"
+      (actualizarVentana)="onActualizarSuscripcion()"
+    ></page-desuscripcion-prudential>
+    <page-suscripcion-prudential
+      *ngIf="mostrarSuscribirPrudential"
+      (actualizarVentana)="onActualizarSuscripcion()"
+    ></page-suscripcion-prudential>
+
+    <section *ngIf="mostrarNoHabilitada">
+      <ion-grid class="no_habilitada">
+        <ion-row class="icono_row">
+          <ion-col size="12">
+              <div class="cnt_icon">
+                  <ion-icon class="icon-alerta"></ion-icon>
+              </div>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="12">
+              <h2 class="form-title">
+                {{CONSTANTES.SECCION_NO_HABILITADA}}
+              </h2>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </section>
+  </article>
+</ion-content>

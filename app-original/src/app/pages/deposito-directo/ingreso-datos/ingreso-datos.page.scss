@@ -1,0 +1,232 @@
+@import '../../../../theme/mixins';
+
+:host {
+  .content_page {
+    background: var(--colors-blanco);
+    padding: 40px 0 60px;
+
+    .container {
+      width: 90%;
+      margin: 0 auto;
+      height: 100%;
+      padding-top: 20px;
+
+      &-title {
+        @include title;
+        width: 100%;
+        margin: 40px 0 0;
+      }
+
+      &-text {
+        font: 1rem var(--fonts-weight-regular);
+        color: var(--colors-gris-oscuro);
+        text-align: center;
+        .texto_negrita{
+          font: 1rem var(--fonts-weight-bold);
+        }
+      }
+      .cnt_form {
+        margin: 40px 0 60px;
+        .money_input {
+          @include money();
+          margin-top: 10%;
+          &-title {
+            font: 1rem  var(--fonts-weight-regular);
+          }
+          &-input {
+            --padding-start: 10px;
+            border-radius: 4px;
+            .text-input {
+              width: 100%;
+              height: 100%;
+              margin: 0 auto;
+            }
+          }
+        }
+      }
+
+      .card_cuentas {
+        margin: 10% 0 4% 0;
+        height: 41%;
+        &.card_cuentas--scroll {
+          height: auto;
+        }
+        &-text_item {
+          font: 1rem var(--fonts-weight-regular);
+          color: var(--colors-gris-oscuro);
+          width: 100%;
+          margin: 20px 0 0;
+          display: flex;
+          justify-content: flex-start;
+          .icon {
+            font-size: 1rem;
+            margin: 0 0 0 14px;
+          }
+        }
+
+        .email_input{
+          padding: 8px;
+          width: 100%;
+          border: 0;
+          background-color: var(--colors-light);
+          color: var(--colors-gris-oscuro);
+          font-family: var(--fonts-roboto);
+          font-weight: var(--fonts-weight-regular);
+        }
+
+        .email_text{
+          margin-top: 16px !important;
+          margin-bottom: 10px !important;
+          font-weight: 500;
+          line-height: 1.2;
+        }
+
+        .box_selector {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          margin: 10px 0;
+          border-radius: 4px;
+          overflow: hidden;
+          background-color: var(--colors-light);
+          min-height: 35px;
+          font-weight: var(--fonts-weight-regular);
+          color: var(--colors-gris-suave);
+
+          &-item {
+            width: 10px;
+            height: 35px;
+            color: var(--colors-gris-suave);
+            flex-grow: 1;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            &--active {
+              background-color: var(--colors-celeste);
+              color: var(--colors-blanco);
+            }
+          }
+
+          &-separator {
+            height: 35px;
+            width: 2px;
+            background-color: var(--colors-celeste);
+          }
+        }
+
+        .content_item {
+          margin: 2% 0 0;
+          border-radius: 4px;
+          background-color: var(--colors-light);
+
+          &-select {
+            width: 100%;
+            color: var(--colors-gris-oscuro);
+            &::placeholder {
+              color: var(--colors-gris-suave);
+            }
+            .select-icon {
+              visibility: hidden;
+            }
+          }
+
+          ion-select {
+            max-width: 100%;
+            font-size: 1rem;
+          }
+        }
+      }
+      .button_depdir {
+        width: 100%;
+        margin: 0;
+        height: 102px;
+        display: block;
+        align-items: flex-start;
+        &-btn {
+          min-width: 100%;
+          margin-bottom: 10px;
+          @include btn-general;
+        }
+        .btn_cancelar {
+          min-width: 100%;
+          background: var(--colors-blanco);
+          color: var(--colors-azul-oscuro);
+        }
+      }
+    }
+  }
+
+  .modal_info {
+    @include modalSlide();
+    .modal_cnt{
+      border-radius: 4px;
+      height: 23rem !important;
+      .modal{
+        border-radius: 4px;
+        .header{
+          background-color: var(--colors-blanco)!important;
+          padding-top: 2.5rem;
+        }
+      }
+    }
+  }
+
+  .toast_custom {
+    background: var(--colors-warning);
+    color: var(--colors-blanco);
+    height: 80px;
+    opacity: 0.95;
+    width: 100%;
+    position: absolute;
+    z-index: var(--z-index-overlay);
+    display: block;
+    pointer-events: none;
+    visibility: hidden;
+
+    &.toast_custom--visible {
+      visibility: visible;
+    }
+
+    &-container {
+      display: flex;
+      align-items: center;
+      pointer-events: auto;
+
+      .box_message {
+        width: 85%;
+        margin: 10px;
+        padding: 15px 10px 5px 15px;
+      }
+
+      .box_buttons {
+        height: 40px;
+        width: 40px;
+        background-color: var(--colors-blanco);
+        border-radius: 4px;
+        margin: 15px 15px 5px 0;
+        color: var(--colors-warning);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+  }
+}
+
+.md {
+  page-ingreso-datos {
+    .content_page {
+      .container {
+        max-height: calc(100% - 60px);
+        .card_cuentas {
+          height: 39%;
+        }
+        .button_depdir {
+          height: 100px;
+        }
+      }
+    }
+  }
+}

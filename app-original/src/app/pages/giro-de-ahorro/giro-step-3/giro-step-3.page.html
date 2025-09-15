@@ -1,0 +1,185 @@
+<app-header [showBackButton]="false"></app-header>
+<ion-content class="content_page">
+  <section class="container">
+    <app-step-items [active]="3"></app-step-items>
+    <ng-container *ngIf="!solicitudGenerada">
+      <h2 class="titulo">Clave Dinámica</h2>
+
+      <section class="box_time" *ngIf="!validadorTiempoCompleto">
+        <article class="box_time-item">
+          <span class="text">
+            {{ sMinutos }}:{{ sSegundos }}
+          </span>
+        </article>
+      </section>
+
+      <section class="box_btn" *ngIf="validadorTiempoCompleto">
+        <article class="box_btn-item">
+          <button class="btn_solicitar" (click)="solicitarNuevaClave()">
+            Solicitar Nueva Clave
+          </button>
+        </article>
+      </section>
+
+      <section class="box_text" *ngIf="!intentosFallidos">
+        <span class="texto_no_recibes">
+          Si aún no recibes la clave dinámica vía SMS, podrás solicitarla nuevamente en 59 segundos.
+        </span>
+      </section>
+
+      <section class="box_text" *ngIf="intentosFallidos">
+        <span class="alerta">
+          Intento {{ nroIntentosFallidos }} de 3. <br />
+          La clave ingresada no es válida.
+        </span>
+      </section>
+
+      <section class="box_inputs">
+        <section class="box_inputs-content">
+          <article class="item">
+            <ion-input class="text" #codigo0 size="1" solo-numeros [attr.minlength]="1" [attr.maxlength]="1" type="tel"
+              [(ngModel)]="codigo[0]" (keyup)="onKey($event, 0)">
+            </ion-input>
+          </article>
+          <article class="item">
+            <ion-input class="text" #codigo1 size="1" [attr.minlength]="1" [attr.maxlength]="1" type="tel"
+              [(ngModel)]="codigo[1]" (keyup)="onKey($event, 1)">
+            </ion-input>
+          </article>
+          <article class="item">
+            <ion-input class="text" #codigo2 size="1" [attr.minlength]="1" [attr.maxlength]="1" type="tel"
+              [(ngModel)]="codigo[2]" (keyup)="onKey($event, 2)">
+            </ion-input>
+          </article>
+          <article class="item">
+            <ion-input class="text" #codigo3 size="1" [attr.minlength]="1" [attr.maxlength]="1" type="tel"
+              [(ngModel)]="codigo[3]" (keyup)="onKey($event, 3)">
+            </ion-input>
+          </article>
+          <article class="item">
+            <ion-input class="text" #codigo4 size="1" [attr.minlength]="1" [attr.maxlength]="1" type="tel"
+              [(ngModel)]="codigo[4]" (keyup)="onKey($event, 4)">
+            </ion-input>
+          </article>
+          <article class="item">
+            <ion-input class="text" #codigo5 size="1" [attr.minlength]="1" [attr.maxlength]="1" type="tel"
+              [(ngModel)]="codigo[5]" (keyup.enter)="eventoRealizarSolicitudTeclado()">
+            </ion-input>
+          </article>
+        </section>
+      </section>
+
+      <section class="box_text">
+        <span class="texto_para_realizar">
+            Para realizar el giro por favor ingresa la clave dinámica de 6 dígitos enviada a tu celular<br>+{{numeroCelularFormateado}}
+          <ion-icon class="icon icon-informacion" (click)="modalInfo = true"></ion-icon>
+        </span>
+      </section>
+
+      <section class="box_botones">
+        <button class="btn_realizar_solicitud" (click)="validarCodigoSMS()"
+          [disabled]="validarBotonRealizarSolicitud()">
+          Realizar Solicitud de Giro
+        </button>
+        <button class="btn_volver" (click)="mostrarConfirmacionVolver()">
+          Cancelar
+        </button>
+      </section>
+    </ng-container>
+
+    <section class="box_exito" *ngIf="solicitudGenerada">
+      <div class=box_exito-fondoVerde>
+          <ion-icon class="box_exito-fondoVerde-icon icon-exito"></ion-icon>
+      </div>
+      <h2 class="box_exito-title" *ngIf="!validadorListaSolicitudes">
+        ¡Tu Solicitud ha sido realizada con éxito!
+      </h2>
+      <h2 class="box_exito-title" *ngIf="validadorListaSolicitudes">
+        ¡Tus Solicitudes han sido realizadas con éxito!
+      </h2>
+      <p class="box_exito-text">
+        <span *ngIf="!validadorListaSolicitudes">
+          La solicitud <span class="bold">nº {{ listadoNumeroFoliosSolicitud }}</span> se materializará
+        </span>
+        <span *ngIf="validadorListaSolicitudes">
+          Las solicitudes
+          <span class="bold">nº {{listadoNumeroFoliosSolicitud}}</span>
+          se materializarán
+        </span>
+        al quinto día hábil siguiente de la fecha de suscripción.
+      </p>
+      <p class="box_exito-text" *ngIf="parametrosGiro.email && validadorEnvioCorreo">
+        Hemos enviado el comprobante a tu Email <span class="email">{{parametrosGiro.email}}</span>
+      </p>
+    </section>
+
+    <section class="box_exito-botonera" *ngIf="solicitudGenerada">
+      <button class="btn_download" (click)="descargarPdf()">Descargar</button>
+      <button class="btn_volver" (click)="volverAlHome()">Ir al Home</button>
+    </section>
+  </section>
+</ion-content>
+
+<section class="modal_info" *ngIf="modalInfo" [@fadeInOut]>
+  <article class="modal_cnt">
+    <ion-card class="modal">
+      <ion-icon class="icon_close icon-cerrar" (click)="modalInfo = false"></ion-icon>
+      <ion-card-header class="header">
+        <ion-icon class="header-icon icon-informacion"></ion-icon>
+      </ion-card-header>
+      <ion-card-content class="body">
+        <h3 class="body-title">
+          ¿Número Incorrecto?
+        </h3>
+        <p class="body-text">
+          Si tu número de celular registrado no es el correcto, deberás actualizarlo en cualquiera de nuestras
+          Sucursales o llamar a nuestro
+          <span class="medium" (click)="llamarContactCenter()"> Contact Center.</span>
+        </p>
+      </ion-card-content>
+    </ion-card>
+  </article>
+</section>
+
+<section class="modal_info" *ngIf="modalIntentosSolicitudClave" [@fadeInOut]>
+  <article class="modal_cnt">
+    <ion-card class="modal">
+      <ion-card-header class="header">
+        <ion-icon class="header-icon icon-informacion"></ion-icon>
+      </ion-card-header>
+      <ion-card-content class="body">
+        <h3 class="body-title">
+          Has superado el límite de intentos diarios de clave dinámica
+        </h3>
+        <p class="body-text">
+          Por favor, vuelve a intentarlo mañana. Si tienes dudas, acércate a cualquiera de nuestras Sucursales o llama a
+          nuestro
+          <span class="medium" (click)="llamarContactCenter()"> Contact Center.</span>
+        </p>
+        <button class="body-btn" (click)="volverAlHome()">Volver al Home</button>
+      </ion-card-content>
+    </ion-card>
+  </article>
+</section>
+
+<section class="modal_info" *ngIf="mostrarPopUpMaxIntentosFallidos" [@fadeInOut]>
+  <article class="modal_cnt">
+    <ion-card class="modal">
+      <ion-card-header class="header">
+        <ion-icon class="header-icon icon-informacion"></ion-icon>
+      </ion-card-header>
+      <ion-card-content class="body">
+        <h3 class="body-title">
+          Clave Dinámica Incorrecta
+        </h3>
+        <p class="body-text">
+          Has agotado los intentos de verificación de la clave enviada.
+        </p>
+        <p class="body-text">
+          Has click en <span class="destacado">Volver a intentar </span>y podrás realizar nuevamente esta operación.
+        </p>
+        <button class="body-btn" (click)="volverAIntentarSMS()">Volver a Intentar</button>
+      </ion-card-content>
+    </ion-card>
+  </article>
+</section>

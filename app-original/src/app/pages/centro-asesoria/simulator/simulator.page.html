@@ -1,0 +1,136 @@
+<app-header-centro-asesoria [hidden]="videoFullScreen" [headerElements]="headerElements" (clickLeftButton)="goBack()"></app-header-centro-asesoria>
+<ion-content no-bounce forceOverscroll="false" [class.simulator-result-background]="existResult">
+  <form [formGroup]="form" [hidden]="existResult || showLoading">
+    <ion-slides #slides pager="false" [options]="slideOpts">
+      <ion-slide>
+        <app-question-slide 
+          #slideIngresoBruto
+          [questionSlideText]="questionSlideTexts.taxableIncome"
+          [currentSlide]="slideNumber" [totalSlides]="totalSlides"
+          [disableButton]="obtenerEstadoBoton()" [formGroup]="form"
+          [errorCondition]="taxableIncomeError"
+          textError="Tu ingreso bruto no puede ser menor a {{ configParameters.minimumIncome | chileanCurrency }}"
+          (clickButton)="nextSlide()" ngDefaultControl></app-question-slide>
+      </ion-slide>
+      <ion-slide>
+        <app-question-slide
+          #slideTotalAhorrado
+          [questionSlideText]="questionSlideTexts.balance"
+          [currentSlide]="slideNumber" 
+          [totalSlides]="totalSlides" 
+          [disableButton]="!isAmountQuestionValid"
+          [formGroup]="form" 
+          (clickButton)="nextSlide()" 
+          ngDefaultControl>
+        </app-question-slide>
+      </ion-slide>
+      <ion-slide>
+        <app-question-slide 
+          #slideSeleccionMeses
+          [questionSlideText]="questionSlideTexts.density"
+          [currentSlide]="slideNumber" 
+          [totalSlides]="totalSlides" 
+          [disableButton]="obtenerEstadoBotonStep3()" 
+          [formGroup]="form"
+          [pickerOptions]="pickerOptions" 
+          (clickButton)="doSimulation()" 
+          (pickerChange)="changeDensity($event)">
+        </app-question-slide>
+      </ion-slide>
+    </ion-slides>
+  </form>
+
+  <app-loading [showLoading]="showLoading" [textLoading]="textLoading"></app-loading>
+
+  <div class="main-result-simulator" *ngIf="simulationResult && existResult">
+    <div class="container-result">
+      <p class="drop-text">Tu pensión estimada a los
+        {{ gender === 'F' ? configParameters.maxAgeWomen : configParameters.maxAgeMen }} años es de:</p>
+      <h1 class="value-result">{{ valueResult | chileanCurrency }}</h1>
+      <p class="text-disclaimer">Suponiendo que seguirás cotizando {{ controls.density.value }} meses cada año, hasta tu edad legal de jubilación.</p>
+    </div>
+    <div *ngIf="!individioEnabled" class="container-question-result">
+      <div class="improve-pension">
+        <div class="container-image illus-simulator-result"></div>
+        <h6 class="legal-text" (click)="showModalLegal()">Textos legales</h6>
+        <ion-button class="secondary-button" (click)="doResimulation()">Volver a simular</ion-button>
+      </div>
+    </div>
+    <div *ngIf="individioEnabled" class="container-question-result" [ngClass]="{ 'view-video': (!questionImprovePension && !responseImprovePension) || (showVideoGoal && !loadingIndividio) }">
+      <div class="improve-pension" *ngIf="questionImprovePension">
+        <h1 class="question">¿Te gustaría mejorar tu pensión?</h1>
+        <div class="container-image illus-simulator-result"></div>
+        <div *ngIf="simulation12Months && simulationExtraYears" class="container-button">
+          <ion-button class="secondary-button" (click)="improvePension(false)">No</ion-button>
+          <ion-button class="primary-button" (click)="improvePension(true)">Si</ion-button>
+        </div>
+      </div>
+      <div class="congratulations" *ngIf="!questionImprovePension && !responseImprovePension">
+        <p [hidden]="sendEmailEvent">Aunque estás conforme con tu futura pensión, te invitamos a entender el resultado de tu simulación y conocer
+          las alternativas para mejorarla.<br/>
+        </p>
+          <p [hidden]="sendEmailEvent">  <strong class="dale-play"> ¡Dale play aquí!</strong></p>
+        <div *ngIf="!sendEmailEvent && !finishedVideo" class="individio">
+          <indi-video [hidden]="loadingIndividio" #myIndiVideo lang="es" env="{{ individeoEnv }}" [autoFullscreen]="true" [emulateFullscreen]="true"
+            [lockFullScreenToLandscape]="true" src="{{ individeoSrc }}" attachmentCode="{{ individeoCode }}"
+            (emitEvent)="onEvent($event)"></indi-video>
+          <div class="container-spinner" [hidden]="!loadingIndividio">
+            <ion-spinner name="bubbles"></ion-spinner>
+            <p>Cargando video...</p>
+          </div>
+        </div>
+        <div class="email-question" [hidden]="!sendEmailEvent">
+          <h1 class="question">¿Quieres recibir en tu correo esta simulación?</h1>
+          <form [formGroup]="form">
+            <ion-item>
+              <ion-input placeholder="Ingresa tu email aquí" type="email" formControlName="email" color="tertiary"  (keyup.enter)="sendEmail()"></ion-input>
+            </ion-item>
+            <ion-text [hidden]="!controls.email.errors" class="text-warning">El formato del correo es incorrecto.</ion-text>
+          </form>
+        </div>
+        <div class="container-button">
+          <h6 class="legal-text" (click)="showModalLegal()">Textos legales</h6>
+          <ion-button [hidden]="!sendEmailEvent" class="primary-button" (click)="sendEmail()"> Enviar simulación</ion-button>
+          <ion-button class="secondary-button" (click)="setearPantallaStep1()"> Volver a simular</ion-button>
+        </div>
+      </div>
+      <div class="pension-goal" [ngClass]="{ 'only-individio': showVideoGoal }" [hidden]="!(!questionImprovePension && responseImprovePension)">
+        <div *ngIf="!showVideoGoal">
+          <h1 class="question">Ingresa el monto mensual que quieres para tu pensión</h1>
+          <form [formGroup]="form">
+            <ion-item>
+              <ion-input type="tel" color="tertiary" [value]="showAmount | chileanCurrency" (ionChange)="modifyAmount($event)" placeholder="$" (keyup.enter)="showVideo()" (ionBlur)="validateNumber()" ></ion-input>
+            </ion-item>
+            <ion-text [hidden]="!goalError" class="text-warning">El monto ingresado debe ser mayor a {{ valueResult | chileanCurrency }}.</ion-text>
+          </form>
+        </div>
+        <div *ngIf="showVideoGoal && !sendEmailEvent && !finishedVideo" class="individio">
+          <indi-video [hidden]="loadingIndividio" #myIndiVideo lang="es" env="{{ individeoEnv }}" [autoFullscreen]="true" [emulateFullscreen]="true"
+                      [lockFullScreenToLandscape]="true" src="{{ individeoSrc }}" attachmentCode="{{ individeoCode }}"
+                      (emitEvent)="onEvent($event)"></indi-video>
+          <div class="container-spinner" [hidden]="!loadingIndividio">
+            <ion-spinner name="bubbles"></ion-spinner>
+            <p>Cargando video...</p>
+          </div>
+        </div>
+        <div class="email-question" [hidden]="!sendEmailEvent">
+          <h1 class="question">¿Quieres recibir en tu correo esta simulación?</h1>
+          <form [formGroup]="form">
+            <ion-item>
+              <ion-input placeholder="Ingresa tu email aquí" type="email" formControlName="email" color="tertiary"  (keyup.enter)="sendEmail()"></ion-input>
+            </ion-item>
+            <ion-text [hidden]="!controls.email.errors" class="text-warning">El formato del correo es incorrecto.</ion-text>
+          </form>
+        </div>
+        <div class="container-button" [ngClass]="{ 'resimulate': showVideoGoal }">
+          <p *ngIf="!showVideoGoal" [hidden]="goalError || controls.goal.value === null">¡Dale play aquí! y conoce cómo lograr tu meta.</p>
+          <h6 *ngIf="showVideoGoal" class="legal-text" (click)="showModalLegal()">Textos legales</h6>
+          <ion-button *ngIf="!showVideoGoal" class="primary-button" (click)="showVideo()" [disabled]="goalError || controls.goal.value === null">¡Ver cómo lograr mi meta!</ion-button>
+          <ion-button [hidden]="!sendEmailEvent" class="primary-button" (click)="sendEmail()"> Enviar simulación</ion-button>
+          <ion-button class="secondary-button" (click)="setearPantallaStep1()"> Volver a simular</ion-button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <app-error *ngIf="!simulationResult && existResult" [buttons]="errorButtons" (clickErrorButton)="clickErrorButtons($event)"></app-error>
+</ion-content>

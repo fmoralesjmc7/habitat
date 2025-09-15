@@ -1,0 +1,385 @@
+<app-header (clickBackButton)="volverAlHome()" ></app-header>
+<ion-content class="content_page">
+    <section class="container">
+        <app-step-items [active]="1"></app-step-items>
+        <h2 class="container-title">Aumenta tus Ahorros</h2>
+        <p class="container-text" *ngIf="mostraTextoInformativoInicio">
+            A continuación podrás suscribirte a un APV o Cuenta 2 para aumentar aún más tus ahorros.
+        </p>
+
+        <section class="selector_cuentas" [ngClass]="{'selector_cuentas--scroll': idTipoProducto != undefined}"
+                 *ngIf="!mostrarFormulario">
+            <h3 class="selector_cuentas-subtitulo">
+                Selecciona Cuenta para Aperturar
+                <ion-icon class="icon icon-informacion" *ngIf="mostrarListadoRegimenes && !mostrarFormulario" (click)="verModalInformativo()"></ion-icon>
+            </h3>
+            <article class="box_selector">
+                <div class="box_selector-item"
+                     [ngClass]="{'box_selector-item--activo': idTipoProducto == CONSTANTES.ID_PRODUCTO_CUENTA_2}"
+                     (click)="validarTipoCuenta(CONSTANTES.NOMBRE_PRODUCTO_CUENTA_2)">
+                    Cuenta 2
+                </div>
+                <div class="box_selector-separador"></div>
+                <div class="box_selector-item"
+                     [ngClass]="{'box_selector-item--activo': idTipoProducto == CONSTANTES.ID_PRODUCTO_APV}"
+                     (click)="validarTipoCuenta(CONSTANTES.NOMBRE_PRODUCTO_APV)">
+                    APV
+                </div>
+            </article>
+        </section>
+
+        <section class="regimenes" *ngIf="mostrarListadoRegimenes && !mostrarFormulario">
+            <h3 class="selector_cuentas-subtitulo"> Complete los datos para continuar </h3>
+            <section class="regimen">
+                <article class="regimen_item" [ngClass]="{'editado': reg.confirmado}"
+                         *ngFor="let reg of listadoFormularios" (click)="eventoMostrarFormulario(reg)">
+                    <span class="regimen_item-title">{{ reg.nombre}}</span>
+                    <ion-icon class="regimen_item-icon icon-plus" *ngIf="!reg.confirmado"></ion-icon>
+                    <ion-icon class="regimen_item-icon_edit icon-editar" *ngIf="reg.confirmado"></ion-icon>
+                </article>
+            </section>
+        </section>
+    </section>
+    <section class="botonera" *ngIf="mostrarListadoRegimenes">
+        <button class="btn_continuar" [disabled]="!validarBotonContinuar()" (click)="continuarStep2()">Continuar</button>
+        <button class="btn_volver" (click)="eventoCancelar()">Cancelar</button>
+    </section>
+</ion-content>
+
+<section class="modal_detalle_regimen" *ngIf="mostrarFormulario">
+    <article class="barra_superior">
+        <ion-icon class="icon-cerrar icon_close" (click)="eventoCerrarFormulario(mostrarForm)"></ion-icon>
+    </article>
+    <ion-content class="contenedor_scroll">
+        <section class="detalle">
+            <h2 class="title">{{tituloFormulario}} <p class="rojo">* Datos Obligatorios</p></h2>
+
+            <ion-card class="detalle-cuenta">
+                <ion-row class="row_formulario" *ngIf="mostrarForm === CONSTANTES.ID_FORMULARIO_DATOS">
+                    <ion-col size="8" offset="4" class="columna_titulo">
+                        <span class="regular">Ingresa Monto</span><span class="rojo regular"> *</span>
+                    </ion-col>
+                </ion-row>
+                <ion-row class="row_formulario" *ngIf="mostrarForm === CONSTANTES.ID_FORMULARIO_DATOS">
+                    <ion-col size="4" class="columna_valor">
+                        <ion-select
+                                class="columna_monto-input"
+                                [interfaceOptions]="selectorTipoMoneda"
+                                [(ngModel)]="tipoSeleccionado"
+                                (ionChange)="asignarTipoMonto(tipoSeleccionado)"
+                                okText="ACEPTAR"
+                                cancelText="CANCELAR"
+                                placeholder="Selecciona Tipo de Moneda"
+                                (ionChange)="validarMonto(solicitudDePlan.montoSeleccionado, 'select', 'montoSeleccionado')">
+                            <ion-select-option *ngFor="let tipo of tiposMonedas" [value]="tipo.id_tipo_moneda">
+                                {{ tipo.nombre_tipo_moneda | formatoMayusculas}}
+                            </ion-select-option>
+                        </ion-select>
+                    </ion-col>
+                    <ion-col size="8" class="columna_valor">
+                        <ion-input type="tel"
+                                   class="columna_monto-input"
+                                   [attr.maxlength]="9"
+                                   [(ngModel)]="solicitudDePlan.montoSeleccionado"
+                                   (ionBlur)="validarMonto(solicitudDePlan.montoSeleccionado, 'input', 'montoSeleccionado')"
+                                   (keyup.enter)="keyUpMonto(solicitudDePlan.montoSeleccionado, 'input', 'montoSeleccionado')"
+                                   (ionInput)="formatoMontoDinero(solicitudDePlan.montoSeleccionado, $any($event.target).value, 'montoSeleccionado')">
+                        </ion-input>
+                    </ion-col>
+                </ion-row>
+
+                <ion-row class="row_formulario" *ngIf="mostrarForm === CONSTANTES.ID_FORMULARIO_DATOS">
+                    <ion-col size="12" class="columna_titulo">
+                        <span class="regular">Fondo de Destino</span><span class="rojo regular"> *</span>
+                    </ion-col>
+                </ion-row>
+                <ion-row class="row_formulario" *ngIf="mostrarForm === CONSTANTES.ID_FORMULARIO_DATOS">
+                    <ion-col size="12" class="columna_valor">
+                        <ion-select
+                                class="columna_monto-input"
+                                [interfaceOptions]="selectorFondoDestino"
+                                [(ngModel)]="fondoSeleccionado"
+                                (ionChange)="asignarObjetoFondo(fondoSeleccionado)"
+                                okText="ACEPTAR"
+                                cancelText="CANCELAR"
+                                placeholder="Selecciona Fondo">
+                            <ion-select-option *ngFor="let fondo of fondosDestino" [value]="fondo.id_tipo_fondo">
+                                {{ fondo.nombre_tipo_fondo | formatoMayusculas}}
+                            </ion-select-option>
+                        </ion-select>
+                    </ion-col>
+                </ion-row>
+
+                <ion-row class="row_formulario" *ngIf="mostrarForm === CONSTANTES.ID_FORMULARIO_DATOS">
+                    <ion-col size="12" class="columna_titulo">
+                        <span class="regular">Régimen Tributario</span><span class="rojo regular" *ngIf="idTipoProducto === CONSTANTES.ID_PRODUCTO_APV"> *</span>
+                        <ion-icon class="icon icon-informacion icon_margen" (click)="verModalRegimenes()"></ion-icon>
+                    </ion-col>
+                </ion-row>
+                <ion-row class="row_formulario" *ngIf="mostrarForm === CONSTANTES.ID_FORMULARIO_DATOS && idTipoProducto === CONSTANTES.ID_PRODUCTO_APV">
+                    <ion-col size="12" class="columna_valor">
+
+                        <ion-select
+                                class="columna_monto-input"
+                                [interfaceOptions]="selectorRegimen"
+                                [(ngModel)]="regimenSeleccionado"
+                                (ionChange)="asignarObjetoRegimen(regimenSeleccionado)"
+                                okText="ACEPTAR"
+                                cancelText="CANCELAR"
+                                placeholder="Selecciona Régimen">
+                            <ion-select-option *ngFor="let regimen of regimenes" [value]="regimen.id_regimen">
+                                {{ regimen.nombre_regimen | formatoMayusculas}}
+                            </ion-select-option>
+                        </ion-select>
+                    </ion-col>
+                </ion-row>
+
+                <ion-row class="row_formulario" *ngIf="mostrarForm === CONSTANTES.ID_FORMULARIO_DATOS && idTipoProducto === CONSTANTES.ID_PRODUCTO_CUENTA_2">
+                    <ion-col size="12" class="columna_valor">
+                        <span class="regular">{{solicitudDePlan.regimenSeleccionado.nombre_regimen}}</span>
+                    </ion-col>
+                </ion-row>
+
+                <ion-row class="row_formulario" *ngIf="mostrarForm === CONSTANTES.ID_FORMULARIO_DATOS">
+                    <ion-col size="12" class="columna_titulo">
+                        <span class="regular">Fecha Primer Descuento</span>
+                    </ion-col>
+                </ion-row>
+                <ion-row class="row_formulario" *ngIf="mostrarForm === CONSTANTES.ID_FORMULARIO_DATOS">
+                    <ion-col size="12" class="columna_valor">
+                        <span class="regular text-capitalize">{{solicitudDePlan.primerDescuento | date: 'MMMM yyyy'}}</span>
+                    </ion-col>
+                </ion-row>
+
+                <ion-row class="row_formulario" *ngIf="mostrarForm === CONSTANTES.ID_FORMULARIO_DATOS">
+                    <ion-col size="12" class="columna_titulo">
+                        <span class="regular">Fecha término</span><span class="rojo regular"> *</span>
+                    </ion-col>
+                </ion-row>
+                <ion-row class="row_formulario" *ngIf="mostrarForm === CONSTANTES.ID_FORMULARIO_DATOS">
+                    <ion-col size="1" class="columna_valor">
+                        <ion-checkbox class="checkbox-square caja_checkbox" (ionChange)="fechaIndefinidaSeleccionada()"
+                                      [(ngModel)]="solicitudDePlan.fechaIndefinida" mode="md"></ion-checkbox>
+                    </ion-col>
+                    <ion-col size="11" class="columna_valor col_checkbox">
+                        <span class="texto_informativo texto_checkbox">Fecha de término Indefinida</span>
+                    </ion-col>
+                </ion-row>
+
+                <ion-row class="row_formulario" *ngIf="!solicitudDePlan.fechaIndefinida && mostrarForm === CONSTANTES.ID_FORMULARIO_DATOS">
+                    <ion-col size="6" class="columna_valor">
+
+                        <ion-select
+                                class="columna_monto-input"
+                                [interfaceOptions]="selectorMesFechaFin"
+                                (ionChange)="validarFechaTermino('mes')"
+                                [(ngModel)]="solicitudDePlan.mesSeleccionado"
+                                okText="ACEPTAR"
+                                cancelText="CANCELAR"
+                                placeholder="Selecciona Mes">
+                            <ion-select-option *ngFor="let mes of mesesTermino" [value]="mes.id">
+                                {{ mes.nombre | formatoMayusculas}}
+                            </ion-select-option>
+                        </ion-select>
+                    </ion-col>
+                    <ion-col size="6" class="columna_valor">
+                        <ion-select
+                                class="columna_monto-input"
+                                [interfaceOptions]="selectorAnioFechaFin"
+                                [(ngModel)]="solicitudDePlan.anioSeleccionado"
+                                (ionChange)="validarFechaTermino('anio')"
+                                okText="ACEPTAR"
+                                cancelText="CANCELAR"
+                                placeholder="Selecciona Año">
+                            <ion-select-option *ngFor="let anio of aniosTermino" [value]="anio">
+                                {{ anio}}
+                            </ion-select-option>
+                        </ion-select>
+                    </ion-col>
+                </ion-row>
+
+                <ion-row class="row_formulario" *ngIf="mostrarForm === CONSTANTES.ID_FORMULARIO_DATOS && idTipoProducto == CONSTANTES.ID_PRODUCTO_CUENTA_2">
+                        <ion-col size="1" class="columna_valor">
+                            <ion-checkbox mode="md" class="caja_checkbox" checked="true" [(ngModel)]="solicitudDePlan.autorizacionEmpleador" (ionChange)="autorizaEmpleador()"></ion-checkbox>
+                        </ion-col>
+                        <ion-col size="11" class="columna_valor col_checkbox">
+                            <p class="texto_informativo texto_checkbox">{{CONSTANTES.TEXTO_AUTORIZACION}}</p>
+                        </ion-col>
+                </ion-row>
+
+                <ion-row class="row_formulario" *ngIf="mostrarForm === CONSTANTES.ID_FORMULARIO_TRABAJO">
+                    <ion-col size="12" class="columna_titulo">
+                        <span class="regular">Ocupación</span><span class="rojo regular"> *</span>
+                    </ion-col>
+                </ion-row>
+                <ion-row class="row_formulario" *ngIf="mostrarForm === CONSTANTES.ID_FORMULARIO_TRABAJO">
+                    <ion-col size="12" class="columna_valor">
+                        <ion-select
+                                class="columna_monto-input"
+                                [interfaceOptions]="selectorOcupacion"
+                                [(ngModel)]="cargoSeleccionado"
+                                (ionChange)="asignarObjetoCargo(cargoSeleccionado)"
+                                okText="ACEPTAR"
+                                cancelText="CANCELAR"
+                                placeholder="Selecciona Ocupación">
+                            <ion-select-option *ngFor="let cargo of cargos" [value]="cargo.id_cargo">
+                                {{cargo.nombre_cargo | formatoMayusculas}}
+                            </ion-select-option>
+                        </ion-select>
+                    </ion-col>
+                </ion-row>
+
+                <ion-row class="row_formulario" *ngIf="mostrarForm === CONSTANTES.ID_FORMULARIO_TRABAJO">
+                    <ion-col size="12" class="columna_titulo">
+                        <span class="regular">Renta Imponible</span><span class="rojo regular"> *</span>
+                    </ion-col>
+                </ion-row>
+                <ion-row class="row_formulario" *ngIf="mostrarForm === CONSTANTES.ID_FORMULARIO_TRABAJO">
+                    <ion-col size="12" class="columna_titulo">
+                        <ion-input type="tel"
+                                   class="columna_monto-input"
+                                   [attr.maxlength]="11"
+                                   [(ngModel)]="solicitudDePlan.rentaImponible"
+                                   (ionBlur)="validarRenta(solicitudDePlan.rentaImponible, 'input')"
+                                   (keyup.enter)="keyUpRenta(solicitudDePlan.rentaImponible, 'input')"
+                                   (ionInput)="formatoMontoDinero(solicitudDePlan.rentaImponible, $any($event.target).value, 'rentaImponible')">
+                        </ion-input>
+                    </ion-col>
+
+                    <ion-col size="12" class="columna_valor">
+                        <p class="texto_informativo">{{CONSTANTES.TEXTO_ERROR_RENTA_MINIMA}} <br>{{CONSTANTES.TEXTO_SIGNO_PESO}}{{rentaMinimaTexto}} </p>
+                    </ion-col>
+                </ion-row>
+
+                <div class="cajaBlanca" *ngIf="mostrarForm === CONSTANTES.ID_FORMULARIO_EMPLEADOR">
+                    <ion-row class="row_formulario">
+                        <ion-col size="12" class="columna_titulo">
+                            <span class="regular">Empleador</span><span class="rojo regular"> *</span>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row class="row_formulario">
+                        <ion-col size="12" class="columna_titulo">
+
+                            <ion-select
+                                    class="columna_monto-input"
+                                    [interfaceOptions]="selectorEmpleador"
+                                    [(ngModel)]="empleadorSeleccionado"
+                                    okText="ACEPTAR"
+                                    cancelText="CANCELAR"
+                                    placeholder="Selecciona Empleador Actual"
+                                    (ionChange)="usarDataEmpleador(empleadorSeleccionado)">
+                                <ion-select-option *ngFor="let empleador of empleadores" [value]="empleador.id_mae_empleador">
+                                    {{ empleador.razon_social | formatoMayusculas}}
+                                </ion-select-option>
+                            </ion-select>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row class="row_formulario" *ngIf="mostrarForm === CONSTANTES.ID_FORMULARIO_EMPLEADOR">
+                        <ion-col size="12" class="columna_valor">
+                            <a class="regular link" (click)="verModalEmpleador()"><u>¿Tu empleador no aparece en el listado?</u></a>
+                        </ion-col>
+                    </ion-row>
+                </div>
+
+                <ion-row class="row_formulario" class="row_formulario" *ngIf="mostrarForm === CONSTANTES.ID_FORMULARIO_EMPLEADOR">
+                    <ion-col size="12" class="columna_titulo">
+                        <span class="bold">Datos para notificación</span>
+                    </ion-col>
+                </ion-row>
+
+                <ion-row class="row_formulario" *ngIf="mostrarForm === CONSTANTES.ID_FORMULARIO_EMPLEADOR">
+                    <ion-col size="12" class="columna_titulo">
+                        <span class="regular">Región</span><span class="rojo regular"> *</span>
+                    </ion-col>
+                </ion-row>
+                <ion-row class="row_formulario" *ngIf="mostrarForm === CONSTANTES.ID_FORMULARIO_EMPLEADOR">
+                    <ion-col size="12" class="columna_valor">
+
+                        <ion-select
+                                class="columna_monto-input"
+                                [interfaceOptions]="selectorRegion"
+                                [(ngModel)]="regionSeleccionada"
+                                (ionChange)="asignarObjetoRegiones(regionSeleccionada); cambioRegion(regionSeleccionada, comunaSeleccionada)"
+                                okText="ACEPTAR"
+                                cancelText="CANCELAR"
+                                placeholder="Selecciona Región">
+                            <ion-select-option *ngFor="let region of regiones" [value]="region.id_region">
+                                {{ region.nombre_region}}
+                            </ion-select-option>
+                        </ion-select>
+                    </ion-col>
+                </ion-row>
+
+                <ion-row class="row_formulario" *ngIf="mostrarForm === CONSTANTES.ID_FORMULARIO_EMPLEADOR">
+                    <ion-col size="12" class="columna_titulo">
+                        <span class="regular">Comuna</span><span class="rojo regular"> *</span>
+                    </ion-col>
+                </ion-row>
+                <ion-row class="row_formulario" *ngIf="mostrarForm === CONSTANTES.ID_FORMULARIO_EMPLEADOR">
+                    <ion-col size="12" class="columna_valor">
+
+                        <ion-select
+                                class="columna_monto-input"
+                                [interfaceOptions]="selectorComuna"
+                                [(ngModel)]="comunaSeleccionada"
+                                (ionChange)="asignarObjetoComuna(comunaSeleccionada)"
+                                okText="ACEPTAR"
+                                cancelText="CANCELAR"
+                                placeholder="Selecciona Comuna">
+                            <ion-select-option *ngFor="let comuna of mostrarComunas" [value]="comuna.id_comuna">
+                                {{ comuna.nombre_comuna}}
+                            </ion-select-option>
+                        </ion-select>
+                    </ion-col>
+                </ion-row>
+
+                <ion-row class="row_formulario" *ngIf="mostrarForm === CONSTANTES.ID_FORMULARIO_EMPLEADOR">
+                    <ion-col size="12" class="columna_titulo">
+                        <span class="regular">Calle</span><span class="rojo regular"> *</span>
+                    </ion-col>
+                </ion-row>
+                <ion-row class="row_formulario" *ngIf="mostrarForm === CONSTANTES.ID_FORMULARIO_EMPLEADOR">
+                    <ion-col size="12" class="columna_valor">
+                        <ion-input class="columna_monto-input" [attr.maxlength]="100" [(ngModel)]="solicitudDePlan.calle" (keyup.enter)="keyUpCalle(solicitudDePlan.calle, 'input'); limiteDeCaracteres($any($event.target).value, CONSTANTES.INGRESO_CALLE, 100)" (ionBlur)="validarCamposEmpleador(solicitudDePlan.calle, 'input'); limiteDeCaracteres($any($event.target).value, CONSTANTES.INGRESO_CALLE, 100)" (ionInput)="limiteDeCaracteres($any($event.target).value, CONSTANTES.INGRESO_CALLE, 100)"></ion-input>
+                    </ion-col>
+                </ion-row>
+
+                <ion-row class="row_formulario" *ngIf="mostrarForm === CONSTANTES.ID_FORMULARIO_EMPLEADOR">
+                    <ion-col size="6" class="columna_titulo">
+                        <span class="regular">Número</span><span class="rojo regular"> *</span>
+                    </ion-col>
+                    <ion-col size="6" class="columna_titulo">
+                        <span class="regular">Oficina</span>
+                    </ion-col>
+                </ion-row>
+                <ion-row class="row_formulario" *ngIf="mostrarForm === CONSTANTES.ID_FORMULARIO_EMPLEADOR">
+                    <ion-col size="6" class="columna_titulo">
+                        <ion-input type="tel" class="columna_monto-input" [attr.maxlength]="10" [(ngModel)]="solicitudDePlan.numero" (keyup.enter)="keyUpNumero(solicitudDePlan.numero, 'input'); formatoMontoDinero(solicitudDePlan.numero, $any($event.target).value, 'numero')" (ionBlur)="validarCamposEmpleador(solicitudDePlan.numero, 'input'); formatoMontoDinero(solicitudDePlan.numero, $any($event.target).value, 'numero')" (ionInput)="formatoMontoDinero(solicitudDePlan.numero, $any($event.target).value, 'numero')"></ion-input>
+                    </ion-col>
+                    <ion-col size="6" class="columna_titulo">
+                        <ion-input type="tel" class="columna_monto-input" [attr.maxlength]="4" [(ngModel)]="solicitudDePlan.oficina" (keyup.enter)="keyUpOficina(solicitudDePlan.oficina, $any($event.target).value, 'oficina')" (ionBlur)="formatoMontoDinero(solicitudDePlan.oficina, $any($event.target).value, 'oficina')" (ionInput)="formatoMontoDinero(solicitudDePlan.oficina, $any($event.target).value, 'oficina')"></ion-input>
+                    </ion-col>
+                </ion-row>
+
+                <ion-row class="row_formulario" *ngIf="mostrarForm === CONSTANTES.ID_FORMULARIO_EMPLEADOR">
+                    <ion-col size="12" class="columna_titulo">
+                        <span class="regular">Email</span><span class="rojo regular"> *</span>
+                    </ion-col>
+                </ion-row>
+                <ion-row class="row_formulario" *ngIf="mostrarForm === CONSTANTES.ID_FORMULARIO_EMPLEADOR">
+                    <ion-col size="12" class="columna_titulo">
+                        <ion-input class="columna_monto-input" [attr.maxlength]="50" [(ngModel)]="solicitudDePlan.correo" (keyup.enter)="keyUpEmail(solicitudDePlan.correo, 'input'); limiteDeCaracteres($any($event.target).value, CONSTANTES.INGRESO_CORREO, 50)" (ionBlur)="validarEmail(solicitudDePlan.correo, 'input'); limiteDeCaracteres($any($event.target).value, CONSTANTES.INGRESO_CORREO, 50)" (ionInput)="limiteDeCaracteres($any($event.target).value, CONSTANTES.INGRESO_CORREO, 50)"></ion-input>
+                    </ion-col>
+                </ion-row>
+            </ion-card>
+            <button class="detalle-btn_aceptar" [class.btn_form2]="mostrarForm ===  CONSTANTES.ID_FORMULARIO_TRABAJO" (click)="guardarFormulario(mostrarForm)"
+                    [disabled]="!validarEstadoBotonAceptar()">
+                Guardar
+            </button>
+        </section>
+    </ion-content>
+</section>
+
+<app-modal-regimenes *ngIf="mostrarModalRegimen" [objetoSlide]="regimenesParaModal" [tipoCuenta]="idTipoProducto" (envioCerrarModal)="ocultarModalRegimenes()"></app-modal-regimenes>
+
+<app-modal-general *ngIf="mostrarModalInformativo || mostrarModalEmpleador" [dataModal]="modalData" [tipoModal]="tipoModal" (envioCerrarModal)="ocultarModals($event)"></app-modal-general>

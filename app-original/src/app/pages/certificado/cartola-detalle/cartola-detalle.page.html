@@ -1,0 +1,49 @@
+<app-header [titulo]="CONSTANTES.TITULO_HEADER_CERTIFICADOS"></app-header>
+
+<ion-content class="content_page">
+
+    <section class="video_cnt" *ngIf="mostrarVideo">
+        <div class=form>
+            <h2 class="title">
+                Revisa tu último Estado de Cuenta Mensual disponible
+            </h2>
+
+            <div id="scriptContainer"></div>
+
+        </div>
+    </section>
+
+    <section class="section_cnt">
+        <div class="form">
+            <h2 class="form-title">
+                ¿Qué es el Estado de Cuenta Mensual?
+            </h2>
+
+            <section class="form_cnt">
+                <p class="texto_certificado texto_certificado-info">Es el documento mensual donde te informamos el detalle de tus cuentas de ahorro y el monto proyectado de tu futura pensión.</p>
+            </section>
+
+            <section class="form_cnt">
+                <p class="texto_certificado texto_certificado-info">Acá puedes revisar tus Estados de Cuentas de los últimos 6 meses en PDF.</p>
+            </section>
+
+            <section class="form_cnt">
+                <h3 class="titulo_opciones">Período de tiempo</h3>
+                <ion-select [placeholder]="'Elegir Período'" name="tipoPeriodo" class="options-select"
+                            okText="ACEPTAR" cancelText="CANCELAR" [interfaceOptions]="periodoOptions"
+                            [(ngModel)]="periodoSeleccionado">
+                    <ion-select-option *ngFor="let periodo of periodos"
+                                    [value]="periodo">{{periodo.nombre_mes +" " + periodo.anio}}</ion-select-option>
+                </ion-select>
+            </section>
+
+            <section class="form_cnt">
+                <button class="button" (click)="obtenerPDF()" [disabled]="!periodoSeleccionado['id_mes']">
+                    Solicitar
+                </button>
+                <button class="button button-cancelar" (click)="cancelar()">Cancelar</button>
+            </section>
+        </div>
+    </section>
+</ion-content>
+

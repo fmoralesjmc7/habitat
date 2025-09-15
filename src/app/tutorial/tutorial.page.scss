@@ -1,0 +1,75 @@
+@import "../../theme/_mixins";
+
+:host {
+  .tutorial_content {
+    --background: transparent;
+    background-color: var(--colors-gris-oscuro);
+    background-image: url("../../assets/imgs/background-habitat-bienvenida-v2.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position-x: center;
+
+    font: 1rem var(--fonts-weight-regular);
+
+    .button_section {
+      width: 100%;
+      padding-left: 1rem;
+      padding-right: 1rem;
+
+      &-continuar {
+        @include btn-general();
+        border-radius: 50px;
+        font-size: 1.7188rem;
+        margin-top: 1.875rem;
+      }
+    }
+
+    .tutorial_section {
+      background-color: rgba(255, 255, 255, 0.7);
+      height: 90%;
+      width: 90%;
+      margin: 10% auto 0;
+      border-radius: 4px;
+
+      .tutorial_slides {
+        height: 80%;
+
+        .slide {
+          background-color: transparent;
+          height: 100%;
+          width: 100%;
+          margin: 0 auto;
+          padding: 30% 5% 10%;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+
+          .icon {
+            height: 60%;
+            width: 100%;
+            font-size: 8.75rem;
+            color: var(--colors-rojo-habitat);
+          }
+
+          .slide-title {
+            width: 100%;
+            margin: 1rem auto;
+            font: 1.5rem var(--fonts-weight-bold);
+            color: var(--colors-gris-oscuro);
+          }
+
+          .slide-texto {
+            margin: 1.5rem auto 0.625rem;
+            font: 1.125rem var(--fonts-weight-medium);
+            color: var(--colors-gris-oscuro);
+          }
+        }
+
+        .swiper-pagination {
+          bottom: 2% !important;
+        }
+      }
+    }
+  }
+}
