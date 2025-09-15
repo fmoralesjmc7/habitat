@@ -1,0 +1,11 @@
+@import '../../../theme/mixins';
+
+:host {
+    h1 {
+        margin: 0;
+        font: 1.5rem var(--fonts-weight-medium);
+        text-align: center;
+        padding-right: 1.5rem;
+        color: var(--colors-blanco);
+    }
+}

@@ -1,0 +1,14 @@
+ngx-extended-pdf-viewer::ng-deep {
+  #viewerContainer,
+  .html .body {
+    border-radius: 1rem;
+  }
+  .pdfViewer.singlePageView .page {
+    margin: 0;
+  }
+}
+
+.contenedor-pdf {
+  border: 1px solid lightgray;
+  border-radius: 1rem;
+}

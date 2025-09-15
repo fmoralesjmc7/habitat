@@ -1,0 +1,25 @@
+<section [ngClass]="['modal-felicitaciones', ventanaOrigen ? 'modal-felicitaciones-' + ventanaOrigen : '']">
+    <article class="modal_cnt">
+        <ion-icon class="icon-cerrar icon_close" (click)="onCerrarModal()"></ion-icon>
+        <ion-card class="modal">
+            <div class="icon-check-exito icon-exito-prudential"></div>
+            <ion-card-header class="header">
+                <span class="header-text">
+                    {{textoHeaderModal}}
+                </span>
+            </ion-card-header>
+            <ion-card-content class="body">
+                <p class="body-text">
+                    Te enviamos un email para que tengas el comprobante de esta autorizaci&oacute;n.
+                </p>
+                <p class="body-text-small">
+                    Si en alg&uacute;n momento decides deshacer esta acci&oacute;n, debes dirigirte al menú lateral e ingresar a “Consolidaci&oacute;n de Saldos”.
+                </p>
+
+                <div class="botonera-prudential">
+                    <button class="body-btn btn-cancelar" (click)="onCerrarModal()">Continuar</button>
+                </div>
+            </ion-card-content>
+        </ion-card>
+    </article>
+</section>

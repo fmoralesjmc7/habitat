@@ -100,7 +100,7 @@ export class SigninPage implements OnInit {
       next: (response: any) => {
         // Expected response: { codigo: 'S'|'N'|'B', token?: string }
         if (response?.codigo === 'S') {
-          this.nav.navigateRoot('/home');
+          this.nav.navigateRoot('/home-cliente');
         } else if (response?.codigo === 'B') {
           // bloqueado: stay, could show toast
         } else {

@@ -9,7 +9,7 @@ export class CheckTutorial implements CanLoad {
   async canLoad(route: Route, segments: UrlSegment[]): Promise<boolean> {
     const res = await Preferences.get({ key: 'muestra-tutorial' });
     if (res.value === 'no') {
-      this.router.navigateByUrl('/home', { replaceUrl: true });
+      this.router.navigateByUrl('/home-cliente', { replaceUrl: true });
       return false;
     }
     return true;

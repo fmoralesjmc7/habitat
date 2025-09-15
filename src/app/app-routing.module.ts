@@ -18,8 +18,12 @@ const routes: Routes = [
     loadChildren: () => import('./login/signin/signin.module').then(m => m.SigninPageModule)
   },
   {
-    path: 'home',
-    loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
+    path: 'home-cliente',
+    loadChildren: () => import('./pages/home/home-cliente/home-cliente.module').then( m => m.HomeClientePageModule)
+  },
+  {
+    path: 'error-root',
+    loadComponent: () => import('./pages/error-root/error-root.page').then(m => m.ErrorRootPage),
   },
 ];
 

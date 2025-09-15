@@ -1,0 +1,481 @@
+<ion-header class="header_app">
+  <ion-toolbar class="navbar">
+    <ion-buttons
+      slot="start"
+      class="nav-button button-left custom-size-mail"
+      (click)="cambiarPantalla('notificaciones-home')"
+    >
+      <ion-icon class="icon icono_izquierdo icon-notificacion"></ion-icon>
+      @if (notifNoLeidas) {
+      <span class="dot"></span>
+      }
+    </ion-buttons>
+
+    <figure class="logo">
+      <img alt="logo header" class="logo-img" src="./assets/imgs/nuevo_logo_header.png" />
+    </figure>
+    <ion-buttons
+      slot="primary"
+      class="nav-button button-right"
+      (click)="toggleMenu()"
+    >
+      <ion-icon class="btn-icon icon-menu-hamb"></ion-icon>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="home_page">
+  <section class="home_content new-home-enunciado">
+    <h2 class="title">¡Hola {{ nombre | titlecase }}!</h2>
+
+    <ion-card class="home_content-card">
+      <ion-grid>
+        <ion-row>
+          <ion-col size="12" class="text-item">
+            <ul class="text">
+              <li class="text-item">Tu total ahorrado es:</li>
+              <li class="text-item">{{totalAhorrado | formatoPesoChileno}}</li>
+              <li class="text-item">{{ textoSaldos }}</li>
+            </ul>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+      <a class="link_evolucion_ahorros" (click)="irEvolucionAhorros()">
+        <img
+          src="assets/icon/balance-ahorros.svg"
+          alt="icon-evolucion-ahorros"
+        />
+        Evolución de tus Ahorros
+        <ion-icon name="chevron-forward-outline"></ion-icon>
+      </a>
+    </ion-card>
+  </section>
+  <section class="home_content">
+    <swiper-container
+      #sliderCuentas
+      class="slides_cuentas"
+      (slidechange)="cambiarDetalleCuentaSlider()"
+    >
+      @for (producto of productosSlide; track producto.nombreCortoProducto; let
+      i = $index) {
+      <swiper-slide>
+        <section>
+          <span class="producto-activo">
+            {{ producto.nombreCortoProducto }}
+          </span>
+        </section>
+
+        @for (productoAux of (productosSlide | slice:(i + 1)); track
+        productoAux.nombreCortoProducto; let j = $index) {
+        <section>
+          <span (click)="cambiarDetalleCuenta(i + 1 + j)">
+            {{ productoAux.nombreCortoProducto }}
+          </span>
+        </section>
+        }
+      </swiper-slide>
+      }
+    </swiper-container>
+
+    <swiper-container
+      #sliderDetalleCuentas
+      pager="true"
+      effect="slide"
+      speed="300"
+      class="slides_container"
+      pager="true"
+      spaceBetween="10"
+      bounce="false"
+      (slidechange)="cambiarCuenta()"
+    >
+      @for (producto of productos; track producto) {
+        <swiper-slide id="card" class="card_container">
+          <ion-grid class="info_container">
+            <ion-row class="info_title">
+              <ion-col size="8">
+                <div
+                  class="info_title-item"
+                  [innerHTML]="formatearNombreProducto(producto.nombreCortoProducto, producto.codigoProducto)"
+                ></div>
+              </ion-col>
+              <ion-col class="info_fondo" size="4">
+                <div class="info_fondo-value">
+                  @for (fondo of producto.fondos; track fondo.id) {
+                  <div
+                    class="bill"
+                    [ngClass]="{'letter--red': fondo.nombreFondo === 'A', 'letter--orange': fondo.nombreFondo === 'B', 'letter--green': fondo.nombreFondo === 'C', 'letter--cyan': fondo.nombreFondo === 'D', 'letter--blue': fondo.nombreFondo === 'E'}"
+                  >
+                    <span class="value"> {{ fondo.nombreFondo }} </span>
+                  </div>
+                  }
+                </div>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col class="info_saldo" size="8">
+                <div class="info_saldo-item">
+                  <span class="signo">$</span
+                  ><span class="monto"
+                    >{{ producto.saldoTotal | chileanCurrency:false }}</span
+                  >
+                </div>
+              </ion-col>
+              <ion-col size="4">
+                @if (producto.saldoTotal !== 0) {
+                  <div
+                    class="detail"
+                    (click)="verDetalleCuenta(producto);"
+                  >
+                    <ion-icon name="chevron-forward-outline"></ion-icon>
+                  </div>
+                }
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </swiper-slide>
+
+        @if (bono) {
+          <swiper-slide class="card_container">
+            <ion-grid class="info_container">
+              <ion-row class="info_title">
+                <ion-col>
+                  <div class="info_title-item">
+                    Bono de <br />
+                    Reconocimiento
+                  </div>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col class="info_saldo" size="8">
+                  <div class="info_saldo-item">
+                    <span class="signo">$</span
+                    ><span class="monto"
+                      >{{ bono.totalMonto | chileanCurrency:false }}</span
+                    >
+                  </div>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </swiper-slide>
+        }
+
+        @if (prudential && prudential?.estadoConsolidacion === CONSTANTES_PRUDENTIAL.ESTADO_MANDATO_HAB.ACEPTADO) {
+          <swiper-slide
+            id="card"
+            class="card_container"
+          >
+            <ion-grid class="info_container">
+              <ion-row class="info_title" size="8">
+                <ion-col>
+                  <div class="info_title-item">
+                    <span
+                      >Total Ahorros <br />
+                      Prudential AGF</span
+                    >
+                    <ion-icon
+                      class="icon icon-informacion"
+                      (click)="abrirModalInformativoPrudential()"
+                    ></ion-icon>
+                  </div>
+                </ion-col>
+                <ion-col class="ion-text-end">
+                  <ion-toggle
+                    mode="md"
+                    class="cnt_ver-switch"
+                    [(ngModel)]="verSaldosPrudential"
+                    (ionChange)="onCambioPreferencia()"
+                  ></ion-toggle>
+                </ion-col>
+              </ion-row>
+              @if (verSaldosPrudential && prudential.preferencia) {
+                <ion-row>
+                  <ion-col class="info_saldo" size="8">
+                    <div class="info_saldo-item">
+                      <span class="signo">$</span
+                      ><span class="monto"
+                        >{{ prudential.totalMonto | chileanCurrency:false }}</span
+                      >
+                    </div>
+                  </ion-col>
+                  <ion-col size="4">
+                    <div class="detail">
+                      <div class="detail" (click)="verDetalleProducto(prudential);">
+                        <ion-icon name="chevron-forward-outline"></ion-icon>
+                      </div>
+                    </div>
+                  </ion-col>
+                </ion-row>
+              }
+            </ion-grid>
+          </swiper-slide>
+        }
+      }
+    </swiper-container>
+  </section>
+</ion-content>
+
+@if (datosBarraInformativa && datosBarraInformativa.encendido && !verBarraPrudential) {
+  <section class="barra-informativa">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="8">
+          <section class="texto">
+            <p>{{datosBarraInformativa.titulo}}</p>
+            <p>{{datosBarraInformativa.subtitulo}}</p>
+          </section>
+        </ion-col>
+        <ion-col size="4">
+          <button (click)="redireccionarBarra()">
+            {{datosBarraInformativa.titulo_boton}}
+          </button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </section>
+}
+
+@if (verBarraPrudential) {
+  <section class="barra-informativa-prudential">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="8">
+          <section class="texto">
+            <p>
+              Gracias a la alianza con <b>Prudential AGF</b>, ahora puedes
+              consolidar tus saldos en tu APP
+            </p>
+          </section>
+        </ion-col>
+        <ion-col size="4">
+          <button (click)="modalPrudentialAutorizaConsolidacion = true">
+            Conoce más aquí
+          </button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </section>
+}
+
+<section class="botones">
+  <ion-row>
+    <ion-col
+      class="botones-element"
+      (click)="cambiarPantalla('certificado-home')"
+    >
+      <ion-icon class="icon icon-certificado"></ion-icon>
+      <p class="text">Tus</p>
+      <p class="text">Certificados</p>
+    </ion-col>
+
+    @if (esPensionado) {
+      <ion-col class="botones-element" (click)="cambiarPantalla('LiquidacionDePensionesComponent')">
+        <ion-icon class="icon icon-liquidaciones"></ion-icon>
+        <p class="text">Liquidación</p>
+        <p class="text">de Pensión</p>
+      </ion-col>
+    } @else {
+      <ion-col class="botones-element" (click)="cambiarPantalla('ValorCuotaPage')">
+        <ion-icon class="icon icon-valor-cuota"></ion-icon>
+        <p class="text">Valores</p>
+        <p class="text">Cuota</p>
+      </ion-col>
+    }
+
+    <ion-col
+      class="botones-element"
+      (click)="cambiarPantalla('home-centro-asesoria')"
+    >
+      <ion-icon class="icon_centro icon-centro-asesoria"></ion-icon>
+      <p class="text">Centro</p>
+      <p class="text">de Asesoría</p>
+    </ion-col>
+  </ion-row>
+</section>
+
+<section class="options">
+  <button class="options-element" (click)="cambiarPantalla('ClaveSacuPage', 1)">
+    <ion-icon class="icon icon-deposito-directo"></ion-icon>
+    <p class="text">Cambio</p>
+    <p class="text">de Fondo</p>
+  </button>
+
+  <button class="options-element" (click)="validacionGiros()">
+    <ion-icon class="icon icon-pension"></ion-icon>
+    <p class="text">Giro</p>
+    <p class="text">de Ahorro</p>
+  </button>
+
+  @if (esPensionado) {
+    <button class="options-element" (click)="mostrarFechaPagoPensiones()">
+      <ion-icon class="icon icon-calendario"></ion-icon>
+      <p class="text">Fecha Pago</p>
+      <p class="text">Pensión</p>
+    </button>
+  } @else {
+    <button
+      class="options-element"
+      (click)="cambiarPantalla('planes-step-uno')"
+      [hidden]="ocultarSimuladorPension"
+    >
+      <ion-icon class="icon icon-plan-icon"></ion-icon>
+      <p class="text">Plan</p>
+      <p class="text">de Ahorro</p>
+    </button>
+
+    <button
+      class="options-element"
+      (click)="cambiarPantalla('ContactoPage')"
+      [hidden]="ocultarContacto"
+    >
+      <ion-icon class="icon icon-contacto"></ion-icon>
+      <p class="text">Contáctanos</p>
+    </button>
+  }
+
+  <button class="options-element" (click)="validarCantidadDepositosDiarios()">
+    <ion-icon class="icon icon-fondos"></ion-icon>
+    <p class="text">Depósito</p>
+    <p class="text">Directo</p>
+  </button>
+</section>
+
+@if (modalValidacionSinCuentasVigentesGiro) {
+  <section class="modal_informativo">
+    <article class="modal_cnt">
+      <ion-icon
+        class="icon_close"
+        (click)="modalValidacionSinCuentasVigentesGiro = false"
+      ></ion-icon>
+      <ion-card class="modal">
+        <ion-card-header class="header">
+          <ion-icon class="header-icon icon-informacion"></ion-icon>
+        </ion-card-header>
+        <ion-card-content class="body">
+          <h3 class="body-title">Sin Cuentas Vigentes</h3>
+          <p class="body-text">
+            No tienes ninguna cuenta vigente para realizar un giro.
+          </p>
+          <button
+            class="body-btn"
+            (click)="modalValidacionSinCuentasVigentesGiro = false"
+          >
+            Aceptar
+          </button>
+        </ion-card-content>
+      </ion-card>
+    </article>
+  </section>
+}
+
+@if (modalCuentasSinSaldosGiro) {
+  <section class="modal_informativo">
+    <article class="modal_cnt">
+      <ion-icon
+        class="icon_close"
+        (click)="modalCuentasSinSaldosGiro = false"
+      ></ion-icon>
+      <ion-card class="modal">
+        <ion-card-header class="header">
+          <ion-icon class="header-icon icon-informacion"></ion-icon>
+        </ion-card-header>
+        <ion-card-content class="body">
+          <h3 class="body-title">Cuentas sin Saldo</h3>
+          <p class="body-text">
+            No puedes realizar giros, debido a que no tienes saldo en ninguna
+            Cuenta.
+          </p>
+          <p class="body-text">
+            Para más información, comunícate con nuestro<a
+              (click)="llamarContactCenter()"
+            >
+              Contact Center.</a
+            >
+          </p>
+          <button class="body-btn" (click)="modalCuentasSinSaldosGiro = false">
+            Aceptar
+          </button>
+        </ion-card-content>
+      </ion-card>
+    </article>
+  </section>
+}
+
+@if (modalSinCelularValido) {
+  <section class="modal_informativo">
+    <article class="modal_cnt">
+      <ion-icon
+        class="icon_close icon-cerrar"
+        (click)="modalSinCelularValido = false"
+      ></ion-icon>
+      <ion-card class="modal">
+        <ion-card-header class="header">
+          <ion-icon class="header-icon icon-informacion"></ion-icon>
+        </ion-card-header>
+        <ion-card-content class="body">
+          <h3 class="body-title">Sin Número de Celular válido</h3>
+          <p class="body-text">
+            No tienes registrado número de celular válido para realizar el giro.
+            Regístralo en cualquiera de nuestras Sucursales.
+          </p>
+
+          <button class="body-btn" (click)="modalSinCelularValido = false">
+            Aceptar
+          </button>
+        </ion-card-content>
+      </ion-card>
+    </article>
+  </section>
+}
+
+@if (modalValidacionSaldoDiscordante) {
+  <section class="modal_informativo">
+    <article class="modal_cnt">
+      <ion-icon
+        class="icon-cerrar icon_close"
+        (click)="modalValidacionSaldoDiscordante = false"
+      ></ion-icon>
+      <ion-card class="modal">
+        <ion-card-header class="header">
+          <ion-icon class="header-icon icon-informacion"></ion-icon>
+        </ion-card-header>
+        <ion-card-content class="body">
+          <h3 class="body-title">Saldos Discordantes</h3>
+          <p class="body-text">
+            No puedes realizar giros, debido a datos discordantes en los saldos de
+            tus cuentas.
+          </p>
+          <p class="body-text">
+            Para más información, comunícate con nuestro
+            <a class="link" (click)="llamarContactCenter()">Contact Center.</a>
+          </p>
+          <button
+            class="body-btn"
+            (click)="modalValidacionSaldoDiscordante = false"
+          >
+            Aceptar
+          </button>
+        </ion-card-content>
+      </ion-card>
+    </article>
+  </section>
+}
+
+@if (modalPrudentialAutorizaConsolidacion) {
+  <app-modal-prudential-autoriza-consolidacion
+    (cerrarModal)="modalPrudentialAutorizaConsolidacion = false"
+    (finalizarConsolidacion)="modalPrudentialFelicitaciones = true; modalPrudentialAutorizaConsolidacion = false"
+  >
+  </app-modal-prudential-autoriza-consolidacion>
+}
+
+@if (modalPrudentialFelicitaciones) {
+  <app-modal-prudential-felicitaciones
+    (cerrarModal)="modalPrudentialFelicitaciones = false"
+  ></app-modal-prudential-felicitaciones>
+}
+
+@if (modalInformativoPrudential) {
+  <app-modal-informativo-prudential
+    (cerrarModal)="modalInformativoPrudential=false"
+  ></app-modal-informativo-prudential>
+}

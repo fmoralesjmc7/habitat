@@ -1,0 +1,14 @@
+<section [ngClass]="['modal-felicitaciones', ventanaOrigen ? 'modal-felicitaciones-' + ventanaOrigen : '']">
+    <article class="modal_cnt">
+        <ion-icon class="icon-cerrar icon_close" (click)="onCerrarModal()"></ion-icon>
+        <ion-card class="modal">
+            <div class="icon-informacion"></div>
+            <ion-card-content class="body">
+                <p class="body-text-small">
+                    Recuerda que la visualizaci&oacute;n de los saldos de Prudential AGF, solo considera los productos de Fondos Mutuos
+                    APV y Fondos Mutuos Dep&oacute;sitos Convenidos. Si quieres aumentar tu pensi&oacute;n con alguno de estos productos, contacta a Prudential AGF.
+                </p>
+            </ion-card-content>
+        </ion-card>
+    </article>
+</section>

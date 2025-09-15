@@ -6,32 +6,36 @@
 /* Custom fonts used by original app */
 @font-face {
   font-family: 'roboto-regular';
-  src: url('../assets/fonts/roboto/roboto-regular.woff') format('woff'), url('../assets/fonts/roboto/roboto-regular.woff2') format('woff2');
+  src: url('../assets/fonts/roboto/roboto-regular.woff') format('woff'),
+    url('../assets/fonts/roboto/roboto-regular.woff2') format('woff2');
   font-weight: 400;
   font-style: normal;
 }
 @font-face {
   font-family: 'roboto-light';
-  src: url('../assets/fonts/roboto/roboto-light.woff') format('woff'), url('../assets/fonts/roboto/roboto-light.woff2') format('woff2');
+  src: url('../assets/fonts/roboto/roboto-light.woff') format('woff'),
+    url('../assets/fonts/roboto/roboto-light.woff2') format('woff2');
   font-weight: 300;
   font-style: normal;
 }
 @font-face {
   font-family: 'roboto-medium';
-  src: url('../assets/fonts/roboto/roboto-medium.woff') format('woff'), url('../assets/fonts/roboto/roboto-medium.woff2') format('woff2');
+  src: url('../assets/fonts/roboto/roboto-medium.woff') format('woff'),
+    url('../assets/fonts/roboto/roboto-medium.woff2') format('woff2');
   font-weight: 500;
   font-style: normal;
 }
 @font-face {
   font-family: 'roboto-bold';
-  src: url('../assets/fonts/roboto/roboto-bold.woff') format('woff'), url('../assets/fonts/roboto/roboto-bold.woff2') format('woff2');
+  src: url('../assets/fonts/roboto/roboto-bold.woff') format('woff'),
+    url('../assets/fonts/roboto/roboto-bold.woff2') format('woff2');
   font-weight: 700;
   font-style: normal;
 }
 
 :root,
-:root[mode=md],
-:root[mode=ios] {
+:root[mode='md'],
+:root[mode='ios'] {
   --fonts-roboto: 'roboto-regular';
   --fonts-weight-regular: 'roboto-regular';
   --fonts-weight-light: 'roboto-light';
@@ -44,12 +48,24 @@
 
 /* Minimal color variables required by tutorial styles */
 :root {
-  --colors-blanco: #FFFFFF;
-  --colors-rojo-habitat: #B4123B;
-  --colors-gris-oscuro: #4C4C4A;
+  --colors-primary: #488aff;
+  --colors-amarillo: #fca800;
+  --colors-naranjo: #eb6a36;
+  --colors-verde: #5cae3a;
+  --colors-blanco: #ffffff;
+  --colors-rojo-habitat: #b4123b;
+  --colors-gris-suave: #909090;
+  --colors-gris-oscuro: #4c4c4a;
   --colors-gris-placholder: #707070;
-  --colors-gris-medio: #8B8B8B;
-  --color-gris-disabled: #BFBFBF;
-  --colors-celeste: #6BA4B8;
-  --colors-rojo-oscuro: #BF0D3E;
+  --color-gris-lines: #aaaaaa;
+  --colors-gris-medio: #8b8b8b;
+  --color-gris-disabled: #bfbfbf;
+  --color-gris-text-icon: #aaaaaa;
+  --colors-celeste: #6ba4b8;
+  --colors-rojo-oscuro: #bf0d3e;
+  --color-header-tittle: #4c4c4a;
+  --color-gris-header-name: #eaeaea;
+  // Barra informativa prudential
+  --colors-gris-azul-fondo-home: #003057;
+  --colors-boton-celeste-p: #6ba3b7;
 }
