@@ -38,6 +38,25 @@ export class UtilService {
     return myuuid;
   }
 
+  generarModeloDatosCliente(datos: any): any {
+    return {
+      rut: parseInt(datos.rut, 10),
+      dv: datos.digitoVerificadorRut,
+      nombre: datos.primerNombre,
+      apellidoPaterno: datos.apellidoPaterno,
+      apellidoMaterno: datos.apellidoMaterno,
+      email: datos.correoElectronico,
+      apodo: datos.primerNombre,
+      sexo: datos.sexo,
+      fechaAfiliacion: datos.fechaAfiliacion,
+      fechaIncorporacion: datos.fechaIncorporacion,
+      idPersona: datos.idMaePersona,
+      edad: parseInt(datos.edad, 10),
+      esPensionado: datos.esPensionado,
+      telefonoCelular: datos.telefonoCelular,
+    };
+  }
+
   /**
    * Obtenemos el uuid desde el storage
    */

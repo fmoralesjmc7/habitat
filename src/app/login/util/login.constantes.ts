@@ -10,6 +10,65 @@ export const CONSTANTES_TOAST_LOGIN = {
 export const CONSTANTES_LOGIN = {
   LOGEADO: 'S',
   NO_LOGEADO: 'N',
-  BLOQUEADO: 'B'
+  BLOQUEADO: 'B',
+  TITULO_HUELLA: 'Habitat Login Biométrico',
+  SUBTITULO_HUELLA: 'Usa tu Huella Digital para iniciar sesión en tu Habitat App',
+  BOTON_HUELLA: 'Cancelar',
+  TIPO_BIOMETRIA_FACE: 'face',
+  ERROR_BIOMETRIA: '10'
+};
+
+const LOGIN_DATOS = 'Login EXITO';
+const LOGIN_MODULO = 'ACCESO AL SITIO PRIVADO';
+
+export const CONSTANTES_TRAZAS_LOGIN = {
+  CANAL: 'APPMOBILE',
+  USUARIO: 'INTERNET',
+  SUCURSAL: 98,
+  CODIGO_SISTEMA: 10,
+  LOGIN_EXITO: {
+    CODIGO_OPERACION: 19400,
+    DATOS: LOGIN_DATOS,
+    EXITO: 1,
+    MODULO: LOGIN_MODULO,
+  },
+};
+
+export const CONSTANTES_TRAZAS_LOGIN_BIOMETRIA = {
+  CANAL: 'APPMOBILE',
+  USUARIO: 'INTERNET',
+  SUCURSAL: 98,
+  CODIGO_SISTEMA: 100,
+  LOGIN_BIOMETRIA_HUELLA: {
+    DATOS: LOGIN_DATOS,
+    EXITO: 1,
+    MODULO: LOGIN_MODULO,
+    CODIGO_OPERACION: 28270,
+  },
+  LOGIN_BIOMETRIA_REGISTRAR_HUELLA: {
+    DATOS: LOGIN_DATOS,
+    EXITO: 1,
+    MODULO: LOGIN_MODULO,
+    CODIGO_OPERACION: 28289,
+  },
+  LOGIN_BIOMETRIA_ERROR: {
+    CODIGO_OPERACION: 28288,
+    DATOS: 'Login Biometrico ERROR',
+    EXITO: 5,
+    MODULO: LOGIN_MODULO,
+  },
+};
+
+export const CONSTANTES_ACTIVACION_BIOMETRIA = {
+  finger: 'Huella',
+  face: 'FaceID',
+  biometric: ' Biometría',
+};
+
+export const CONSTANTES_WHATSAPP = {
+  WHATSAPP_NUMERO: '56959821111',
+  WHATSAPP_MENSAJE: '¡Hola!',
+  TEXTO_WHATSAPP_NO_INSTALADO:
+    'No tienes WhatsApp instalado en tu dispositivo. Por favor, instálalo para contactarnos.',
 };
 

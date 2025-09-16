@@ -22,6 +22,14 @@ const routes: Routes = [
     loadChildren: () => import('./pages/home/home-cliente/home-cliente.module').then( m => m.HomeClientePageModule)
   },
   {
+    path: 'HomeInvitadoPage',
+    loadChildren: () => import('./pages/home/home-invitado/home-invitado.module').then( m => m.HomeInvitadoPageModule)
+  },
+  {
+    path: 'HomeInvitadoStep2Page',
+    loadChildren: () => import('./pages/home/home-invitado-step-dos/home-invitado-step-dos.module').then( m => m.HomeInvitadoStepDosPageModule)
+  },
+  {
     path: 'error-root',
     loadComponent: () => import('./pages/error-root/error-root.page').then(m => m.ErrorRootPage),
   },

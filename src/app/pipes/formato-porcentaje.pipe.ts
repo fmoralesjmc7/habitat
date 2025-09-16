@@ -2,6 +2,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
   name: 'formatoPorcentaje',
+  standalone: true
 })
 export class FormatoPorcentajePipe implements PipeTransform {
 

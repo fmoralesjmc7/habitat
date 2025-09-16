@@ -1,10 +1,13 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { IonicModule } from '@ionic/angular';
 
 @Component({
-  selector: 'app-ayuda-contextual',
+  selector: 'ayuda-contextual, app-ayuda-contextual',
   templateUrl: 'ayuda-contextual.html',
   styleUrls: ['./ayuda-contextual.scss'],
-  standalone: false
+  standalone: true,
+  imports: [CommonModule, IonicModule]
 })
 export class AyudaContextualComponent {
   @Input() text!: string;
